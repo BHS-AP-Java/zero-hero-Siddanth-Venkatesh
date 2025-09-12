@@ -12,8 +12,11 @@
 
 package edu.bhscs;
 
-public class Main{
+public class Main {
   public static void main(String[] args) {
+    System.out.println("-------------");
     System.out.println("Java wastes hours of someones life");
+    System.out.println("Hello");
+    System.out.println("FIRST PROGRAM BRO");
   }
 }
