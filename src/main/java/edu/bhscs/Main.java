@@ -33,45 +33,74 @@ public class Main {
     System.out.println();
     System.out.println("OK I am done");
 
-    char[][] board = create_board();
+    int[][] board = create_board();
     print_board(board);
-    turn(board, "x", scanner);
+    game(board,scanner);
 
     scanner.close();
-
   }
 
-  public static void print_board(char[][] board) {
+  public static void game(int[][] board, Scanner scanner){
+    boolean win = false;
+    boolean player_number = true;
+    while (!win){
+      String player = player_number? "X": "O";
+      turn(board, player, scanner);
+      player_number = !player_number;
+    }
+  }
+
+  public boolean check_win(int[][] board){
+    int[][] check = new int[3][3];
+    for (int i = 0; i < 3; i++){
+      
+    }
+    return false;
+  }
+
+  public static void print_board(int[][] board) {
     for (int i = 0; i < 3; i++) {
       for (int j = 0; j < 3; j++) {
-        System.out.print(board[i][j] + " ");
+        char C = '-';
+        if (board[i][j] != 0){
+          C = board[i][j] == 1 ? 'X': 'O';
+        }
+        System.out.print(C + " ");
       }
       System.out.println();
     }
   }
 
-  public static char[][] create_board() {
-    char[][] board = new char[3][3];
-    Arrays.stream(board).forEach(row -> Arrays.fill(row, '-'));
+  public static int[][] create_board() {
+    int[][] board = new int[3][3];
+    Arrays.stream(board).forEach(row -> Arrays.fill(row, 0));
     return board;
   }
 
-  public static void turn(char[][] board, String player, Scanner scanner) {
-    System.out.println("Place an " + player + " at x y" );
-    int x = get_cord("x", scanner);
-    int y = get_cord("y", scanner);
-    board[3 - y][x-1] = player.charAt(0);
-    print_board(board);
-
-  }
-  public static int get_cord(String x, Scanner scanner){
-    System.out.print(x + " cordinate (1, 2, 3): ");
-    int input = scanner.nextInt();
-    int[] numbers = new int[3];
-    for (int i = 0; i < 3; ++i) {
-      numbers[i] = scanner.nextInt();
+  public static void turn(int[][] board, String player, Scanner scanner) {
+    System.out.println("Place an " + player + " at coordinates x, y");
+    int x[] = get_cord(scanner);
+    while (board[3 - x[1]][x[0] - 1] != 0){
+      System.out.println("Already has something");
+      x = get_cord(scanner);
     }
-    // scanner.close();
-    return input;
+    board[3 - x[1]][x[0] - 1] = player.charAt(0) == 'X' ? 1: -1;
+    print_board(board);
+  }
+
+  public static int[] get_cord(Scanner scanner) {
+    int[] numbers = new int[2];
+    for (int i = 0; i < 2; ++i) {
+      System.out.print((i == 1) ? "Y: ": "X: ");
+      numbers[i] = scanner.nextInt();
+      if (numbers[i] < 1 || numbers[i] > 3){
+        System.out.println("Has to be 1,2, or 3");
+        System.out.print((i == 1) ? "Y: " : "X: ");
+        numbers[i] = scanner.nextInt();
+      }
+    }
+
+    System.out.println();
+    return numbers;
   }
 }
