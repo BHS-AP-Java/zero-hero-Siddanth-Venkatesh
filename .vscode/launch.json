@@ -3,6 +3,27 @@
   "configurations": [
     {
       "type": "java",
+      "name": "Store",
+      "request": "launch",
+      "mainClass": "edu.bhscs.Store",
+      "projectName": "ap-java-starter"
+    },
+    {
+      "type": "java",
+      "name": "Cake",
+      "request": "launch",
+      "mainClass": "edu.bhscs.Cake",
+      "projectName": "ap-java-starter"
+    },
+    {
+      "type": "java",
+      "name": "donut",
+      "request": "launch",
+      "mainClass": "edu.bhscs.donut",
+      "projectName": "ap-java-starter"
+    },
+    {
+      "type": "java",
       "name": "Example",
       "request": "launch",
       "mainClass": "edu.bhscs.Example",
