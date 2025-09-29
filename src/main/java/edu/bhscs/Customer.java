@@ -4,7 +4,8 @@
 // 9/19
 
 /*
- * DESCRIPTION: Makes a person, who can buy and steal cakes or go to jail
+ * DESCRIPTION: Makes a person, who can buy and steal cakes or go to jail. If jailed, the person can't
+ * do anything
  * INPUT: Requires the name, weight, and wealth
  * OUTPUT: No output
  * EDGE CASE: A jailed person is restricted in their activities
@@ -14,25 +15,26 @@ package edu.bhscs;
 
 import java.util.ArrayList;
 
-public class Person {
+public class Customer {
   private ArrayList<Cake> cakesOwned = new ArrayList<>();
   private double weight = 0;
   private double balance = 0;
   private boolean jailed = false;
   private String name;
 
-  public Person(String name, double weight, double wealth){
+  public Customer(String name, double weight, double wealth) {
     this.name = name;
     this.weight = weight;
     this.balance = wealth;
   }
-  public void escape(){
-    if (!jailed){
+
+  public void escape() {
+    if (!jailed) {
       System.out.println("Why are you trying to escape when not jailed, " + name + "?");
       return;
     }
     int random = (int) Math.floor(Math.random() * 2);
-    if (random == 1){
+    if (random == 1) {
       System.out.println("Escape didn't wrk out");
       return;
     }
@@ -41,15 +43,18 @@ public class Person {
   }
 
   public Cake getCake(String name) {
-    return cakesOwned.stream().filter(cake -> cake.getName().equals(name)).findFirst().orElse(null);                                                                             // exception
+    return cakesOwned.stream()
+        .filter(cake -> cake.getName().equals(name))
+        .findFirst()
+        .orElse(null); // exception
   }
 
   public void eat(Cake cake, double percent) {
-    if (jailed){
+    if (jailed) {
       System.out.println("You can't eat cake while in jail, " + name);
       return;
     }
-    if (!cakesOwned.contains(cake)){
+    if (!cakesOwned.contains(cake)) {
       System.out.println("Can't eat a cake you don't have");
       return;
     }
@@ -59,7 +64,7 @@ public class Person {
     System.out.println("Do you feel good after eating the " + cake.getName() + " " + name + "?");
   }
 
-  public void steal(Store store, String cakeName) {
+  public void steal(Baker store, String cakeName) {
     int random = (int) Math.floor(Math.random() * 2); // Generates 0 or 1
     if (jailed) {
       System.out.println("Your in jail " + name);
@@ -80,17 +85,18 @@ public class Person {
     cakesOwned.add(cake);
     System.out.println("You stole the " + cakeName + " succesfully " + name);
   }
-  public void buy(Store store, String cakeName){
-    if (jailed){
+
+  public void buy(Baker store, String cakeName) {
+    if (jailed) {
       System.out.println("Your in jail " + name);
       return;
     }
-    if (store.getCakeAmount(cakeName) < 1){
+    if (store.getCakeAmount(cakeName) < 1) {
       System.out.println("Out of stock");
       return;
     }
     Cake cake = store.getCakeByName(cakeName);
-    if (balance < cake.getCost()){
+    if (balance < cake.getCost()) {
       System.out.println("You are too poor to buy, " + name);
       return;
     }
@@ -100,4 +106,23 @@ public class Person {
     store.getMoney(cake.getCost());
   }
 
+  public void buyInFundraiser(Baker store, String cakeName) {
+    if (jailed) {
+      System.out.println("Your in jail " + name);
+      return;
+    }
+    if (store.getCakeAmount(cakeName) < 1) {
+      System.out.println("Out of stock");
+      return;
+    }
+    Cake cake = store.getCakeByName(cakeName);
+    if (balance < cake.getCost()) {
+      System.out.println("You are too poor to buy, " + name);
+      return;
+    }
+    store.add(cake, -1);
+    cakesOwned.add(cake);
+    balance -= cake.getCost();
+    store.getMoney(cake.getCost());
+  }
 }

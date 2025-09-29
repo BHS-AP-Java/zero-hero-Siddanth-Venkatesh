@@ -16,14 +16,14 @@ public class Main {
 
   public static void main(String[] args) {
     String storeName = "Cake Store";
-    Store store = Store.defaultStore(storeName);
+    Baker store = Baker.defaultStore(storeName);
     store.displayStock();
-    Person Bob = new Person("Bob", 100, 1000);
+    Customer Bob = new Customer("Bob", 100, 1000);
     Bob.buy(store, "Chocolate Cake");
     Bob.buy(store, "Chocolate Cake");
     Bob.buy(store, "Chocolate Cake");
     Bob.eat(Bob.getCake("Chocolate Cake"), 50);
-    Bob.steal(store, "Coffee Cake");
+    // Bob.steal(store, "Coffee Cake");
     store.add("Chocolate Cake", 2);
     store.displayStock();
   }

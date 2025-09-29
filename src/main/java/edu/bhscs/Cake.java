@@ -15,8 +15,13 @@ package edu.bhscs;
 import java.util.Arrays;
 
 public class Cake {
+
+  // weightPounds is the current weight, WEIGHTOG is the original weight of the cake.
+  // cost is the cost of the cake to buy it.
+  // name is he name of the cake.
+  // ingredients is a list of the ingredients in an array.
   private double weightPounds;
-  private double weightOG;
+  private final double WEIGHTOG;
   private double cost;
   private String name;
   private String[] ingredients;
@@ -26,7 +31,7 @@ public class Cake {
     this.name = name;
     this.ingredients = ingredients;
     weightPounds = weight;
-    weightOG = weight;
+    WEIGHTOG = weight;
 
     String stuff = Arrays.toString(ingredients);
     System.out.println("Baking the cake with... " + stuff);
@@ -36,12 +41,15 @@ public class Cake {
   public double getWeight() {
     return weightPounds;
   }
-  public void eat(double percent){
+
+  public void eat(double percent) {
     weightPounds *= ((100 - percent) * weightPounds) / 100;
   }
-  public String getName(){
+
+  public String getName() {
     return name;
   }
+
   public double getCost() {
     return cost;
   }
@@ -51,9 +59,10 @@ public class Cake {
   }
 
   public double amountLeftPercent() {
-    return 100 * (weightPounds / weightOG);
+    return 100 * (weightPounds / WEIGHTOG);
   }
 
+  // Displays the info of cake including cost, name, weight, and ingredients.
   public void displayInfo() {
     String stuff = Arrays.toString(ingredients);
     System.out.print(
@@ -61,11 +70,14 @@ public class Cake {
     System.out.println();
   }
 
+  // Takes extra ingredients and appends them to a list of base ingredients in a cake
+  // PRECONDITION: Do not put ingredients with the same name as a base ingredient
   public static String[] base(String[] ingredients) {
     String[] things = {"Flour", "Sugar", "Water", "Milk", "Egg", "Baking Powder", "Salt"};
     return concatenate(things, ingredients);
   }
 
+  // Takes two arrays and returns a new array where both are combined.
   private static String[] concatenate(String[] first, String[] second) {
     String[] result = new String[first.length + second.length];
     System.arraycopy(first, 0, result, 0, first.length);
@@ -79,7 +91,7 @@ public class Cake {
     };
     String name = "Chocolate Cake";
     Cake cake = new Cake(ingredients, 100.00, 100, name);
-    Person Bob = new Person("Bob", 100, 500);
+    Customer Bob = new Customer("Bob", 100, 500);
     Bob.eat(cake, 10);
     // System.out.println(cake.amountLeftWeight());
     // cake.displayInfo();
