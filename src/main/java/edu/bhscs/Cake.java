@@ -5,9 +5,9 @@
 
 /*
  * DESCRIPTION: Makes a Cake, and allows methods to modify cake and view cake
- * INPUT: You need the ingredients, cost, weight, name
- * OUTPUT: No output
- * EDGE CASE: None
+ * INPUT: You need the ingredients, cost, weight, name. You can include some base ingredients
+ * OUTPUT: You can ouput information regarding the cake, including how much was eaten, cost, name, weight.
+ * EDGE CASE: If two ingredients have the same name, then they will be treated as two seperate ingredients
  */
 
 package edu.bhscs;
@@ -26,6 +26,7 @@ public class Cake {
   private String name;
   private String[] ingredients;
 
+  // This is the constructor for a cake, and it makes an instance of a cake with it's ingredients, cost, weight, and name.
   public Cake(String ingredients[], double cost, double weight, String name) {
     this.cost = cost;
     this.name = name;
@@ -38,26 +39,27 @@ public class Cake {
     System.out.println("The cake will cost: $" + this.cost + "");
   }
 
+  // Returns current weight of cake.
   public double getWeight() {
     return weightPounds;
   }
 
-  public void eat(double percent) {
-    weightPounds *= ((100 - percent) * weightPounds) / 100;
-  }
-
+  // Returns name of the cake.
   public String getName() {
     return name;
   }
 
+  // Returns cost of the cake
   public double getCost() {
     return cost;
   }
 
+  // Returns the remaining weight of the cake
   public double amountLeftWeight() {
     return weightPounds;
   }
 
+  // Returns the percent of the cake remaining compared to the original weight.
   public double amountLeftPercent() {
     return 100 * (weightPounds / WEIGHTOG);
   }
@@ -85,6 +87,7 @@ public class Cake {
     return result;
   }
 
+  // Main method, used for debugging the cake class
   public static void main(String[] args) {
     String[] ingredients = {
       "Chocolate Chips", "Flour", "Sugar", "Water", "Milk", "Egg", "Cocoa Powder"
