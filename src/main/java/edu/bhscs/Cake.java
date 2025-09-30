@@ -20,16 +20,39 @@ public class Cake {
   // cost is the cost of the cake to buy it.
   // name is he name of the cake.
   // ingredients is a list of the ingredients in an array.
+  // flour is the flour used in the cake
+  // quality is the quality of the cake. The price of the cake goes up with quality
   private double weightPounds;
   private final double WEIGHTOG;
   private double cost;
   private String name;
   private String[] ingredients;
+  private Flour flour;
+  private double quality;
 
   // This is the constructor for a cake, and it makes an instance of a cake with it's ingredients,
   // cost, weight, and name.
-  public Cake(String ingredients[], double cost, double weight, String name) {
-    this.cost = cost;
+  public Cake(String ingredients[], double cost, double weight, String name, double quality) {
+    Flour flour = new Flour("All-Purpose Flour", 20, 100, 10);
+    this.flour = flour;
+    this.cost = cost * quality + flour.getQuality();
+    this.name = name;
+    this.ingredients = ingredients;
+    weightPounds = weight;
+    WEIGHTOG = weight;
+
+    String stuff = Arrays.toString(ingredients);
+    System.out.println("Baking the cake with... " + stuff);
+    System.out.println("The cake will cost: $" + this.cost + "");
+    System.out.println("This cake has " + flour.getQuality() + " quality");
+  }
+
+  public Cake(String ingredients[], double cost, double weight, String name, Flour flour, double quality) {
+    if (flour.getQuality() == 0){
+      System.out.println("Yucky Cake being made");
+    }
+    this.quality = quality;
+    this.cost = cost * quality + flour.getQuality();
     this.name = name;
     this.ingredients = ingredients;
     weightPounds = weight;
@@ -45,7 +68,8 @@ public class Cake {
     return weightPounds;
   }
 
-  // Let's you eat a percent of the cake. The percent you eat is based on the amount of cake remaining, not the total cake. 
+  // Let's you eat a percent of the cake. The percent you eat is based on the amount of cake
+  // remaining, not the total cake.
   public void eat(double percent) {
     if (percent < 0 || percent > 100) {
       System.out.println("You can't eat more than 100 or less than 0 percent of a cake");
@@ -103,7 +127,7 @@ public class Cake {
       "Chocolate Chips", "Flour", "Sugar", "Water", "Milk", "Egg", "Cocoa Powder"
     };
     String name = "Chocolate Cake";
-    Cake cake = new Cake(ingredients, 100.00, 100, name);
+    Cake cake = new Cake(ingredients, 100.00, 100, name, 10.00);
     Customer Bob = new Customer("Bob", 100, 500);
     Bob.eat(cake, 10);
     // System.out.println(cake.amountLeftWeight());

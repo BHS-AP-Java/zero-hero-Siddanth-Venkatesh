@@ -11,7 +11,7 @@
  * OUTPUT: Shows the prices and wealth of the store, how succesful the fundraiser was, and how the person changes from buying a cake.
  * EDGE CASE: Don't name two different cakes the same thing. Don't gives two cakes the same two ingredients. Don't make
  * the PTSA have to buy two of the sames things. All of these will result in doubled up behavior, where the actual thing that gets chosen
- * would be random. 
+ * would be random.
  */
 
 package edu.bhscs;
@@ -32,7 +32,6 @@ public class Main {
     Bob.eat(Bob.getCake("Chocolate Cake"), 50);
     Bob.steal(baker, "Coffee Cake");
     baker.add("Chocolate Cake", 2);
-
 
     PTSA Bothell = PTSAthing();
     Bob.buyInFundraiser(baker, "Coffee Cake", Bothell);

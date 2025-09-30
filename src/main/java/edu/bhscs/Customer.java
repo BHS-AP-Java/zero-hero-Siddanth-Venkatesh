@@ -29,7 +29,8 @@ public class Customer {
   private boolean jailed = false;
   private String name;
 
-  // This is the constroctor for a customer. It takes in their name, weight, and wealth and makes a customer.
+  // This is the constroctor for a customer. It takes in their name, weight, and wealth and makes a
+  // customer.
   public Customer(String name, double weight, double wealth) {
     this.name = name;
     this.weight = weight;
@@ -40,9 +41,13 @@ public class Customer {
   public void donate(PTSA fundraiser, double amount) {
     System.out.println("----------------------------");
     donateNoMSG(fundraiser, amount);
-    System.out.println("Thank you " + name + " for donating " + amount + " to us at " + fundraiser.getName());
-    if (jailed){
-      System.out.println("Even though you are in jail " + name + ", you chose to donate. Even criminals can have hearts it seems");
+    System.out.println(
+        "Thank you " + name + " for donating " + amount + " to us at " + fundraiser.getName());
+    if (jailed) {
+      System.out.println(
+          "Even though you are in jail "
+              + name
+              + ", you chose to donate. Even criminals can have hearts it seems");
     }
     System.out.println("----------------------------");
   }
@@ -56,7 +61,6 @@ public class Customer {
     fundraiser.donate(amount);
     balance -= amount;
   }
-
 
   // If a customer is in jail, they can try their luck and try to escape. They have a 50% chance.
   public void escape() {
@@ -191,10 +195,12 @@ public class Customer {
     balance -= cake.getCost();
     double cutDeductedProfit = cake.getCost() * (100 - fundraiser.getCut()) / 100;
     store.getMoney(cutDeductedProfit);
-    System.out.println("Thank you Bob for participating in the " + fundraiser.getName() + " fundraiser");
+    System.out.println(
+        "Thank you Bob for participating in the " + fundraiser.getName() + " fundraiser");
     System.out.println("Enjoy the " + cakeName + " that you bought");
     double amount = (fundraiser.getCut() / 100) * cake.getCost();
-    System.out.println("We recieved $" + amount + " from " + name + " because of the cake you bought.");
+    System.out.println(
+        "We recieved $" + amount + " from " + name + " because of the cake you bought.");
     donateNoMSG(fundraiser, amount);
     System.out.println("----------------------------");
   }

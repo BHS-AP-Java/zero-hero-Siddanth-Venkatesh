@@ -9,7 +9,7 @@
  * INPUT: Requires the name of the school, the things he PTSA plans to buy, and how much those things cost,
  * as well as the cut the PTSA will take from every cake purchase from the baker.
  * OUTPUT: It will output all the things the PTSA is trying to buy, the amount of money they are trying to raise. It will also confirm
- * what stuff the PTSA can buy, assuming they buy the cheapest things up. 
+ * what stuff the PTSA can buy, assuming they buy the cheapest things up.
  * EDGE CASE: If the fundraiser tries to fundraise twice for the same thing, it will be counted twice.
  * If the fundraiser has equal value items, the PTSA will prioritize buying one randomly if they can only buy some of them.
  */
