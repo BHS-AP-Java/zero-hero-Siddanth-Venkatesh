@@ -28,7 +28,8 @@ public class Customer {
   private boolean jailed = false;
   private String name;
 
-  // This is the constroctor for a customer. It takes in their name, weight, and wealth and makes a customer.
+  // This is the constroctor for a customer. It takes in their name, weight, and wealth and makes a
+  // customer.
   public Customer(String name, double weight, double wealth) {
     this.name = name;
     this.weight = weight;
@@ -50,12 +51,19 @@ public class Customer {
     jailed = false;
   }
 
-  // This takes in a name of cake, and filters through the list of cakes they have and finds the cake with that name
+  // This takes in a name of cake, and filters through the list of cakes they have and finds the
+  // cake with that name
   public Cake getCake(String name) {
     return cakesOwned.stream()
-        .filter(cake -> cake.getName().equals(name)) // Filters the stream of cakes into a stream only containing ones
-        .findFirst() // Could have multiple cakes with the same name, this ensures that only the first one is chosen
-        .orElse(null); // Exception, if the customer does not have the cake. Did this way to mess around with streams in java
+        .filter(
+            cake ->
+                cake.getName()
+                    .equals(name)) // Filters the stream of cakes into a stream only containing ones
+        .findFirst() // Could have multiple cakes with the same name, this ensures that only the
+        // first one is chosen
+        .orElse(
+            null); // Exception, if the customer does not have the cake. Did this way to mess around
+    // with streams in java
   }
 
   // You can eat some percent of a cake. Can't eat more than 100 or less than 0.
@@ -71,7 +79,6 @@ public class Customer {
     if (percent > 100) {
       System.out.println("Can't eat more than a 100% of the cake");
       return;
-
     }
     if (percent < 0) {
       System.out.println("Can't eat a negative amount of cake");

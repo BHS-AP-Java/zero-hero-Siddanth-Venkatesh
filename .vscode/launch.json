@@ -3,6 +3,20 @@
   "configurations": [
     {
       "type": "java",
+      "name": "TicTacToe",
+      "request": "launch",
+      "mainClass": "edu.bhscs.TicTacToe",
+      "projectName": "ap-java-starter"
+    },
+    {
+      "type": "java",
+      "name": "PTSA",
+      "request": "launch",
+      "mainClass": "edu.bhscs.PTSA",
+      "projectName": "ap-java-starter"
+    },
+    {
+      "type": "java",
       "name": "Store",
       "request": "launch",
       "mainClass": "edu.bhscs.Store",

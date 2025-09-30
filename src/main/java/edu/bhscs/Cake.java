@@ -26,7 +26,8 @@ public class Cake {
   private String name;
   private String[] ingredients;
 
-  // This is the constructor for a cake, and it makes an instance of a cake with it's ingredients, cost, weight, and name.
+  // This is the constructor for a cake, and it makes an instance of a cake with it's ingredients,
+  // cost, weight, and name.
   public Cake(String ingredients[], double cost, double weight, String name) {
     this.cost = cost;
     this.name = name;
@@ -42,6 +43,14 @@ public class Cake {
   // Returns current weight of cake.
   public double getWeight() {
     return weightPounds;
+  }
+
+  public void eat(double percent) {
+    if (percent < 0 || percent > 100) {
+      System.out.println("You can't eat more than 100 or less than 0 percent of a cake");
+      return;
+    }
+    weightPounds *= (100.00 - percent) / 100.00;
   }
 
   // Returns name of the cake.
