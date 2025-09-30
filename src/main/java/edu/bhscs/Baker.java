@@ -4,8 +4,11 @@
 // 9/19
 
 /*
- * DESCRIPTION: Makes a Store that sells cakes INPUT: Information regarding what cakes the store
- * sells at what price with what name OUTPUT: No output EDGE CASE: None
+ * DESCRIPTION: Makes a Store that sells cakes
+ * INPUT: Information regarding what cakes the store
+ * sells at what price with what name
+ * OUTPUT: No output
+ * EDGE CASE: None
  */
 package edu.bhscs;
 

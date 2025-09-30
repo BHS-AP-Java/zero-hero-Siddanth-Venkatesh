@@ -1,6 +1,6 @@
 // Siddanth Venkatesh
 // P2
-// Part of Cake project
+// Zero to Hero, to turn in
 // 9/19
 
 /*
@@ -132,7 +132,7 @@ public class Customer {
     store.getMoney(cake.getCost());
   }
 
-  public void buyInFundraiser(Baker store, String cakeName) {
+  public void buyInFundraiser(Baker store, String cakeName, PTSA fundraiser) {
     if (jailed) {
       System.out.println("Your in jail " + name);
       return;
