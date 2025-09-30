@@ -45,6 +45,7 @@ public class Cake {
     return weightPounds;
   }
 
+  // Let's you eat a percent of the cake. The percent you eat is based on the amount of cake remaining, not the total cake. 
   public void eat(double percent) {
     if (percent < 0 || percent > 100) {
       System.out.println("You can't eat more than 100 or less than 0 percent of a cake");
