@@ -7,9 +7,8 @@
  * DESCRIPTION: Makes some flour that could be used in the cake
  * INPUT: Requires the name, weight, price, and quality of the flour
  * OUTPUT: This outputs information regarding the flour.
- * EDGE CASE: Flour can have negative quality. This doesn't represent anything. 
+ * EDGE CASE: Flour can have negative quality. This doesn't represent anything.
  */
-
 
 package edu.bhscs;
 

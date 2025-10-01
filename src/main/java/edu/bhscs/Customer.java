@@ -71,7 +71,7 @@ public class Customer {
       System.out.println("Why are you trying to escape when not jailed, " + name + "?");
       return;
     }
-    if (race != "American"){
+    if (race != "American") {
       System.out.println("You can't escape from ICE agents " + name);
       System.out.println("------------------------------------");
       return;
@@ -216,7 +216,7 @@ public class Customer {
       System.out.println("Your in jail " + name);
       return;
     }
-    if (race != "American"){
+    if (race != "American") {
       System.out.println("Uh oh, ICE agents got you " + name + ". You are deported");
       System.out.println("-------------------------------------");
     }
