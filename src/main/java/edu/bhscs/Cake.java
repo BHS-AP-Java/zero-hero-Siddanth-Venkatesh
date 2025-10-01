@@ -30,8 +30,7 @@ public class Cake {
   private Flour flour;
   private double quality;
 
-  // This is the constructor for a cake, and it makes an instance of a cake with it's ingredients,
-  // cost, weight, and name.
+  // This is the constructor for a cake, and it makes an instance of a cake with it's ingredients cost, weight, and name.
   public Cake(String ingredients[], double cost, double weight, String name, double quality) {
     Flour flour = new Flour("All-Purpose Flour", 20, 100, 10);
     this.flour = flour;
@@ -66,15 +65,23 @@ public class Cake {
     System.out.println("The cake will cost: $" + this.cost + "");
   }
 
+  // Makes an exact clone of another cake. This is used when you need a new cake value, and not something passed by reference. 
   public Cake(Cake other) {
     WEIGHTOG = other.getWeight();
-    cost = other.cost;
-    name;
-    ingredients;
-    flour;
-    quality;
+    cost = other.getCost();
+    name = other.getName();
+    ingredients = other.getIngredients();
+    flour = other.getFlour();
+    quality = other.getQuality();
 }
 
+
+  public String[] getIngredients(){
+    return ingredients;
+  }
+  public Flour getFlour(){
+    return flour;
+  }
 
   // Returns current weight of cake.
   public double getWeight() {

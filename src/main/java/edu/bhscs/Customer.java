@@ -163,13 +163,14 @@ public class Customer {
       return;
     }
     Cake cake = store.getCakeByName(cakeName);
+    Cake newCake = new Cake(cake);
     if (balance < cake.getCost()) {
       System.out.println("You are too poor to buy, " + name);
       return;
     }
     System.out.println(name + " bought a " + cakeName);
     store.add(cake, -1);
-    cakesOwned.add(cake);
+    cakesOwned.add(newCake);
     balance -= cake.getCost();
     store.getMoney(cake.getCost());
   }
