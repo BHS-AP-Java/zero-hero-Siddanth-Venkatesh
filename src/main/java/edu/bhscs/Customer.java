@@ -175,8 +175,8 @@ public class Customer {
     store.getMoney(cake.getCost());
   }
 
-// Makes a customer only buy a cake if it meets their quality expectation.
-public void buyQuality(Baker store, String cakeName, double quality) {
+  // Makes a customer only buy a cake if it meets their quality expectation.
+  public void buyQuality(Baker store, String cakeName, double quality) {
     if (jailed) {
       System.out.println("Your in jail " + name);
       return;
@@ -226,13 +226,14 @@ public void buyQuality(Baker store, String cakeName, double quality) {
   }
 
   // Makes the customer only buy a cake in a fundraiser if it meets their quality expectation.
-  public void buyInFundraiserGoodQuality(Baker store, String cakeName, PTSA fundraiser, double quality){
+  public void buyInFundraiserGoodQuality(
+      Baker store, String cakeName, PTSA fundraiser, double quality) {
     if (jailed) {
       System.out.println("Your in jail " + name);
       return;
     }
     Cake cake = store.getCakeByName(cakeName);
-    if (cake.getQuality() < quality){
+    if (cake.getQuality() < quality) {
       System.out.println("The cake " + cakeName + " is too yucky for " + name);
       System.out.println("The quality of the cake needs to go up to atleast " + quality);
       System.out.println("---------------------------------------");

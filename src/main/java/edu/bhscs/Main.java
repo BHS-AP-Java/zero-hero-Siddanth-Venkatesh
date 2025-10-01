@@ -41,7 +41,8 @@ public class Main {
     Bob.buyInFundraiserGoodQuality(baker, "Vanilla Cake", Bothell, 100);
   }
 
-  // Set up the fundraiser. It will be a fundraiser for a computer, sports maintenance, and some new floors
+  // Set up the fundraiser. It will be a fundraiser for a computer, sports maintenance, and some new
+  // floors
   public static PTSA PTSAthing() {
     Map<String, Double> things = new HashMap<>();
     things.put("a computer", 100.00);

@@ -5,7 +5,7 @@
 
 /*
  * DESCRIPTION: Makes a Baker/Store that sells cakes at the price they were made for. The bakers
- * cakes have better quality the more the baker bakes. 
+ * cakes have better quality the more the baker bakes.
  * INPUT: Information regarding what cakes the store, and the amounts of each cake
  * OUTPUT: Will output information regarding whta the store sells, how much inventory it has, and if
  * something is bought improperly.

@@ -14,7 +14,7 @@
  * EDGE CASE: If the fundraiser tries to fundraise twice for the same thing, it will be counted twice.
  * If the fundraiser has equal value items, the PTSA will prioritize buying one randomly if they can only buy some of them.
  * The things the PTSA fundraises for should have articles attached to them, like "a computer", or "some new floors" or else
- * when it prints out those things, grammar errors will occur. 
+ * when it prints out those things, grammar errors will occur.
  */
 
 package edu.bhscs;
@@ -31,7 +31,8 @@ public class PTSA {
   // name is the name of the school the PTSA is for
   // cut is the percentage of revenue the PTSA takes from cake sales
   // necesities is a HashMap representing the things and the cost of those things the PTSA
-  // is trying to fundraise for. The String things the PTSA needs should have articles attached to them.
+  // is trying to fundraise for. The String things is what the PTSA needs.
+  // They strings in them should have articles attached to them.
   private double balance = 0;
   private String name;
   private double goal;
