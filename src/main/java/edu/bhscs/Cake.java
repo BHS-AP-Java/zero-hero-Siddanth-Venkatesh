@@ -7,7 +7,8 @@
  * DESCRIPTION: Makes a Cake, and allows methods to modify cake and view cake
  * INPUT: You need the ingredients, cost, weight, name. You can include some base ingredients
  * OUTPUT: You can ouput information regarding the cake, including how much was eaten, cost, name, weight.
- * EDGE CASE: If two ingredients have the same name, then they will be treated as two seperate ingredients
+ * EDGE CASE: If two ingredients have the same name, then they will be treated as two seperate ingredients.
+ * The cake has a Flour field and could have flour in it's ingredients list.
  */
 
 package edu.bhscs;
@@ -30,7 +31,8 @@ public class Cake {
   private Flour flour;
   private double quality;
 
-  // This is the constructor for a cake, and it makes an instance of a cake with it's ingredients cost, weight, and name.
+  // This is the constructor for a cake, and it makes an instance of a cake with it's ingredients
+  // cost, weight, and name.
   public Cake(String ingredients[], double cost, double weight, String name, double quality) {
     Flour flour = new Flour("All-Purpose Flour", 20, 100, 10);
     this.flour = flour;
@@ -65,7 +67,8 @@ public class Cake {
     System.out.println("The cake will cost: $" + this.cost + "");
   }
 
-  // Makes an exact clone of another cake. This is used when you need a new cake value, and not something passed by reference. 
+  // Makes an exact clone of another cake. This is used when you need a new cake value, and not
+  // something passed by reference.
   public Cake(Cake other) {
     WEIGHTOG = other.getWeight();
     cost = other.getCost();
@@ -73,13 +76,15 @@ public class Cake {
     ingredients = other.getIngredients();
     flour = other.getFlour();
     quality = other.getQuality();
-}
+  }
 
-
-  public String[] getIngredients(){
+  // Returns the ingredients in a cake
+  public String[] getIngredients() {
     return ingredients;
   }
-  public Flour getFlour(){
+
+  // Returns the flour object in a cake
+  public Flour getFlour() {
     return flour;
   }
 
@@ -108,11 +113,14 @@ public class Cake {
     return cost;
   }
 
-  public double getQuality(){
+  // returns the quality of the cake
+  public double getQuality() {
     return quality;
   }
-  public void setQuality(double newQuality){
-    if (newQuality < quality){
+
+  // Allows the quality of the cake to be modified
+  public void setQuality(double newQuality) {
+    if (newQuality < quality) {
       System.out.println("The baker " + name + " can't get worse?");
       return;
     }
@@ -123,7 +131,6 @@ public class Cake {
   public double amountLeftWeight() {
     return weightPounds;
   }
-
 
   // Returns the percent of the cake remaining compared to the original weight.
   public double amountLeftPercent() {
@@ -140,6 +147,7 @@ public class Cake {
 
   // Takes extra ingredients and appends them to a list of base ingredients in a cake
   // PRECONDITION: Do not put ingredients with the same name as a base ingredient
+  // The cake will contain a Flour object, as well as flour in the ingredients.
   public static String[] base(String[] ingredients) {
     String[] things = {"Flour", "Sugar", "Water", "Milk", "Egg", "Baking Powder", "Salt"};
     return concatenate(things, ingredients);

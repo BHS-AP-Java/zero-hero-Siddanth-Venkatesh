@@ -6,12 +6,15 @@
 /*
  * DESCRIPTION: Makes a PTSA that does a fundraiser to buy things for a school. All bakers are
  * automatically entered into a fundraiser. They lose a "cut" of their profits whenever someone buys from them for their fundraiser.
+ * The PTSA will try to buy the cheapest things first.
  * INPUT: Requires the name of the school, the things he PTSA plans to buy, and how much those things cost,
  * as well as the cut the PTSA will take from every cake purchase from the baker.
  * OUTPUT: It will output all the things the PTSA is trying to buy, the amount of money they are trying to raise. It will also confirm
  * what stuff the PTSA can buy, assuming they buy the cheapest things up.
  * EDGE CASE: If the fundraiser tries to fundraise twice for the same thing, it will be counted twice.
  * If the fundraiser has equal value items, the PTSA will prioritize buying one randomly if they can only buy some of them.
+ * The things the PTSA fundraises for should have articles attached to them, like "a computer", or "some new floors" or else
+ * when it prints out those things, grammar errors will occur. 
  */
 
 package edu.bhscs;
@@ -28,7 +31,7 @@ public class PTSA {
   // name is the name of the school the PTSA is for
   // cut is the percentage of revenue the PTSA takes from cake sales
   // necesities is a HashMap representing the things and the cost of those things the PTSA
-  // is trying to fundraise for.
+  // is trying to fundraise for. The String things the PTSA needs should have articles attached to them.
   private double balance = 0;
   private String name;
   private double goal;

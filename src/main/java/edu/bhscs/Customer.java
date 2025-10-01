@@ -175,6 +175,22 @@ public class Customer {
     store.getMoney(cake.getCost());
   }
 
+// Makes a customer only buy a cake if it meets their quality expectation.
+public void buyQuality(Baker store, String cakeName, double quality) {
+    if (jailed) {
+      System.out.println("Your in jail " + name);
+      return;
+    }
+    Cake cake = store.getCakeByName(cakeName);
+    if (cake.getQuality() < quality) {
+      System.out.println("The cake " + cakeName + " is too yucky for " + name);
+      System.out.println("The quality of the cake needs to go up to atleast " + quality);
+      System.out.println("------------------------------------------");
+      return;
+    }
+    buy(store, cakeName);
+  }
+
   // The customer can buy a cake in a fundraiser with a specific name if they
   // are not in jail and have enough money. A percentage of how much the customer paied
   // will go towards the fundraiser. The baker has no say in how much they lose.
@@ -193,7 +209,7 @@ public class Customer {
       System.out.println("You are too poor to buy, " + name);
       return;
     }
-    System.out.println("----------------------------");
+    System.out.println("------------------------------------------");
     store.add(cake, -1);
     cakesOwned.add(cake);
     balance -= cake.getCost();
@@ -206,6 +222,22 @@ public class Customer {
     System.out.println(
         "We recieved $" + amount + " from " + name + " because of the cake they bought.");
     donateNoMSG(fundraiser, amount);
-    System.out.println("----------------------------");
+    System.out.println("-----------------------------------------");
+  }
+
+  // Makes the customer only buy a cake in a fundraiser if it meets their quality expectation.
+  public void buyInFundraiserGoodQuality(Baker store, String cakeName, PTSA fundraiser, double quality){
+    if (jailed) {
+      System.out.println("Your in jail " + name);
+      return;
+    }
+    Cake cake = store.getCakeByName(cakeName);
+    if (cake.getQuality() < quality){
+      System.out.println("The cake " + cakeName + " is too yucky for " + name);
+      System.out.println("The quality of the cake needs to go up to atleast " + quality);
+      System.out.println("---------------------------------------");
+      return;
+    }
+    buyInFundraiser(store, cakeName, fundraiser);
   }
 }

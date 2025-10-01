@@ -9,9 +9,9 @@
  * INPUT: Requires the people, the store, and the PTSA to all be made in the main function. Then actions can be written in main
  * such as buying, selling, stealing, and donating. No command line arguments.
  * OUTPUT: Shows the prices and wealth of the store, how succesful the fundraiser was, and how the person changes from buying a cake.
- * EDGE CASE: Don't name two different cakes the same thing. Don't gives two cakes the same two ingredients. Don't make
+ * EDGE CASE: Don't name two different cakes the same thing. Don't give two cakes the same two ingredients. Don't make
  * the PTSA have to buy two of the sames things. All of these will result in doubled up behavior, where the actual thing that gets chosen
- * would be random.
+ * would be random. For example, if two cakes were named "Vanilla", then buying a cake named "Vanilla" would randomly pick one of them
  */
 
 package edu.bhscs;
@@ -38,9 +38,10 @@ public class Main {
     baker.displayStock();
     Bob.donate(Bothell, 300);
     Bothell.displayGoal();
+    Bob.buyInFundraiserGoodQuality(baker, "Vanilla Cake", Bothell, 100);
   }
 
-  // Set up the fundraiser
+  // Set up the fundraiser. It will be a fundraiser for a computer, sports maintenance, and some new floors
   public static PTSA PTSAthing() {
     Map<String, Double> things = new HashMap<>();
     things.put("a computer", 100.00);

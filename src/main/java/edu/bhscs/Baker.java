@@ -4,7 +4,8 @@
 // 9/19
 
 /*
- * DESCRIPTION: Makes a Baker/Store that sells cakes at the price they were made for
+ * DESCRIPTION: Makes a Baker/Store that sells cakes at the price they were made for. The bakers
+ * cakes have better quality the more the baker bakes. 
  * INPUT: Information regarding what cakes the store, and the amounts of each cake
  * OUTPUT: Will output information regarding whta the store sells, how much inventory it has, and if
  * something is bought improperly.
@@ -74,7 +75,8 @@ public class Baker {
     System.out.println("Welcome to our bakery by " + name + ". We sell the following: ");
     for (Cake key : inventory.keySet()) {
       key.displayInfo();
-      System.out.println("Stock: " + inventory.get(key) + " and has a quality of " + key.getQuality());
+      System.out.println(
+          "Stock: " + inventory.get(key) + " and has a quality of " + key.getQuality());
     }
   }
 
@@ -90,23 +92,35 @@ public class Baker {
     inventory.put(cake, inventory.get(cake) + amount);
     if (amount < 0) {
       System.out.println(
-          name + " has sold " + -1 * amount + " cake(s) called " + cake.getName() + " from their store");
+          name
+              + " has sold "
+              + -1 * amount
+              + " cake(s) called "
+              + cake.getName()
+              + " from their store");
       return;
     }
     System.out.println(
-        name + " has stocked " + amount + " extra cake(s) called " + cake.getName() + " to their store");
+        name
+            + " has stocked "
+            + amount
+            + " extra cake(s) called "
+            + cake.getName()
+            + " to their store");
     skill += amount * 10;
     cake.setQuality(skill);
-    System.out.println("The Baker's skill has increased to " + skill + " meaning he bakes cakes with better quality");
+    System.out.println(
+        "The Baker's skill has increased to "
+            + skill
+            + " meaning he bakes cakes with better quality");
     System.out.println("-----------------------------");
-
   }
 
   // This adds a specific amount of cakes with a certain name into the baker's inventory.
   public void add(String cakeName, int amount) {
     Cake cake = getCakeByName(cakeName);
     if (cake == null) {
-      System.out.println(name + " doesn't have cakes with that name " );
+      System.out.println(name + " doesn't have cakes with that name ");
       return;
     }
     add(cake, amount);
