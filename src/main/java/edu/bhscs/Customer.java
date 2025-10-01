@@ -102,21 +102,24 @@ public class Customer {
       return;
     }
     if (!cakesOwned.contains(cake)) {
-      System.out.println("Can't eat a cake you don't have");
+      System.out.println("Can't eat a cake you don't have, " + name);
       return;
     }
     if (percent > 100) {
-      System.out.println("Can't eat more than a 100% of the cake");
+      System.out.println("Can't eat more than a 100% of the cake, " + name);
       return;
     }
     if (percent < 0) {
-      System.out.println("Can't eat a negative amount of cake");
+      System.out.println("Can't eat a negative amount of cake, " + name);
       return;
     }
     weight += cake.getWeight() * percent / 100;
     cake.eat(percent);
     System.out.println("Do you feel good after eating the " + cake.getName() + " " + name + "?");
     System.out.println("You now are " + weight + "lb " + name + " after eating cake");
+    if (cake.getQuality() > 100) {
+      System.out.println("That was a pretty high quality cake, so maybe it was worth it");
+    }
     System.out.println("----------------------------");
   }
 
@@ -197,10 +200,10 @@ public class Customer {
     store.getMoney(cutDeductedProfit);
     System.out.println(
         "Thank you Bob for participating in the " + fundraiser.getName() + " fundraiser");
-    System.out.println("Enjoy the " + cakeName + " that you bought");
+    System.out.println("Enjoy the " + cakeName + " that you bought, " + name);
     double amount = (fundraiser.getCut() / 100) * cake.getCost();
     System.out.println(
-        "We recieved $" + amount + " from " + name + " because of the cake you bought.");
+        "We recieved $" + amount + " from " + name + " because of the cake they bought.");
     donateNoMSG(fundraiser, amount);
     System.out.println("----------------------------");
   }

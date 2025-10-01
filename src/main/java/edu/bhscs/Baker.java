@@ -18,7 +18,7 @@ import java.util.HashMap;
 
 public class Baker {
   // The inventory represents a map from every cake the baker has to the amount of it they have.
-  // name is the name of the bake.
+  // name is the name of the baker.
   // balance is the amount of money the baker has.
   // skill is the skill of the baker, which will determine the quality of the cakes they make
   private HashMap<Cake, Integer> inventory = new HashMap<>();
@@ -30,11 +30,11 @@ public class Baker {
   // of the cakes,
   // and the storeName.
   public Baker(Cake[] cakes, int[] amounts, String storeName) {
-    inventory = new HashMap<>();
     if (cakes.length != amounts.length) {
       System.out.println("Need amounts for each type of Cake");
       return;
     }
+    inventory = new HashMap<>();
     name = storeName;
     for (int i = 0; i < cakes.length; i++) {
       inventory.put(cakes[i], amounts[i]);
@@ -43,7 +43,12 @@ public class Baker {
 
   // This sets the default baker, with three types of cakes, each with the same default ingredients,
   // plus one different one.
-  public static Baker defualtBaker(String storeName, double skill) {
+  public Baker(String storeName, double skill) {
+    this(defaultCakeOptions(10), new int[] {2, 4, 5}, storeName);
+  }
+
+  // List of the default cake options a store could sell
+  private static Cake[] defaultCakeOptions(double skill) {
     String name = "Chocolate Cake";
     String[] ingredientsChocolate = {"Cocoa Powder"};
     Cake chocolateCake = new Cake(Cake.base(ingredientsChocolate), 150.00, 100, name, skill);
@@ -56,9 +61,7 @@ public class Baker {
     String[] ingredientsCoffee = {"Instant Coffee"};
     Cake coffeeCake = new Cake(Cake.base(ingredientsCoffee), 100.00, 100, name, skill);
 
-    int[] amounts = {2, 4, 5};
-
-    return new Baker(new Cake[] {chocolateCake, vanillaCake, coffeeCake}, amounts, storeName);
+    return new Cake[] {chocolateCake, vanillaCake, coffeeCake};
   }
 
   // This gives the balance of the Baker.
@@ -68,11 +71,10 @@ public class Baker {
 
   // This displays all the stock the Baker has.
   public void displayStock() {
-    System.out.println("Welcome to our store " + name + ". We sell the following: ");
-
+    System.out.println("Welcome to our bakery by " + name + ". We sell the following: ");
     for (Cake key : inventory.keySet()) {
       key.displayInfo();
-      System.out.println("Stock: " + inventory.get(key));
+      System.out.println("Stock: " + inventory.get(key) + " and has a quality of " + key.getQuality());
     }
   }
 
@@ -83,22 +85,28 @@ public class Baker {
 
   // This adds a cake to bakers inventory. If the cake added has the same name as another cake,
   // but different ingredients, it will still get added.
+  // If the baker adds many cakes, the quality of their cakes will go up.
   public void add(Cake cake, int amount) {
     inventory.put(cake, inventory.get(cake) + amount);
     if (amount < 0) {
       System.out.println(
-          "We have sold " + -1 * amount + " cakes called " + cake.getName() + " from our store");
+          name + " has sold " + -1 * amount + " cake(s) called " + cake.getName() + " from their store");
       return;
     }
     System.out.println(
-        "We have stocked " + amount + " extra cakes called " + cake.getName() + " to our store");
+        name + " has stocked " + amount + " extra cake(s) called " + cake.getName() + " to their store");
+    skill += amount * 10;
+    cake.setQuality(skill);
+    System.out.println("The Baker's skill has increased to " + skill + " meaning he bakes cakes with better quality");
+    System.out.println("-----------------------------");
+
   }
 
   // This adds a specific amount of cakes with a certain name into the baker's inventory.
   public void add(String cakeName, int amount) {
     Cake cake = getCakeByName(cakeName);
     if (cake == null) {
-      System.out.println("We don't have cakes with that name");
+      System.out.println(name + " doesn't have cakes with that name " );
       return;
     }
     add(cake, amount);

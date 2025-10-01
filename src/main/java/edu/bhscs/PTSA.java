@@ -137,7 +137,7 @@ public class PTSA {
   public void add(String thing, double price) {
     necesities.put(thing, price);
     System.out.println("Our " + name + " PTSA now needs to buy " + thing);
-    System.out.println("It costs " + price);
+    System.out.println("It costs $" + price);
   }
 
   // Donate some wealth

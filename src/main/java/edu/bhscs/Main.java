@@ -22,15 +22,15 @@ import java.util.Map;
 public class Main {
 
   public static void main(String[] args) {
-    String bakerName = "Cake baker";
-    Baker baker = Baker.defaultBaker(bakerName);
+    String bakerName = "Mr. Reiber";
+    Baker baker = new Baker(bakerName, 100.0);
     baker.displayStock();
     Customer Bob = new Customer("Bob", 100, 1000);
     Bob.buy(baker, "Chocolate Cake");
     Bob.buy(baker, "Chocolate Cake");
     Bob.buy(baker, "Chocolate Cake");
     Bob.eat(Bob.getCake("Chocolate Cake"), 50);
-    Bob.steal(baker, "Coffee Cake");
+    // Bob.steal(baker, "Coffee Cake");
     baker.add("Chocolate Cake", 2);
 
     PTSA Bothell = PTSAthing();

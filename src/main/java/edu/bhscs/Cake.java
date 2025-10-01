@@ -35,7 +35,8 @@ public class Cake {
   public Cake(String ingredients[], double cost, double weight, String name, double quality) {
     Flour flour = new Flour("All-Purpose Flour", 20, 100, 10);
     this.flour = flour;
-    this.cost = cost * quality + flour.getQuality();
+    this.quality = quality + flour.getQuality();
+    this.cost = cost;
     this.name = name;
     this.ingredients = ingredients;
     weightPounds = weight;
@@ -47,12 +48,14 @@ public class Cake {
     System.out.println("This cake has " + flour.getQuality() + " quality");
   }
 
-  public Cake(String ingredients[], double cost, double weight, String name, Flour flour, double quality) {
-    if (flour.getQuality() == 0){
+  // This makes a cake using a specific type of flour
+  public Cake(
+      String ingredients[], double cost, double weight, String name, Flour flour, double quality) {
+    if (flour.getQuality() == 0) {
       System.out.println("Yucky Cake being made");
     }
-    this.quality = quality;
-    this.cost = cost * quality + flour.getQuality();
+    this.quality = quality + flour.getQuality();
+    this.cost = cost;
     this.name = name;
     this.ingredients = ingredients;
     weightPounds = weight;
@@ -62,6 +65,16 @@ public class Cake {
     System.out.println("Baking the cake with... " + stuff);
     System.out.println("The cake will cost: $" + this.cost + "");
   }
+
+  public Cake(Cake other) {
+    WEIGHTOG = other.getWeight();
+    cost = other.cost;
+    name;
+    ingredients;
+    flour;
+    quality;
+}
+
 
   // Returns current weight of cake.
   public double getWeight() {
@@ -88,10 +101,22 @@ public class Cake {
     return cost;
   }
 
+  public double getQuality(){
+    return quality;
+  }
+  public void setQuality(double newQuality){
+    if (newQuality < quality){
+      System.out.println("The baker " + name + " can't get worse?");
+      return;
+    }
+    quality = newQuality;
+  }
+
   // Returns the remaining weight of the cake
   public double amountLeftWeight() {
     return weightPounds;
   }
+
 
   // Returns the percent of the cake remaining compared to the original weight.
   public double amountLeftPercent() {
