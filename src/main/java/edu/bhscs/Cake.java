@@ -168,7 +168,7 @@ public class Cake {
     };
     String name = "Chocolate Cake";
     Cake cake = new Cake(ingredients, 100.00, 100, name, 10.00);
-    Customer Bob = new Customer("Bob", 100, 500);
+    Customer Bob = new Customer("Bob", 100, 500, "Mexican");
     Bob.eat(cake, 10);
     // System.out.println(cake.amountLeftWeight());
     // cake.displayInfo();

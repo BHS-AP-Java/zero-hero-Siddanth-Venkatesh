@@ -1,16 +1,16 @@
 // Siddanth Venkatesh
-// P2
-// Zero to Hero, to turn in
+// P: 2
+// The cake project
 // 9/19
 
 /*
- * DESCRIPTION: Makes a customer, who can buy and steal cakes or go to jail. If jailed, the customer can't
- * do anything. The customer can donate to PTSA
+ * DESCRIPTION: Makes a customer, who can buy and steal cakes or go to jail.
+ * The Customer can donate to the PTSA
  * INPUT: Requires the name, weight, and wealth
  * OUTPUT: Either returns a customer, or that a customer can't do something because they are either in jail, or don't have enough money
- * EDGE CASE: A jailed customer is restricted in their activities. If two different stores have the same named cake, then the customer
- * can only buy the cake that comes first in their list of cakes. If a customer owns two different cakes with the same name, they can only
- * eat the one that comes first in their list of cakes, before eating the second one.
+ * EDGE CASE: A jailed customer is restricted in their activities. Customer randomly eats
+ * one of two cakes if they are named the same. If the race of the customer
+ * is not American, they are very limited in the activities they can do.
  */
 
 package edu.bhscs;
@@ -28,13 +28,15 @@ public class Customer {
   private double balance = 0;
   private boolean jailed = false;
   private String name;
+  private String race;
 
   // This is the constroctor for a customer. It takes in their name, weight, and wealth and makes a
   // customer.
-  public Customer(String name, double weight, double wealth) {
+  public Customer(String name, double weight, double wealth, String race) {
     this.name = name;
     this.weight = weight;
     this.balance = wealth;
+    this.race = race;
   }
 
   // The customer can donate some amount of money assuming they have enough balance to a PTSA.
@@ -67,6 +69,11 @@ public class Customer {
     System.out.println("----------------------------");
     if (!jailed) {
       System.out.println("Why are you trying to escape when not jailed, " + name + "?");
+      return;
+    }
+    if (race != "American"){
+      System.out.println("You can't escape from ICE agents " + name);
+      System.out.println("------------------------------------");
       return;
     }
     int random = (int) Math.floor(Math.random() * 2);
@@ -130,8 +137,10 @@ public class Customer {
     System.out.println("----------------------------");
     if (jailed) {
       System.out.println("Your in jail " + name);
-      System.out.println("Try to escape before stealing");
       return;
+    }
+    if (race != "American") {
+      System.out.println("Uh oh, ICE agents might get you " + name);
     }
     if (random == 0) {
       jailed = true;
@@ -157,6 +166,10 @@ public class Customer {
       System.out.println("Your in jail " + name);
       return;
     }
+    if (race != "American") {
+      System.out.println("Uh oh, ICE agents got you " + name + ". You are deported");
+      System.out.println("-------------------------------------");
+    }
     if (store.getCakeAmount(cakeName) < 1) {
       System.out.println(cakeName + " is out of stock");
       System.out.println(name + " please wait for the baker to restock");
@@ -181,6 +194,10 @@ public class Customer {
       System.out.println("Your in jail " + name);
       return;
     }
+    if (race != "American") {
+      System.out.println("Uh oh, ICE agents got you " + name + ". You are deported");
+      System.out.println("-------------------------------------");
+    }
     Cake cake = store.getCakeByName(cakeName);
     if (cake.getQuality() < quality) {
       System.out.println("The cake " + cakeName + " is too yucky for " + name);
@@ -198,6 +215,10 @@ public class Customer {
     if (jailed) {
       System.out.println("Your in jail " + name);
       return;
+    }
+    if (race != "American"){
+      System.out.println("Uh oh, ICE agents got you " + name + ". You are deported");
+      System.out.println("-------------------------------------");
     }
     if (store.getCakeAmount(cakeName) < 1) {
       System.out.println("Out of stock of " + cakeName);
@@ -231,6 +252,10 @@ public class Customer {
     if (jailed) {
       System.out.println("Your in jail " + name);
       return;
+    }
+    if (race != "American") {
+      System.out.println("Uh oh, ICE agents got you " + name + ". You are deported");
+      System.out.println("-------------------------------------");
     }
     Cake cake = store.getCakeByName(cakeName);
     if (cake.getQuality() < quality) {

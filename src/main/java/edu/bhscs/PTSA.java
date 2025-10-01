@@ -1,7 +1,7 @@
 // Siddanth Venkatesh
-// P2
-// Zero to Hero, to turn in
-// 9/12
+// P: 2
+// The cake project
+// 9/19
 
 /*
  * DESCRIPTION: Makes a PTSA that does a fundraiser to buy things for a school. All bakers are

@@ -1,7 +1,7 @@
 // Siddanth Venkatesh
-// P2
-// Zero to Hero, to turn in
-// 9/12
+// P: 2
+// The cake project
+// 9/19
 
 /*
  * DESCRIPTION: Allows you to make people and a baker where people can buy or steal from the baker. Additionally,
@@ -25,7 +25,7 @@ public class Main {
     String bakerName = "Mr. Reiber";
     Baker baker = new Baker(bakerName, 100.0);
     baker.displayStock();
-    Customer Bob = new Customer("Bob", 100, 1000);
+    Customer Bob = new Customer("Bob", 100, 1000, "American");
     Bob.buy(baker, "Chocolate Cake");
     Bob.buy(baker, "Chocolate Cake");
     Bob.buy(baker, "Chocolate Cake");
