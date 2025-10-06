@@ -24,6 +24,8 @@ public class Player {
   private String name;
   // Array List of options Player can do
   private final List<Option<?>> options = new ArrayList<>();
+  // Aray List of options without return value that Player can do
+  List<noReturnOption> actions = new ArrayList<>();
 
   // This is a map of all the type of Object to how many there are
   private Map<String, List<Creatable>> lists = new HashMap<>();
@@ -42,13 +44,14 @@ public class Player {
     options.add(new Option<Customer>(("Make Customer"), this::makeCustomer));
     options.add(new Option<Baker>(("Make Bakery"), this::makeBaker));
     options.add(new Option<PTSA>(("Make PTSA"), this::makePTSA));
-    // TODO: options.add(new Option<Void>("View Customer Actions", this::viewCustomerActions));
-
+    actions.add(new noReturnOption("View Customers ", () -> viewCustomerActions()));
   }
 
   // --------------- This is the wrapper for an "Option" a Player can do --------------------
   // This makes an option class that allows you to make an option the player can do
   private record Option<T>(String label, Maker<T> maker) {}
+
+  private record noReturnOption(String label, Runnable action) {}
 
   // Each method for creating people can be abstracted into this Maker class, which
   // allows an Option array to made.

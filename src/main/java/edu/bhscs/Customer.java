@@ -28,7 +28,7 @@ public class Customer implements Creatable {
   private boolean jailed = false;
   // name is the name of the customer
   private String name;
-  // Is the race of Customer. Be careful if you aren't American. 
+  // Is the race of Customer. Be careful if you aren't American.
   private String race;
 
   // This is the constroctor for a customer. It takes in their name, weight, and wealth and makes a
