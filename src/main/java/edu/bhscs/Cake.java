@@ -18,17 +18,18 @@ import java.util.Arrays;
 public class Cake {
 
   // weightPounds is the current weight, WEIGHTOG is the original weight of the cake.
-  // cost is the cost of the cake to buy it.
-  // name is he name of the cake.
-  // ingredients is a list of the ingredients in an array.
-  // flour is the flour used in the cake
-  // quality is the quality of the cake. The price of the cake goes up with quality
   private double weightPounds;
+  // cost is the cost of the cake to buy it.
   private final double WEIGHTOG;
+  // name is he name of the cake.
   private double cost;
-  private String name;
+  // ingredients is a list of the ingredients in an array.
   private String[] ingredients;
+  // Name of the cake is name
+  private String name;
+  // flour is the flour used in the cake
   private Flour flour;
+  // quality is the quality of the cake. The price of the cake goes up with quality
   private double quality;
 
   // This is the constructor for a cake, and it makes an instance of a cake with it's ingredients

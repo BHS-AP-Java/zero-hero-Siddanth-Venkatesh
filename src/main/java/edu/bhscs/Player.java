@@ -1,3 +1,15 @@
+// Siddanth Venkatesh
+// P2
+// Cake
+// 9/19
+
+/*
+ * DESCRIPTION: A class that allows the terminal user input to make, destroy, buy, and sell
+ * cakes, and control which bakers make it, and PTSA's.
+ * Input: Name of player and the types of things that might be created it by them.
+ * OUTPUT: Will constantly output all the actions the player can do in loop until the User breaks out of it
+ * EDGE CASE: Don't name two different things the same thing, or else things will get messy. ):
+ */
 package edu.bhscs;
 
 import java.util.ArrayList;
@@ -5,7 +17,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
-import javax.print.attribute.standard.PrinterState;
 
 public class Player {
   // Properties
@@ -22,7 +33,7 @@ public class Player {
 
   // Player Constructor
   public Player(String name, String[] typesOfInstitutionsOrPeople) {
-    for (String thing : typesOfInstitutionsOrPeople){
+    for (String thing : typesOfInstitutionsOrPeople) {
       lists.put(thing, new ArrayList<>());
     }
     this.name = name;
@@ -46,6 +57,7 @@ public class Player {
     T make(Scanner s);
   }
 
+  // Loops through infinitly, the actions the player can do, until they break out of it
   public void showOptions(Scanner s) {
     while (true) {
       System.out.println("\n=== Player Options ===");
@@ -60,8 +72,8 @@ public class Player {
         int choice = Integer.parseInt(input);
         Option<?> opt = options.get(choice - 1);
         Object obj = opt.maker.make(s);
-        if (obj instanceof Creatable creatable){
-          String type =  creatable.getTypeName();
+        if (obj instanceof Creatable creatable) {
+          String type = creatable.getTypeName();
           System.out.println("Created a new " + type);
           lists.get(type).add(creatable);
         }
@@ -71,6 +83,7 @@ public class Player {
     }
   }
 
+  // Asks a question and take in user input from Scanner.
   public String askQuestion(String question, Scanner s) {
     System.out.println(question);
     System.out.print("> ");
@@ -81,6 +94,7 @@ public class Player {
 
   // -------------------- Defining actions the player can do -----------------------
 
+  // Makes a customer with information about them taken from command line
   private Customer makeCustomer(Scanner s) {
     String name = askQuestion("Enter name: ", s);
     double weight = Double.parseDouble(askQuestion("Enter weight", s));
@@ -92,6 +106,7 @@ public class Player {
     return customer;
   }
 
+  // Makes a Baker, with information about them taken from Command line
   private Baker makeBaker(Scanner s) {
     String storeName = askQuestion("Enter Baker name: ", s);
     double skill = Double.parseDouble(askQuestion("Enter Baker Skill: ", s));
@@ -110,6 +125,7 @@ public class Player {
     return baker;
   }
 
+  // Makes a cake, with information about the cake taken from Command line
   private Cake makeCake(Scanner s) {
     String name = askQuestion("Cake name: ", s);
     int count = Integer.parseInt(askQuestion("Enter amounts of ingredients: ", s));
@@ -162,6 +178,8 @@ public class Player {
     return ptsa;
   }
 
+  // Allows player to pick a Person.
+  // TODO: Fix it with the answerQustion stuff
   private <T extends Creatable> T chooseEntity(String typeName, Scanner s) {
     List<Creatable> list = lists.get(typeName);
 
@@ -187,7 +205,6 @@ public class Player {
     T selected = (T) list.get(choice - 1);
     return selected;
   }
-
 
   // For testing purposes
   public static void main() {

@@ -19,15 +19,16 @@ import java.util.ArrayList;
 
 public class Customer implements Creatable {
   // cakesOwned is an ArrayList of cakes the customer bought or stolen
-  // weight is the weight of the customer
-  // balance is the amount of money the customer owns (in dollars)
-  // jailed is a boolean telling if a customer is in jail or not
-  // name is the name of the customer
   private ArrayList<Cake> cakesOwned = new ArrayList<>();
+  // weight is the weight of the customer
   private double weight = 0;
+  // balance is the amount of money the customer owns (in dollars)
   private double balance = 0;
+  // jailed is a boolean telling if a customer is in jail or not
   private boolean jailed = false;
+  // name is the name of the customer
   private String name;
+  // Is the race of Customer. Be careful if you aren't American. 
   private String race;
 
   // This is the constroctor for a customer. It takes in their name, weight, and wealth and makes a
