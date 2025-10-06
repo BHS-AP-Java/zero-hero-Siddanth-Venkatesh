@@ -17,7 +17,7 @@ package edu.bhscs;
 
 import java.util.ArrayList;
 
-public class Customer {
+public class Customer implements Creatable {
   // cakesOwned is an ArrayList of cakes the customer bought or stolen
   // weight is the weight of the customer
   // balance is the amount of money the customer owns (in dollars)
@@ -37,6 +37,12 @@ public class Customer {
     this.weight = weight;
     this.balance = wealth;
     this.race = race;
+  }
+
+  // Returns the name of the type
+  @Override
+  public String getTypeName() {
+    return "Customer";
   }
 
   // The customer can donate some amount of money assuming they have enough balance to a PTSA.

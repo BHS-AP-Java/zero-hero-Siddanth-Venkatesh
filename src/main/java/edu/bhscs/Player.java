@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
+import javax.print.attribute.standard.PrinterState;
 
 public class Player {
   // Properties
@@ -12,24 +13,34 @@ public class Player {
   private String name;
   // Array List of options Player can do
   private final List<Option<?>> options = new ArrayList<>();
-  // List of Customers
-  private List<Customer> customers = new ArrayList<>();
-  // List of bakers
-  private List<Baker> bakers = new ArrayList<>();
-  // List of PTSAs
-  private List<PTSA> PTSAs = new ArrayList<>();
+
+  // This is a map of all the type of Object to how many there are
+  private Map<String, List<Creatable>> lists = new HashMap<>();
+
   // Originally, Scanner which scans user input was given
-  // But was changed to have the scanner passed into methods, b/c it is easier to manage that way. 
+  // But was changed to have the scanner passed into methods, b/c it is easier to manage that way.
 
-  // Options is the set of things the Player can do
-
-  public Player(String name) {
+  public Player(String name, String[] typesOfInstitutionsOrPeople) {
+    for (String thing : typesOfInstitutionsOrPeople){
+      lists.put(thing, new ArrayList<>());
+    }
     this.name = name;
-    this.s = new Scanner(System.in);
+
     // These are the options the Player has
     options.add(new Option<Customer>(("Make Customer"), this::makeCustomer));
     options.add(new Option<Baker>(("Make Bakery"), this::makeBaker));
     options.add(new Option<PTSA>(("Make PTSA"), this::makePTSA));
+  }
+
+  // --------------- This is the wrapper for an "Option" a Player can do --------------------
+  // This makes an option class that allows you to make an option the player can do
+  private record Option<T>(String label, Maker<T> maker) {}
+
+  // Each method for creating people can be abstracted into this Maker class, which
+  // allows an Option array to made.
+  @FunctionalInterface
+  private interface Maker<T> {
+    T make(Scanner s);
   }
 
   public void showOptions(Scanner s) {
@@ -46,7 +57,11 @@ public class Player {
         int choice = Integer.parseInt(input);
         Option<?> opt = options.get(choice - 1);
         Object obj = opt.maker.make(s);
-        System.out.println("Created: " + obj);
+        if (obj instanceof Creatable creatable){
+          String type =  creatable.getTypeName();
+          System.out.println("Created a new " + type);
+          lists.get(type).add(creatable);
+        }
       } catch (Exception e) {
         System.out.println("Error: " + e.getMessage());
       }
@@ -70,7 +85,7 @@ public class Player {
     String race = askQuestion("Enter race: ", s);
 
     Customer customer = new Customer(name, weight, wealth, race);
-    customers.add(customer);
+    // customers.add(customer);
     return customer;
   }
 
@@ -88,7 +103,7 @@ public class Player {
       amounts[i] = Integer.parseInt(askQuestion("How many of this cake? ", s));
     }
     Baker baker = new Baker(cakes, amounts, storeName, skill);
-    bakers.add(baker);
+    // bakers.add(baker);
     return baker;
   }
 
@@ -140,24 +155,14 @@ public class Player {
       needs.put(item, amount);
     }
     PTSA ptsa = new PTSA(name, needs, wealth, cut);
-    PTSAs.add(ptsa);
+    // PTSAs.add(ptsa);
     return ptsa;
-  }
-
-  // --------------- This is the wrapper for an "Option" a Player can do --------------------
-  // This makes an option class that allows you to make an option the player can do
-  private record Option<T>(String label, Maker<T> maker) {}
-
-  // Each method to for the Player can be put into an options array to be used
-  @FunctionalInterface
-  private interface Maker<T> {
-    T make(Scanner s);
   }
 
   // For testing purposes
   public static void main() {
     Scanner s = new Scanner(System.in);
-    Player player = new Player("Sigma");
+    Player player = new Player("Sigma", new String[] {"Customer", "Baker", "PTSA"});
     player.showOptions(s);
   }
 }

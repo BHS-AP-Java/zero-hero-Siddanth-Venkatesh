@@ -26,7 +26,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class PTSA {
+public class PTSA implements Creatable {
   // balance is the amount of money the PTSA has fundraised
   // name is the name of the school the PTSA is for
   // cut is the percentage of revenue the PTSA takes from cake sales
@@ -66,6 +66,12 @@ public class PTSA {
     this.goal = findGoal();
     this.balance = initialWealth;
     displayGoal();
+  }
+
+  // Returns the name of the type
+  @Override
+  public String getTypeName() {
+    return "PTSA";
   }
 
   // Returns the name of the school the PTSA represents.

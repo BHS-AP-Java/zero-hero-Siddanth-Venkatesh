@@ -17,7 +17,7 @@ package edu.bhscs;
 
 import java.util.HashMap;
 
-public class Baker {
+public class Baker implements Creatable {
   // Properties
   // The inventory represents a map from every cake the baker has to the amount of it they have.
   private HashMap<Cake, Integer> inventory = new HashMap<>();
@@ -42,6 +42,12 @@ public class Baker {
       inventory.put(cakes[i], amounts[i]);
     }
     this.skill = skill;
+  }
+
+  // Returns the type of the object
+  @Override
+  public String getTypeName() {
+    return "Baker";
   }
 
   // This sets the default baker, with three types of cakes, each with the same default ingredients,
