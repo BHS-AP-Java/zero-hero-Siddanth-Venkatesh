@@ -41,7 +41,7 @@ public class Player {
     return new Customer(name, weight, wealth, race);
   }
 
-  private Baker makeBaker()) {
+  private Baker makeBaker() {
     String storeName = askQuestion("Enter Baker name: ");
     double skill = Double.parseDouble(askQuestion("Enter Baker Skill: "));
     int numCakes = Integer.parseInt(askQuestion("How many Cakes does store have: "));
@@ -59,22 +59,19 @@ public class Player {
   }
 
   private Cake makeCake() {
-    String name = askQuestion("Cake name");
-
-    System.out.print("Enter number of ingredients: ");
-    int count = Integer.parseInt(s.nextLine());
+    String name = askQuestion("Cake name: ");
+    int count = Integer.parseInt(askQuestion("Enter amounts of ingredients: "));
     String[] ingredients = new String[count];
     for (int i = 0; i < count; i++) {
       System.out.print("Ingredient " + (i + 1) + ": ");
       ingredients[i] = s.nextLine();
     }
 
-    System.out.print("Cost: ");
-    double cost = Double.parseDouble(s.nextLine());
+    double cost = Double.parseDouble(askQuestion("Cost? "));
     System.out.print("Weight: ");
-    double weight = Double.parseDouble(s.nextLine());
+    double weight = Double.parseDouble(askQuestion("Weight? "));
     System.out.print("Quality (1–10): ");
-    double quality = Double.parseDouble(s.nextLine());
+    double quality = Double.parseDouble(askQuestion("Quality? "));
 
     System.out.println("Now, create flour for this cake:");
     Flour flour = makeFlour();
@@ -83,14 +80,10 @@ public class Player {
   }
 
   private Flour makeFlour() {
-    System.out.print("Flour name: ");
-    String name = s.nextLine();
-    System.out.print("Flour weight: ");
-    double weight = Double.parseDouble(s.nextLine());
-    System.out.print("Flour price: ");
-    int price = Integer.parseInt(s.nextLine());
-    System.out.print("Flour quality (1–10): ");
-    int quality = Integer.parseInt(s.nextLine());
+    String name = askQuestion("Flour name: ");
+    double weight = Double.parseDouble(askQuestion("Flour weight"));
+    int price = Integer.parseInt("Flour price (an int)");
+    int quality = 10;
 
     return new Flour(name, weight, price, quality);
   }
