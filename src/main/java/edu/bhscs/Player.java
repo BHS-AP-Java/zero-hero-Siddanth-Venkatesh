@@ -1,10 +1,11 @@
 package edu.bhscs;
 
-import java.util.Scanner;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Scanner;
+
 public class Player {
   // Properties
   // String name
@@ -21,12 +22,30 @@ public class Player {
     this.s = new Scanner(System.in);
     // These are the options the Player has
     options.add(new Option<Customer>(("Make Customer"), this::makeCustomer));
-
   }
 
-  // -------------------- Defining actions the player can do -----------------------
+  public void showOptions(Scanner s) {
+    while (true) {
+      System.out.println("\n=== Player Options ===");
+      for (int i = 0; i < options.size(); i++) {
+        System.out.printf("%d. %s%n", i + 1, options.get(i).label);
+      }
+      String input = askQuestion("0. Exit", s);
+      if (input.equals("0")) {
+        break;
+      }
+      try {
+        int choice = Integer.parseInt(input);
+        Option<?> opt = options.get(choice - 1);
+        Object obj = opt.maker.make(s);
+        System.out.println("Created: " + obj);
+      } catch (Exception e) {
+        System.out.println("Error: " + e.getMessage());
+      }
+    }
+  }
 
-  public String askQuestion(String question, Scanner s){
+  public String askQuestion(String question, Scanner s) {
     System.out.println(question);
     System.out.print("> ");
     String answer = s.nextLine();
@@ -34,11 +53,13 @@ public class Player {
     return answer;
   }
 
-  private Customer makeCustomer(Scanner s){
+  // -------------------- Defining actions the player can do -----------------------
+
+  private Customer makeCustomer(Scanner s) {
     String name = askQuestion("Enter name: ", s);
     double weight = Double.parseDouble(askQuestion("Enter weight", s));
     double wealth = Double.parseDouble(askQuestion("Enter wealth?", s));
-    String race = askQuestion("Enter name: ", s);
+    String race = askQuestion("Enter race: ", s);
     return new Customer(name, weight, wealth, race);
   }
 
@@ -53,7 +74,7 @@ public class Player {
     for (int i = 0; i < numCakes; i++) {
       System.out.printf("\n--- Making Cake %d ---\n", i + 1);
       cakes[i] = makeCake(s);
-      amounts[i] = Integer.parseInt(askQuestion("How many of this cake? "));
+      amounts[i] = Integer.parseInt(askQuestion("How many of this cake? ", s));
     }
 
     return new Baker(cakes, amounts, storeName, skill);
@@ -75,7 +96,7 @@ public class Player {
     double quality = Double.parseDouble(askQuestion("Quality? ", s));
 
     System.out.println("Now, create flour for this cake:");
-    Flour flour = makeFlour();
+    Flour flour = makeFlour(s);
 
     return new Cake(ingredients, cost, weight, name, flour, quality);
   }
@@ -89,31 +110,37 @@ public class Player {
     return new Flour(name, weight, price, quality);
   }
 
-  private PTSA makePTSA(Scanner s){
+  private PTSA makePTSA(Scanner s) {
     String name = askQuestion("Name of PTSA? ", s);
     double wealth = Double.parseDouble(askQuestion("Initial wealth? ", s));
     double cut = Double.parseDouble("Cut the PTSA takes froms sales? ");
     Map<String, Double> needs = new HashMap<>();
-    while (true){
+    while (true) {
       System.out.println("Enter something the PTSA needs (or 'done' when finsihed)");
       String item = askQuestion("What is needed? ", s);
-      if (item.equalsIgnoreCase("done")){
+      if (item.equalsIgnoreCase("done")) {
         break;
       }
       double amount = Double.parseDouble("How much does this cost? ");
       needs.put(item, amount);
-
     }
     return new PTSA(name, needs, wealth, cut);
-
   }
 
+  // --------------- This is the wrapper for an "Option" a Player can do --------------------
   // This makes an option class that allows you to make an option the player can do
   private record Option<T>(String label, Maker<T> maker) {}
+
   // Makes it so that each option can have a unique method attached to it
   @FunctionalInterface
   private interface Maker<T> {
     T make(Scanner s);
   }
 
+  // For testing purposes
+  public static void main() {
+    Scanner s = new Scanner(System.in);
+    Player player = new Player("Sigma");
+    player.showOptions(s);
+  }
 }

@@ -23,28 +23,31 @@ import java.util.Scanner;
 public class Main {
 
   public static void main(String[] args) {
-    String bakerName = "Mr. Reiber";
-    Baker baker = new Baker(bakerName, 100.0);
-    baker.displayStock();
-    Customer Bob = new Customer("Bob", 100, 1000, "American");
-    Bob.buy(baker, "Chocolate Cake");
-    Bob.buy(baker, "Chocolate Cake");
-    Bob.buy(baker, "Chocolate Cake");
-    Bob.eat(Bob.getCake("Chocolate Cake"), 50);
-    Bob.steal(baker, "Coffee Cake");
-    baker.add("Chocolate Cake", 2);
+    // String bakerName = "Mr. Reiber";
+    // Baker baker = new Baker(bakerName, 100.0);
+    // baker.displayStock();
+    // Customer Bob = new Customer("Bob", 100, 1000, "American");
+    // Bob.buy(baker, "Chocolate Cake");
+    // Bob.buy(baker, "Chocolate Cake");
+    // Bob.buy(baker, "Chocolate Cake");
+    // Bob.eat(Bob.getCake("Chocolate Cake"), 50);
+    // Bob.steal(baker, "Coffee Cake");
+    // baker.add("Chocolate Cake", 2);
 
-    PTSA Bothell = PTSAthing();
-    Bob.buyInFundraiser(baker, "Coffee Cake", Bothell);
-    baker.displayStock();
-    Bob.donate(Bothell, 300);
-    Bothell.displayGoal();
-    Bob.buyInFundraiserGoodQuality(baker, "Vanilla Cake", Bothell, 100);
+    // PTSA Bothell = PTSAthing();
+    // Bob.buyInFundraiser(baker, "Coffee Cake", Bothell);
+    // baker.displayStock();
+    // Bob.donate(Bothell, 300);
+    // Bothell.displayGoal();
+    // Bob.buyInFundraiserGoodQuality(baker, "Vanilla Cake", Bothell, 100);
+    // Scanner s = new Scanner(System.in);
+    // System.out.println("What can we do with a Scanner?");
+
+    // System.out.println("IDK but I am done now");
+    // s.close();
     Scanner s = new Scanner(System.in);
-    System.out.println("What can we do with a Scanner?");
-
-    System.out.println("IDK but I am done now");
-    s.close();
+    Player player = new Player("Sigma");
+    player.showOptions(s);
   }
 
   // Set up the fundraiser. It will be a fundraiser for a computer, sports maintenance, and some new
