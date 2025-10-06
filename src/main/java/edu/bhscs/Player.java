@@ -3,6 +3,8 @@ package edu.bhscs;
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 public class Player {
   // Properties
   // String name
@@ -17,9 +19,9 @@ public class Player {
   public Player(String name) {
     this.name = name;
     this.s = new Scanner(System.in);
+    // These are the options the Player has
 
     options.add(new Option<>("Make Customer"). this:makeCustomer);
-    // This options the Player has
 
   }
 
@@ -86,6 +88,25 @@ public class Player {
     int quality = 10;
 
     return new Flour(name, weight, price, quality);
+  }
+
+  private PTSA makePTSA(){
+    String name = askQuestion("Name of PTSA? ");
+    double wealth = Double.parseDouble(askQuestion("Initial wealth? "));
+    double cut = Double.parseDouble("Cut the PTSA takes froms sales? ");
+    Map<String, Double> needs = new HashMap<>();
+    while (true){
+      System.out.println("Enter something the PTSA needs (or 'done' when finsihed)");
+      String item = askQuestion("What is needed? ");
+      if (item.equalsIgnoreCase("done")){
+        break;
+      }
+      double amount = Double.parseDouble("How much does this cost? ");
+      needs.put(item, amount);
+
+    }
+    return new PTSA(name, needs, wealth, cut);
+
   }
 
   // This makes an option class that allows you to make an option the player can do
