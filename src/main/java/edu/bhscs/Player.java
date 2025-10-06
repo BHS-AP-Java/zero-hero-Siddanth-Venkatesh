@@ -10,12 +10,16 @@ public class Player {
   // Properties
   // String name
   private String name;
-  // Scanner s scans user input
-  private Scanner s;
   // Array List of options Player can do
   private final List<Option<?>> options = new ArrayList<>();
   // List of Customers
   private List<Customer> customers = new ArrayList<>();
+  // List of bakers
+  private List<Baker> bakers = new ArrayList<>();
+  // List of PTSAs
+  private List<PTSA> PTSAs = new ArrayList<>();
+  // Originally, Scanner which scans user input was given
+  // But was changed to have the scanner passed into methods, b/c it is easier to manage that way. 
 
   // Options is the set of things the Player can do
 
@@ -64,7 +68,10 @@ public class Player {
     double weight = Double.parseDouble(askQuestion("Enter weight", s));
     double wealth = Double.parseDouble(askQuestion("Enter wealth?", s));
     String race = askQuestion("Enter race: ", s);
-    return new Customer(name, weight, wealth, race);
+
+    Customer customer = new Customer(name, weight, wealth, race);
+    customers.add(customer);
+    return customer;
   }
 
   private Baker makeBaker(Scanner s) {
@@ -80,8 +87,9 @@ public class Player {
       cakes[i] = makeCake(s);
       amounts[i] = Integer.parseInt(askQuestion("How many of this cake? ", s));
     }
-
-    return new Baker(cakes, amounts, storeName, skill);
+    Baker baker = new Baker(cakes, amounts, storeName, skill);
+    bakers.add(baker);
+    return baker;
   }
 
   private Cake makeCake(Scanner s) {
@@ -128,10 +136,12 @@ public class Player {
       if (item.equalsIgnoreCase("done")) {
         break;
       }
-      double amount = Double.parseDouble("How much does this cost? ");
+      double amount = Double.parseDouble(askQuestion("How much does this cost? ", s));
       needs.put(item, amount);
     }
-    return new PTSA(name, needs, wealth, cut);
+    PTSA ptsa = new PTSA(name, needs, wealth, cut);
+    PTSAs.add(ptsa);
+    return ptsa;
   }
 
   // --------------- This is the wrapper for an "Option" a Player can do --------------------
