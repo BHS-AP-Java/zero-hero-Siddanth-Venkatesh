@@ -18,12 +18,12 @@ public class Flour {
   // Is the name of the flour
   String name;
   // This is the price of of the flour
-  int price;
+  double price;
   // This the quality of the flour
   int quality;
 
   // Constructer for the flour object.
-  public Flour(String name, double weight, int price, int quality) {
+  public Flour(String name, double weight, double price, int quality) {
     this.name = name;
     this.weight = weight;
     this.price = price;

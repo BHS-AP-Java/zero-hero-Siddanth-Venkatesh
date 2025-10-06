@@ -22,6 +22,8 @@ public class Player {
     this.s = new Scanner(System.in);
     // These are the options the Player has
     options.add(new Option<Customer>(("Make Customer"), this::makeCustomer));
+    options.add(new Option<Baker>(("Make Bakery"), this::makeBaker));
+    // options.add(new Option<Customer>(("Make Customer"), this::makeCustomer));
   }
 
   public void showOptions(Scanner s) {
@@ -104,8 +106,8 @@ public class Player {
   private Flour makeFlour(Scanner s) {
     String name = askQuestion("Flour name: ", s);
     double weight = Double.parseDouble(askQuestion("Flour weight", s));
-    int price = Integer.parseInt("Flour price (an int)");
-    int quality = 10;
+    double price = Double.parseDouble(askQuestion("Flour price ", s));
+    int quality = Integer.parseInt(askQuestion("Quality of cake if a newbie made it? (probably 0-10) ", s));
 
     return new Flour(name, weight, price, quality);
   }
