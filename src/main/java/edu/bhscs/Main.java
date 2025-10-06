@@ -24,7 +24,7 @@ public class Main {
 
   public static void main(String[] args) {
     Scanner s = new Scanner(System.in);
-    Player player = new Player("Sigma");
+    Player player = new Player("Sigma", new String[] {"Customer", "Baker", "PTSA"});
     player.showOptions(s);
   }
 

@@ -20,6 +20,7 @@ public class Player {
   // Originally, Scanner which scans user input was given
   // But was changed to have the scanner passed into methods, b/c it is easier to manage that way.
 
+  // Player Constructor
   public Player(String name, String[] typesOfInstitutionsOrPeople) {
     for (String thing : typesOfInstitutionsOrPeople){
       lists.put(thing, new ArrayList<>());
@@ -30,6 +31,8 @@ public class Player {
     options.add(new Option<Customer>(("Make Customer"), this::makeCustomer));
     options.add(new Option<Baker>(("Make Bakery"), this::makeBaker));
     options.add(new Option<PTSA>(("Make PTSA"), this::makePTSA));
+    // TODO: options.add(new Option<Void>("View Customer Actions", this::viewCustomerActions));
+
   }
 
   // --------------- This is the wrapper for an "Option" a Player can do --------------------
@@ -158,6 +161,33 @@ public class Player {
     // PTSAs.add(ptsa);
     return ptsa;
   }
+
+  private <T extends Creatable> T chooseEntity(String typeName, Scanner s) {
+    List<Creatable> list = lists.get(typeName);
+
+    if (list == null || list.isEmpty()) {
+      System.out.println("No " + typeName + "s available.");
+      return null;
+    }
+
+    System.out.println("Choose a " + typeName + ":");
+    for (int i = 0; i < list.size(); i++) {
+      System.out.println((i + 1) + ". " + list.get(i));
+    }
+
+    System.out.print("Enter number: ");
+    int choice = Integer.parseInt(s.nextLine());
+
+    if (choice < 1 || choice > list.size()) {
+      System.out.println("Invalid choice.");
+      return null;
+    }
+
+    @SuppressWarnings("unchecked")
+    T selected = (T) list.get(choice - 1);
+    return selected;
+  }
+
 
   // For testing purposes
   public static void main() {
