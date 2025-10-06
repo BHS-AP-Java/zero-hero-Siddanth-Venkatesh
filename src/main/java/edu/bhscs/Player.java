@@ -44,7 +44,8 @@ public class Player {
     options.add(new Option<Customer>(("Make Customer"), this::makeCustomer));
     options.add(new Option<Baker>(("Make Bakery"), this::makeBaker));
     options.add(new Option<PTSA>(("Make PTSA"), this::makePTSA));
-    actions.add(new noReturnOption("View Customers and their actions ", () -> viewCustomerActions()));
+    actions.add(
+        new noReturnOption("View Customers and their actions ", () -> viewCustomerActions()));
   }
 
   // --------------- This is the wrapper for an "Option" a Player can do --------------------
@@ -67,8 +68,8 @@ public class Player {
       for (int i = 0; i < options.size(); i++) {
         System.out.printf("%d. %s%n", i + 1, options.get(i).label);
       }
-      for (int j = options.size(); i < options.size() + actions.size(); j++) {
-        System.out.printf("%d. %s%n", j + options.size() + 1, actions.get(j).label);
+      for (int j = options.size(); j < options.size() + actions.size(); j++) {
+        System.out.printf("%d. %s%n", j + 1, actions.get(j - options.size()).label);
       }
       String input = askQuestion("0. Exit", s);
       if (input.equals("0")) {
@@ -76,12 +77,20 @@ public class Player {
       }
       try {
         int choice = Integer.parseInt(input);
-        Option<?> opt = options.get(choice - 1);
-        Object obj = opt.maker.make(s);
-        if (obj instanceof Creatable creatable) {
-          String type = creatable.getTypeName();
-          System.out.println("Created a new " + type);
-          lists.get(type).add(creatable);
+        Option<?> opt;
+        noReturnOption action;
+        if (choice > options.size() - 1){
+          action = actions.get(choice - 1 - options.size());
+          action.action();
+        }
+        else{
+          opt = options.get(choice - 1);
+          Object obj = opt.maker.make(s);
+          if (obj instanceof Creatable creatable) {
+            String type = creatable.getTypeName();
+            System.out.println("Created a new " + type);
+            lists.get(type).add(creatable);
+          }
         }
       } catch (Exception e) {
         System.out.println("Error: " + e.getMessage());
@@ -112,7 +121,8 @@ public class Player {
     return customer;
   }
 
-  private void viewCustomerActions(){
+  private void viewCustomerActions() {
+    System.out.println();
   }
 
   // Makes a Baker, with information about them taken from Command line
