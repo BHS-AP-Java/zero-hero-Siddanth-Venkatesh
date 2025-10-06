@@ -31,7 +31,7 @@ public class Baker {
   // This is the constructor for this class. It takes in the cakes the baker will sell, the amounts
   // of the cakes,
   // and the storeName.
-  public Baker(Cake[] cakes, int[] amounts, String storeName) {
+  public Baker(Cake[] cakes, int[] amounts, String storeName, double skill) {
     if (cakes.length != amounts.length) {
       System.out.println("Need amounts for each type of Cake");
       return;
@@ -41,12 +41,13 @@ public class Baker {
     for (int i = 0; i < cakes.length; i++) {
       inventory.put(cakes[i], amounts[i]);
     }
+    this.skill = skill;
   }
 
   // This sets the default baker, with three types of cakes, each with the same default ingredients,
   // plus one different one.
   public Baker(String storeName, double skill) {
-    this(defaultCakeOptions(10), new int[] {2, 4, 5}, storeName);
+    this(defaultCakeOptions(skill), new int[] {2, 4, 5}, storeName, skill);
   }
 
   // List of the default cake options a store could sell
