@@ -44,7 +44,7 @@ public class Player {
     options.add(new Option<Customer>(("Make Customer"), this::makeCustomer));
     options.add(new Option<Baker>(("Make Bakery"), this::makeBaker));
     options.add(new Option<PTSA>(("Make PTSA"), this::makePTSA));
-    actions.add(new noReturnOption("View Customers ", () -> viewCustomerActions()));
+    actions.add(new noReturnOption("View Customers and their actions ", () -> viewCustomerActions()));
   }
 
   // --------------- This is the wrapper for an "Option" a Player can do --------------------
@@ -66,6 +66,9 @@ public class Player {
       System.out.println("\n=== Player Options ===");
       for (int i = 0; i < options.size(); i++) {
         System.out.printf("%d. %s%n", i + 1, options.get(i).label);
+      }
+      for (int j = options.size(); i < options.size() + actions.size(); j++) {
+        System.out.printf("%d. %s%n", j + options.size() + 1, actions.get(j).label);
       }
       String input = askQuestion("0. Exit", s);
       if (input.equals("0")) {
@@ -107,6 +110,9 @@ public class Player {
     Customer customer = new Customer(name, weight, wealth, race);
     // customers.add(customer);
     return customer;
+  }
+
+  private void viewCustomerActions(){
   }
 
   // Makes a Baker, with information about them taken from Command line
