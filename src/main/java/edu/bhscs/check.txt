@@ -1,0 +1,17 @@
+// String bakerName = "Mr. Reiber";
+// Baker baker = new Baker(bakerName, 100.0);
+// baker.displayStock();
+// Customer Bob = new Customer("Bob", 100, 1000, "American");
+// Bob.buy(baker, "Chocolate Cake");
+// Bob.buy(baker, "Chocolate Cake");
+// Bob.buy(baker, "Chocolate Cake");
+// Bob.eat(Bob.getCake("Chocolate Cake"), 50);
+// Bob.steal(baker, "Coffee Cake");
+// baker.add("Chocolate Cake", 2);
+
+// PTSA Bothell = PTSAthing();
+// Bob.buyInFundraiser(baker, "Coffee Cake", Bothell);
+// baker.displayStock();
+// Bob.donate(Bothell, 300);
+// Bothell.displayGoal();
+// Bob.buyInFundraiserGoodQuality(baker, "Vanilla Cake", Bothell, 100);

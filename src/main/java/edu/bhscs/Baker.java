@@ -18,13 +18,14 @@ package edu.bhscs;
 import java.util.HashMap;
 
 public class Baker {
+  // Properties
   // The inventory represents a map from every cake the baker has to the amount of it they have.
-  // name is the name of the baker.
-  // balance is the amount of money the baker has.
-  // skill is the skill of the baker, which will determine the quality of the cakes they make
   private HashMap<Cake, Integer> inventory = new HashMap<>();
+  // name is the name of the baker.
   private String name;
+  // balance is the amount of money the baker has.
   private double balance = 0.00;
+  // skill is the skill of the baker, which will determine the quality of the cakes they make
   private double skill;
 
   // This is the constructor for this class. It takes in the cakes the baker will sell, the amounts

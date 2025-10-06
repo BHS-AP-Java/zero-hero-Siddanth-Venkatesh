@@ -13,11 +13,16 @@
 package edu.bhscs;
 
 public class Flour {
+  // Is the weight of the fliur
   double weight;
+  // Is the name of the flour
   String name;
+  // This is the price of of the flour
   int price;
+  // This the quality of the flour
   int quality;
 
+  // Constructer for the flour object.
   public Flour(String name, double weight, int price, int quality) {
     this.name = name;
     this.weight = weight;
@@ -25,10 +30,12 @@ public class Flour {
     this.quality = quality;
   }
 
+  // Returns the quality of the flour
   public int getQuality() {
     return quality;
   }
 
+  // Makes the flour go bad
   public void goBad() {
     quality = 0;
   }

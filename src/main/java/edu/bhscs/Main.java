@@ -18,6 +18,7 @@ package edu.bhscs;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Scanner;
 
 public class Main {
 
@@ -30,7 +31,7 @@ public class Main {
     Bob.buy(baker, "Chocolate Cake");
     Bob.buy(baker, "Chocolate Cake");
     Bob.eat(Bob.getCake("Chocolate Cake"), 50);
-    // Bob.steal(baker, "Coffee Cake");
+    Bob.steal(baker, "Coffee Cake");
     baker.add("Chocolate Cake", 2);
 
     PTSA Bothell = PTSAthing();
@@ -39,6 +40,11 @@ public class Main {
     Bob.donate(Bothell, 300);
     Bothell.displayGoal();
     Bob.buyInFundraiserGoodQuality(baker, "Vanilla Cake", Bothell, 100);
+    Scanner s = new Scanner(System.in);
+    System.out.println("What can we do with a Scanner?");
+
+    System.out.println("IDK but I am done now");
+    s.close();
   }
 
   // Set up the fundraiser. It will be a fundraiser for a computer, sports maintenance, and some new
