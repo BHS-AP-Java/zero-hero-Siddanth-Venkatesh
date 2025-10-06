@@ -14,6 +14,8 @@ public class Player {
   private Scanner s;
   // Array List of options Player can do
   private final List<Option<?>> options = new ArrayList<>();
+  // List of Customers
+  private List<Customer> customers = new ArrayList<>();
 
   // Options is the set of things the Player can do
 
@@ -23,7 +25,7 @@ public class Player {
     // These are the options the Player has
     options.add(new Option<Customer>(("Make Customer"), this::makeCustomer));
     options.add(new Option<Baker>(("Make Bakery"), this::makeBaker));
-    // options.add(new Option<Customer>(("Make Customer"), this::makeCustomer));
+    options.add(new Option<PTSA>(("Make PTSA"), this::makePTSA));
   }
 
   public void showOptions(Scanner s) {
@@ -103,19 +105,22 @@ public class Player {
     return new Cake(ingredients, cost, weight, name, flour, quality);
   }
 
+  // Allows player to make Flour
   private Flour makeFlour(Scanner s) {
     String name = askQuestion("Flour name: ", s);
     double weight = Double.parseDouble(askQuestion("Flour weight", s));
     double price = Double.parseDouble(askQuestion("Flour price ", s));
-    int quality = Integer.parseInt(askQuestion("Quality of cake if a newbie made it? (probably 0-10) ", s));
+    int quality =
+        Integer.parseInt(askQuestion("Quality of cake if a newbie made it? (probably 0-10) ", s));
 
     return new Flour(name, weight, price, quality);
   }
 
+  // Allows Player to make PTSA
   private PTSA makePTSA(Scanner s) {
     String name = askQuestion("Name of PTSA? ", s);
     double wealth = Double.parseDouble(askQuestion("Initial wealth? ", s));
-    double cut = Double.parseDouble("Cut the PTSA takes froms sales? ");
+    double cut = Double.parseDouble(askQuestion("Cut the PTSA takes froms sales? ", s));
     Map<String, Double> needs = new HashMap<>();
     while (true) {
       System.out.println("Enter something the PTSA needs (or 'done' when finsihed)");
@@ -133,7 +138,7 @@ public class Player {
   // This makes an option class that allows you to make an option the player can do
   private record Option<T>(String label, Maker<T> maker) {}
 
-  // Makes it so that each option can have a unique method attached to it
+  // Each method to for the Player can be put into an options array to be used
   @FunctionalInterface
   private interface Maker<T> {
     T make(Scanner s);
