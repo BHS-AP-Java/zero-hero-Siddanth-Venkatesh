@@ -46,6 +46,12 @@ public class Customer implements Creatable {
     return "Customer";
   }
 
+  // Returns the name of the type
+  @Override
+  public String toString() {
+    return name;
+  }
+
   // The customer can donate some amount of money assuming they have enough balance to a PTSA.
   public void donate(PTSA fundraiser, double amount) {
     System.out.println("----------------------------");

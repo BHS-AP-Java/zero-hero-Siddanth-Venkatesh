@@ -31,7 +31,7 @@ public class Player {
   private Map<String, List<Creatable>> lists = new HashMap<>();
 
   // Originally, Scanner which scans user input was given
-  // But was changed to have the scanner passed into methods, b/c it is easier to manage that way.
+  Scanner s;
 
   // Player Constructor
   public Player(String name, String[] typesOfInstitutionsOrPeople) {
@@ -39,6 +39,7 @@ public class Player {
       lists.put(thing, new ArrayList<>());
     }
     this.name = name;
+    s = new Scanner(System.in);
 
     // These are the options the Player has
     options.add(new Option<Customer>(("Make Customer"), this::makeCustomer));
@@ -51,9 +52,8 @@ public class Player {
   // --------------- This is the wrapper for an "Option" a Player can do --------------------
   // This makes an option class that allows you to make an option the player can do
   private record Option<T>(String label, Maker<T> maker) {}
-
+  // This is an option (or action) the Player can do, that doesn't return anything
   private record noReturnOption(String label, Runnable action) {}
-
   // Each method for creating people can be abstracted into this Maker class, which
   // allows an Option array to made.
   @FunctionalInterface
@@ -62,9 +62,13 @@ public class Player {
   }
 
   // Loops through infinitly, the actions the player can do, until they break out of it
-  public void showOptions(Scanner s) {
+  public void showOptions() {
+    loopOptions(options, actions, "Player Options");
+  }
+
+  public void loopOptions(List<Option<?>> options, List<noReturnOption> actions, String whoseOptions) {
     while (true) {
-      System.out.println("\n=== Player Options ===");
+      System.out.println("\n=== " + whoseOptions + " ===");
       for (int i = 0; i < options.size(); i++) {
         System.out.printf("%d. %s%n", i + 1, options.get(i).label);
       }
@@ -79,11 +83,10 @@ public class Player {
         int choice = Integer.parseInt(input);
         Option<?> opt;
         noReturnOption action;
-        if (choice > options.size() - 1){
+        if (choice > options.size() - 1) {
           action = actions.get(choice - 1 - options.size());
-          action.action();
-        }
-        else{
+          action.action.run();
+        } else {
           opt = options.get(choice - 1);
           Object obj = opt.maker.make(s);
           if (obj instanceof Creatable creatable) {
@@ -122,7 +125,8 @@ public class Player {
   }
 
   private void viewCustomerActions() {
-    System.out.println();
+    Customer customer = chooseEntity("Customer", s);
+
   }
 
   // Makes a Baker, with information about them taken from Command line
@@ -198,7 +202,6 @@ public class Player {
   }
 
   // Allows player to pick a Person.
-  // TODO: Fix it with the answerQustion stuff
   private <T extends Creatable> T chooseEntity(String typeName, Scanner s) {
     List<Creatable> list = lists.get(typeName);
 
@@ -227,8 +230,7 @@ public class Player {
 
   // For testing purposes
   public static void main() {
-    Scanner s = new Scanner(System.in);
     Player player = new Player("Sigma", new String[] {"Customer", "Baker", "PTSA"});
-    player.showOptions(s);
+    player.showOptions();
   }
 }

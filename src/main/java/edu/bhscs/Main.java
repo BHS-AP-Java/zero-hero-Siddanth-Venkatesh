@@ -23,21 +23,20 @@ import java.util.Scanner;
 public class Main {
 
   public static void main(String[] args) {
-    Scanner s = new Scanner(System.in);
     Player player = new Player("Sigma", new String[] {"Customer", "Baker", "PTSA"});
-    player.showOptions(s);
+    player.showOptions();
   }
 
-  // Set up the fundraiser. It will be a fundraiser for a computer, sports maintenance, and some new
-  // floors
-  public static PTSA PTSAthing() {
-    Map<String, Double> things = new HashMap<>();
-    things.put("a computer", 100.00);
-    things.put("some Sports maintenance", 10.000);
-    things.put("some new floors", 50.00);
-    PTSA BothellPTSA = new PTSA("Bothell", things, 10, 90);
-    BothellPTSA.add("Chairs", 50);
-    BothellPTSA.displayGoal();
-    return BothellPTSA;
-  }
+  // // Set up the fundraiser. It will be a fundraiser for a computer, sports maintenance, and some new
+  // // floors
+  // public static PTSA PTSAthing() {
+  //   Map<String, Double> things = new HashMap<>();
+  //   things.put("a computer", 100.00);
+  //   things.put("some Sports maintenance", 10.000);
+  //   things.put("some new floors", 50.00);
+  //   PTSA BothellPTSA = new PTSA("Bothell", things, 10, 90);
+  //   BothellPTSA.add("Chairs", 50);
+  //   BothellPTSA.displayGoal();
+  //   return BothellPTSA;
+  // }
 }
