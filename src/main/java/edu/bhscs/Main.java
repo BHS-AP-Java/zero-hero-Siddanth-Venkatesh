@@ -16,10 +16,6 @@
 
 package edu.bhscs;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
-
 public class Main {
 
   public static void main(String[] args) {
@@ -27,7 +23,8 @@ public class Main {
     player.showOptions();
   }
 
-  // // Set up the fundraiser. It will be a fundraiser for a computer, sports maintenance, and some new
+  // // Set up the fundraiser. It will be a fundraiser for a computer, sports maintenance, and some
+  // new
   // // floors
   // public static PTSA PTSAthing() {
   //   Map<String, Double> things = new HashMap<>();

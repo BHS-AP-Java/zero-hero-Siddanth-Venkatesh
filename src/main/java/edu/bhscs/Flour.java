@@ -13,6 +13,7 @@
 package edu.bhscs;
 
 public class Flour {
+  // PROPERTIES AND FIELDS
   // Is the weight of the fliur
   double weight;
   // Is the name of the flour

@@ -18,6 +18,7 @@ package edu.bhscs;
 import java.util.ArrayList;
 
 public class Customer implements Creatable {
+  // PROPERTIES AND FIELDS
   // cakesOwned is an ArrayList of cakes the customer bought or stolen
   private ArrayList<Cake> cakesOwned = new ArrayList<>();
   // weight is the weight of the customer
@@ -143,9 +144,9 @@ public class Customer implements Creatable {
     System.out.println("----------------------------");
   }
 
-  // Gives a 50% chance to steal a cake from a store with a certain name. If failed,
+  // Gives a 50% chance to steal a cake from a baker with a certain name. If failed,
   // the customer goes to jail.
-  public void steal(Baker store, String cakeName) {
+  public void steal(Baker baker, String cakeName) {
     int random = (int) Math.floor(Math.random() * 2); // Generates 0 or 1
     System.out.println("----------------------------");
     if (jailed) {
@@ -160,13 +161,13 @@ public class Customer implements Creatable {
       System.out.println(name + " got jailed for trying to steal a cake");
       return;
     }
-    if (store.getCakeAmount(cakeName) < 1) {
+    if (baker.placeOfWork.getCakeAmount(cakeName) < 1) {
       System.out.println("Can't steal something out of stock of " + name);
       System.out.println("Wait for the " + cakeName + " to restock");
       return;
     }
-    Cake cake = store.getCakeByName(cakeName);
-    store.add(cake, -1);
+    Cake cake = baker.placeOfWork.getCakeByName(cakeName);
+    baker.add(cake, -1);
     cakesOwned.add(cake);
     System.out.println("You stole the " + cakeName + " succesfully " + name);
     System.out.println("----------------------------");
@@ -174,7 +175,7 @@ public class Customer implements Creatable {
 
   // Allows a costumer to buy a cake from a Baker with a specfic name. The customer must have
   // enough money to buy the cake and not be in jail. They lose money after buying the cake.
-  public void buy(Baker store, String cakeName) {
+  public void buy(Baker baker, String cakeName) {
     if (jailed) {
       System.out.println("Your in jail " + name);
       return;
@@ -183,26 +184,26 @@ public class Customer implements Creatable {
       System.out.println("Uh oh, ICE agents got you " + name + ". You are deported");
       System.out.println("-------------------------------------");
     }
-    if (store.getCakeAmount(cakeName) < 1) {
+    if (baker.placeOfWork.getCakeAmount(cakeName) < 1) {
       System.out.println(cakeName + " is out of stock");
       System.out.println(name + " please wait for the baker to restock");
       return;
     }
-    Cake cake = store.getCakeByName(cakeName);
+    Cake cake = baker.placeOfWork.getCakeByName(cakeName);
     Cake newCake = new Cake(cake);
     if (balance < cake.getCost()) {
       System.out.println("You are too poor to buy, " + name);
       return;
     }
     System.out.println(name + " bought a " + cakeName);
-    store.add(cake, -1);
+    baker.add(cake, -1);
     cakesOwned.add(newCake);
     balance -= cake.getCost();
-    store.getMoney(cake.getCost());
+    baker.placeOfWork.getMoney(cake.getCost());
   }
 
   // Makes a customer only buy a cake if it meets their quality expectation.
-  public void buyQuality(Baker store, String cakeName, double quality) {
+  public void buyQuality(Baker baker, String cakeName, double quality) {
     if (jailed) {
       System.out.println("Your in jail " + name);
       return;
@@ -211,20 +212,20 @@ public class Customer implements Creatable {
       System.out.println("Uh oh, ICE agents got you " + name + ". You are deported");
       System.out.println("-------------------------------------");
     }
-    Cake cake = store.getCakeByName(cakeName);
+    Cake cake = baker.placeOfWork.getCakeByName(cakeName);
     if (cake.getQuality() < quality) {
       System.out.println("The cake " + cakeName + " is too yucky for " + name);
       System.out.println("The quality of the cake needs to go up to atleast " + quality);
       System.out.println("------------------------------------------");
       return;
     }
-    buy(store, cakeName);
+    buy(baker, cakeName);
   }
 
   // The customer can buy a cake in a fundraiser with a specific name if they
   // are not in jail and have enough money. A percentage of how much the customer paied
   // will go towards the fundraiser. The baker has no say in how much they lose.
-  public void buyInFundraiser(Baker store, String cakeName, PTSA fundraiser) {
+  public void buyInFundraiser(Baker baker, String cakeName, PTSA fundraiser) {
     if (jailed) {
       System.out.println("Your in jail " + name);
       return;
@@ -233,22 +234,22 @@ public class Customer implements Creatable {
       System.out.println("Uh oh, ICE agents got you " + name + ". You are deported");
       System.out.println("-------------------------------------");
     }
-    if (store.getCakeAmount(cakeName) < 1) {
+    if (baker.placeOfWork.getCakeAmount(cakeName) < 1) {
       System.out.println("Out of stock of " + cakeName);
       System.out.println("Please wait for the cake to be restocked, " + name);
       return;
     }
-    Cake cake = store.getCakeByName(cakeName);
+    Cake cake = baker.placeOfWork.getCakeByName(cakeName);
     if (balance < cake.getCost()) {
       System.out.println("You are too poor to buy, " + name);
       return;
     }
     System.out.println("------------------------------------------");
-    store.add(cake, -1);
+    baker.add(cake, -1);
     cakesOwned.add(cake);
     balance -= cake.getCost();
     double cutDeductedProfit = cake.getCost() * (100 - fundraiser.getCut()) / 100;
-    store.getMoney(cutDeductedProfit);
+    baker.placeOfWork.getMoney(cutDeductedProfit);
     System.out.println(
         "Thank you Bob for participating in the " + fundraiser.getName() + " fundraiser");
     System.out.println("Enjoy the " + cakeName + " that you bought, " + name);
@@ -261,7 +262,7 @@ public class Customer implements Creatable {
 
   // Makes the customer only buy a cake in a fundraiser if it meets their quality expectation.
   public void buyInFundraiserGoodQuality(
-      Baker store, String cakeName, PTSA fundraiser, double quality) {
+      Baker baker, String cakeName, PTSA fundraiser, double quality) {
     if (jailed) {
       System.out.println("Your in jail " + name);
       return;
@@ -270,13 +271,13 @@ public class Customer implements Creatable {
       System.out.println("Uh oh, ICE agents got you " + name + ". You are deported");
       System.out.println("-------------------------------------");
     }
-    Cake cake = store.getCakeByName(cakeName);
+    Cake cake = baker.placeOfWork.getCakeByName(cakeName);
     if (cake.getQuality() < quality) {
       System.out.println("The cake " + cakeName + " is too yucky for " + name);
       System.out.println("The quality of the cake needs to go up to atleast " + quality);
       System.out.println("---------------------------------------");
       return;
     }
-    buyInFundraiser(store, cakeName, fundraiser);
+    buyInFundraiser(baker, cakeName, fundraiser);
   }
 }

@@ -16,7 +16,7 @@ package edu.bhscs;
 import java.util.Arrays;
 
 public class Cake {
-
+  // PROPERTIES AND FIELDS
   // weightPounds is the current weight, WEIGHTOG is the original weight of the cake.
   private double weightPounds;
   // cost is the cost of the cake to buy it.

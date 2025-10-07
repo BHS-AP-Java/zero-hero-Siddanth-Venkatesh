@@ -27,16 +27,17 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class PTSA implements Creatable {
+  // PROPERTIES AND FIELDS
   // balance is the amount of money the PTSA has fundraised
-  // name is the name of the school the PTSA is for
-  // cut is the percentage of revenue the PTSA takes from cake sales
-  // necesities is a HashMap representing the things and the cost of those things the PTSA
-  // is trying to fundraise for. The String things is what the PTSA needs.
-  // They strings in them should have articles attached to them.
   private double balance = 0;
+  // name is the name of the school the PTSA is for
   private String name;
+  // goal is the sum of all the prices of things PTSA is trying to buy
   private double goal;
+  // cut is the percentage of revenue the PTSA takes from cake sales
   private double cut;
+  // necesities is a HashMap representing the things and the cost of those things the PTSA
+  // is trying to fundraise for
   private Map<String, Double> necesities;
 
   // This is the PTSA contructor. It takes in the name of the school and

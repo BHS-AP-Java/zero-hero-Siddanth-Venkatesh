@@ -19,7 +19,7 @@ import java.util.Map;
 import java.util.Scanner;
 
 public class Player {
-  // Properties
+  // PROPERTIES AND FIELDS
   // String name
   private String name;
   // Array List of options Player can do
@@ -33,7 +33,7 @@ public class Player {
   // Originally, Scanner which scans user input was given
   Scanner s;
 
-  // Player Constructor
+  // CONSTRUCTOR
   public Player(String name, String[] typesOfInstitutionsOrPeople) {
     for (String thing : typesOfInstitutionsOrPeople) {
       lists.put(thing, new ArrayList<>());
@@ -52,8 +52,10 @@ public class Player {
   // --------------- This is the wrapper for an "Option" a Player can do --------------------
   // This makes an option class that allows you to make an option the player can do
   private record Option<T>(String label, Maker<T> maker) {}
+
   // This is an option (or action) the Player can do, that doesn't return anything
   private record noReturnOption(String label, Runnable action) {}
+
   // Each method for creating people can be abstracted into this Maker class, which
   // allows an Option array to made.
   @FunctionalInterface
@@ -66,7 +68,9 @@ public class Player {
     loopOptions(options, actions, "Player Options");
   }
 
-  public void loopOptions(List<Option<?>> options, List<noReturnOption> actions, String whoseOptions) {
+  // Loops through the options that need to be done until Player breaks out of it
+  public void loopOptions(
+      List<Option<?>> options, List<noReturnOption> actions, String whoseOptions) {
     while (true) {
       System.out.println("\n=== " + whoseOptions + " ===");
       for (int i = 0; i < options.size(); i++) {
@@ -110,6 +114,15 @@ public class Player {
     return answer;
   }
 
+  // Asks a question and take in user input from Scanner.
+  public String giveAnswer(String question) {
+    System.out.println(question);
+    System.out.print("> ");
+    String answer = s.nextLine();
+    System.out.println();
+    return answer;
+  }
+
   // -------------------- Defining actions the player can do -----------------------
 
   // Makes a customer with information about them taken from command line
@@ -126,10 +139,10 @@ public class Player {
 
   private void viewCustomerActions() {
     Customer customer = chooseEntity("Customer", s);
-
   }
 
   // Makes a Baker, with information about them taken from Command line
+  // TODO: Fix this
   private Baker makeBaker(Scanner s) {
     String storeName = askQuestion("Enter Baker name: ", s);
     double skill = Double.parseDouble(askQuestion("Enter Baker Skill: ", s));
@@ -143,7 +156,7 @@ public class Player {
       cakes[i] = makeCake(s);
       amounts[i] = Integer.parseInt(askQuestion("How many of this cake? ", s));
     }
-    Baker baker = new Baker(cakes, amounts, storeName, skill);
+    Store store = new Store(cakes, amounts, storeName, skill);
     // bakers.add(baker);
     return baker;
   }
