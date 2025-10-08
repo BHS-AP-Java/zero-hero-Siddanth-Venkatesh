@@ -44,11 +44,6 @@ public class Store implements Creatable {
   }
 
   // METHODS
-  // Returns the type of the object
-  @Override
-  public String getTypeName() {
-    return "Store";
-  }
 
   // This sets the default Store, with three types of cakes, each with the same default ingredients,
   // plus one different one.
@@ -124,5 +119,18 @@ public class Store implements Creatable {
       }
     }
     return null; // No cake found with that name
+  }
+
+  // Creatable methods
+  // Returns the name of the type
+  @Override
+  public String getTypeName() {
+    return "Store";
+  }
+
+  // Returns the name of the type
+  @Override
+  public String toString() {
+    return "Store called " + name;
   }
 }

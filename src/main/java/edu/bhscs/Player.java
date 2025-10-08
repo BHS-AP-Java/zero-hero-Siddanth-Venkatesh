@@ -66,12 +66,15 @@ public class Player {
 
   // Loops through infinitly, the actions the player can do, until they break out of it
   public void showOptions() {
-    loopOptions(options, actions, "Player Options");
+    loopOptions(options, actions, "Player Options", true);
   }
 
   // Loops through the options that need to be done until Player breaks out of it
   public void loopOptions(
-      List<Option<?>> options, List<noReturnOption> actions, String whoseOptions) {
+      List<Option<?>> options,
+      List<noReturnOption> actions,
+      String whoseOptions,
+      boolean returnHandling) {
     while (true) {
       System.out.println("\n=== " + whoseOptions + " ===");
       for (int i = 0; i < options.size(); i++) {
@@ -94,7 +97,8 @@ public class Player {
         } else {
           opt = options.get(choice - 1);
           Object obj = opt.maker.make(s);
-          if (obj instanceof Creatable creatable) {
+          // ONLY executed when outer loop does something.
+          if (returnHandling && obj instanceof Creatable creatable) {
             String type = creatable.getTypeName();
             System.out.println("Created a new " + type);
             lists.get(type).add(creatable);
@@ -126,6 +130,7 @@ public class Player {
 
   // -------------------- Defining actions the player can do -----------------------
 
+  // CUSTOMER ACTIONS:
   // Makes a customer with information about them taken from command line
   private Customer makeCustomer(Scanner s) {
     String name = askQuestion("Enter name: ", s);
@@ -139,10 +144,102 @@ public class Player {
 
   private void viewCustomerActions() {
     Customer customer = chooseEntity("Customer", s);
+    showCustomerActions(customer);
   }
 
+  private void showCustomerActions(Customer customer) {
+    List<Option<?>> options = List.of(); // no creation options
+
+    List<noReturnOption> actions =
+        List.of(
+            new noReturnOption(
+                "Donate to Fundraiser",
+                () -> {
+                  PTSA fundraiser = chooseEntity("PTSA", s);
+                  if (fundraiser == null) return;
+                  double amount = Double.parseDouble(askQuestion("Amount to donate:", s));
+                  customer.donate(fundraiser, amount);
+                }),
+            new noReturnOption(
+                "Try to Escape Jail",
+                () -> {
+                  customer.escape();
+                }),
+            new noReturnOption(
+                "Eat a Cake",
+                () -> {
+                  Cake cake = chooseEntity("Cake", s);
+                  if (cake == null) return;
+                  double percent = Double.parseDouble(askQuestion("Percent to eat:", s));
+                  customer.eat(cake, percent);
+                }),
+            new noReturnOption(
+                "Steal a Cake",
+                () -> {
+                  Baker baker = chooseEntity("Baker", s);
+                  if (baker == null) return;
+                  String cakeName = askQuestion("Cake name:", s);
+                  customer.steal(baker, cakeName);
+                }),
+            new noReturnOption(
+                "Buy a Cake",
+                () -> {
+                  Baker baker = chooseEntity("Baker", s);
+                  if (baker == null) return;
+                  String cakeName = askQuestion("Cake name:", s);
+                  customer.buy(baker, cakeName);
+                }),
+            new noReturnOption(
+                "Buy a Cake directly from the Baker, with default ingredients, but custom name",
+                () -> {
+                  Baker baker = chooseEntity("Baker", s);
+                  if (baker == null) return;
+                  int price = Integer.parseInt(askQuestion("Price:", s));
+                  customer.buyCustom(baker, price);
+                }),
+            new noReturnOption(
+                "Buy Cake (Quality Requirement)",
+                () -> {
+                  Baker baker = chooseEntity("Baker", s);
+                  if (baker == null) return;
+                  String cakeName = askQuestion("Cake name:", s);
+                  double q = Double.parseDouble(askQuestion("Minimum quality:", s));
+                  customer.buyQuality(baker, cakeName, q);
+                }),
+            new noReturnOption(
+                "Buy in Fundraiser",
+                () -> {
+                  Baker baker = chooseEntity("Baker", s);
+                  PTSA fundraiser = chooseEntity("PTSA", s);
+                  if (baker == null || fundraiser == null) return;
+                  String cakeName = askQuestion("Cake name:", s);
+                  customer.buyInFundraiser(baker, cakeName, fundraiser);
+                }),
+            new noReturnOption(
+                "Buy in Fundraiser (Quality Requirement)",
+                () -> {
+                  Baker baker = chooseEntity("Baker", s);
+                  PTSA fundraiser = chooseEntity("PTSA", s);
+                  if (baker == null || fundraiser == null) return;
+                  String cakeName = askQuestion("Cake name:", s);
+                  double q = Double.parseDouble(askQuestion("Minimum quality:", s));
+                  customer.buyInFundraiserGoodQuality(baker, cakeName, fundraiser, q);
+                }));
+
+    loopOptions(options, actions, "Customer Options", false);
+  }
+
+  // BAKER ACTIONS:
   // Makes a Baker, with information about them taken from Command line
   private Store makeStore(Scanner s) {
+    String defaultStore =
+        askQuestion("Make a default store? (answer yes/y or anything else for no)", s);
+    if (defaultStore.equalsIgnoreCase("yes") || defaultStore.equalsIgnoreCase("y")) {
+      String name = askQuestion("Name of the default store? ", s);
+      return new Store(name);
+    }
+    ;
+
     String storeName = askQuestion("Enter Store name: ", s);
     int numCakes = Integer.parseInt(askQuestion("How many Cakes does store have: ", s));
 
@@ -176,6 +273,7 @@ public class Player {
     return baker;
   }
 
+  // CAKE ACTIONS:
   // Makes a cake, with information about the cake taken from Command line
   private Cake makeCake(Scanner s) {
     String name = askQuestion("Cake name: ", s);
@@ -205,10 +303,10 @@ public class Player {
     double price = Double.parseDouble(askQuestion("Flour price ", s));
     int quality =
         Integer.parseInt(askQuestion("Quality of cake if a newbie made it? (probably 0-10) ", s));
-
     return new Flour(name, weight, price, quality);
   }
 
+  // PTSA ACTIONS
   // Allows Player to make PTSA
   private PTSA makePTSA(Scanner s) {
     String name = askQuestion("Name of PTSA? ", s);
@@ -229,31 +327,35 @@ public class Player {
     return ptsa;
   }
 
-  // Allows player to pick a Person.
+  // Allows a Person to choose an Entity
+  @SuppressWarnings("unchecked")
   private <T extends Creatable> T chooseEntity(String typeName, Scanner s) {
-    List<Creatable> list = lists.get(typeName);
+    List<? extends Creatable> list = lists.get(typeName);
 
     if (list == null || list.isEmpty()) {
       System.out.println("No " + typeName + "s available.");
       return null;
     }
 
-    System.out.println("Choose a " + typeName + ":");
+    System.out.println("\nChoose a " + typeName + ":");
     for (int i = 0; i < list.size(); i++) {
       System.out.println((i + 1) + ". " + list.get(i));
     }
 
-    System.out.print("Enter number: ");
-    int choice = Integer.parseInt(s.nextLine());
+    int choice;
+    try {
+      choice = Integer.parseInt(askQuestion("Enter number:", s));
+    } catch (NumberFormatException e) {
+      System.out.println("Invalid input.");
+      return null;
+    }
 
     if (choice < 1 || choice > list.size()) {
       System.out.println("Invalid choice.");
       return null;
     }
 
-    @SuppressWarnings("unchecked")
-    T selected = (T) list.get(choice - 1);
-    return selected;
+    return (T) list.get(choice - 1);
   }
 
   // For testing purposes

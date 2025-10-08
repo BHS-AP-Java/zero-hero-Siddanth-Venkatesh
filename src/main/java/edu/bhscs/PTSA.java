@@ -69,12 +69,6 @@ public class PTSA implements Creatable {
     displayGoal();
   }
 
-  // Returns the name of the type
-  @Override
-  public String getTypeName() {
-    return "PTSA";
-  }
-
   // Returns the name of the school the PTSA represents.
   public String getName() {
     return name;
@@ -174,5 +168,17 @@ public class PTSA implements Creatable {
     PTSA BothellPTSA = new PTSA("Bothell", things, 160, 90);
     BothellPTSA.add("Chairs", 50);
     BothellPTSA.displayGoal();
+  }
+
+  // Returns the name of the type
+  @Override
+  public String getTypeName() {
+    return "PTSA";
+  }
+
+  // Returns the name of the type
+  @Override
+  public String toString() {
+    return "PTSA is for the " + name + " school";
   }
 }

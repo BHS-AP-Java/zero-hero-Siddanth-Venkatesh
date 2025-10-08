@@ -1,0 +1,37 @@
+// The customer can donate some amount of money assuming they have enough balance to a PTSA.
+public void donate(PTSA fundraiser, double amount)
+// If a customer is in jail, they can try their luck and try to escape. They have a 50% chance.
+  public void escape()
+// This takes in a name of cake, and filters through the list of cakes the customer
+  // has and finds the cake with that name
+  public Cake getCake(String name)
+// You can eat some percent of a cake. Can't eat more than 100 or less than 0.
+  public void eat(Cake cake, double percent)
+  // Returns an Array List of the Cakes owned
+  ArrayList<Cake> getCakesOwned()
+// If a customer is in jail, they can try their luck and try to escape. They have a 50% chance.
+  public void escape()
+ // You can eat some percent of a cake. Can't eat more than 100 or less than 0.
+  public void eat(Cake cake, double percent)
+// Gives a 50% chance to steal a cake from a baker with a certain name. If failed,
+  // the customer goes to jail.
+  public void steal(Baker baker, String cakeName)
+ // Allows a costumer to buy a cake from a Baker with a specfic name. The customer must have
+  // enough money to buy the cake and not be in jail. They lose money after buying the cake.
+  public void buy(Baker baker, String cakeName)
+  // This buys a cake directly from the Baker. Since the baker can't use store ingredients
+  // it will just be a default cake with a custom name
+  public void buy(Baker b, int price)
+// Makes a customer only buy a cake if it meets their quality expectation.
+  public void buyQuality(Baker baker, String cakeName, double quality)
+  // The customer can buy a cake in a fundraiser with a specific name if they
+  // are not in jail and have enough money. A percentage of how much the customer paied
+  // will go towards the fundraiser. The baker has no say in how much they lose.
+  public void buyInFundraiser(Baker baker, String cakeName, PTSA fundraiser)
+// Makes the customer only buy a cake in a fundraiser if it meets their quality expectation.
+  public void buyInFundraiserGoodQuality
+
+Helper Methods:
+// This takes in a name of cake, and filters through the list of cakes the customer
+  // has and finds the cake with that name
+  public Cake getCake(String name)

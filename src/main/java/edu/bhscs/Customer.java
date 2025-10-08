@@ -41,6 +41,7 @@ public class Customer implements Creatable {
     this.race = race;
   }
 
+  // Creatable Methods
   // Returns the name of the type
   @Override
   public String getTypeName() {
@@ -66,6 +67,11 @@ public class Customer implements Creatable {
               + ", you chose to donate. Even criminals can have hearts it seems");
     }
     System.out.println("----------------------------");
+  }
+
+  // Returns an Array List of the Cakes owned
+  ArrayList<Cake> getCakesOwned() {
+    return cakesOwned;
   }
 
   // Same thing as the donate above, except there is no message in a succesful donation
@@ -214,7 +220,7 @@ public class Customer implements Creatable {
 
   // This buys a cake directly from the Baker. Since the baker can't use store ingredients
   // it will just be a default cake with a custom name
-  public void buy(Baker b, int price) {
+  public void buyCustom(Baker b, int price) {
     b.takeOrder(price, this);
   }
 

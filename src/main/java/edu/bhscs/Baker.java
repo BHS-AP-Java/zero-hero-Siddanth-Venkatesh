@@ -91,7 +91,6 @@ public class Baker implements Creatable {
     add(cake, amount);
   }
 
-
   // Creatable Methods
 
   // Returns the name of the type
@@ -105,5 +104,4 @@ public class Baker implements Creatable {
   public String toString() {
     return "Baker called " + name;
   }
-
 }
