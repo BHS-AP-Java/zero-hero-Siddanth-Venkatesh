@@ -39,7 +39,7 @@ public class Baker implements Creatable {
     }
   }
 
-  void giveName(String name){
+  void giveName(String name) {
     this.name = name;
   }
 
@@ -91,9 +91,19 @@ public class Baker implements Creatable {
     add(cake, amount);
   }
 
+
+  // Creatable Methods
+
   // Returns the name of the type
   @Override
   public String getTypeName() {
-    return "Customer";
+    return "Baker";
   }
+
+  // Returns the name of the type
+  @Override
+  public String toString() {
+    return "Baker called " + name;
+  }
+
 }

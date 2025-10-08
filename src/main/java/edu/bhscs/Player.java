@@ -34,8 +34,8 @@ public class Player {
   Scanner s;
 
   // CONSTRUCTOR
-  public Player(String name, String[] typesOfInstitutionsOrPeople) {
-    for (String thing : typesOfInstitutionsOrPeople) {
+  public Player(String name, String[] typesOfInstitutionsOrPeoplePlayerControls) {
+    for (String thing : typesOfInstitutionsOrPeoplePlayerControls) {
       lists.put(thing, new ArrayList<>());
     }
     this.name = name;
@@ -48,7 +48,6 @@ public class Player {
     options.add(new Option<PTSA>(("Make PTSA"), this::makePTSA));
     actions.add(
         new noReturnOption("View Customers and their actions ", () -> viewCustomerActions()));
-
   }
 
   // --------------- This is the wrapper for an "Option" a Player can do --------------------
@@ -160,11 +159,12 @@ public class Player {
     // bakers.add(baker);
     return store;
   }
-  private Baker makeBaker(Scanner s){
+
+  private Baker makeBaker(Scanner s) {
     String name = askQuestion("Name of the baker? ", s);
     double skill = Double.parseDouble(askQuestion("Enter Baker Skill: ", s));
     Store store = chooseEntity("Store", s);
-    if (store == null){
+    if (store == null) {
       System.out.println("No baker made");
       return null;
     }
