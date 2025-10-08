@@ -26,6 +26,8 @@ public class Player {
   private final List<Option<?>> options = new ArrayList<>();
   // Aray List of options without return value that Player can do
   List<noReturnOption> actions = new ArrayList<>();
+  // Accomplishments of the player
+  int accomplishments;
 
   // This is a map of all the type of Object to how many there are
   private Map<String, List<Creatable>> lists = new HashMap<>();
@@ -91,7 +93,7 @@ public class Player {
         int choice = Integer.parseInt(input);
         Option<?> opt;
         noReturnOption action;
-        if (choice > options.size() - 1) {
+        if (choice > options.size()) {
           action = actions.get(choice - 1 - options.size());
           action.action.run();
         } else {
@@ -108,6 +110,10 @@ public class Player {
         System.out.println("Error: " + e.getMessage());
       }
     }
+  }
+
+  public void accomplishments(int amount){
+    accomplishments += amount;
   }
 
   // Asks a question and take in user input from Scanner.
@@ -168,10 +174,21 @@ public class Player {
             new noReturnOption(
                 "Eat a Cake",
                 () -> {
-                  Cake cake = chooseEntity("Cake", s);
-                  if (cake == null) return;
+                  Cake cake = customer.getCake(askQuestion("Name of the cake? ", s));
                   double percent = Double.parseDouble(askQuestion("Percent to eat:", s));
                   customer.eat(cake, percent);
+                }),
+            new noReturnOption(
+                "View Cakes",
+                () -> {
+                  ArrayList<Cake> cakes = customer.getCakesOwned();
+                  System.out.println(cakes);
+                }),
+            new noReturnOption(
+                "View Balance",
+                () -> {
+                  double balance = customer.getBalance();
+                  System.out.println(balance);
                 }),
             new noReturnOption(
                 "Steal a Cake",
@@ -186,6 +203,7 @@ public class Player {
                 () -> {
                   Baker baker = chooseEntity("Baker", s);
                   if (baker == null) return;
+                  baker.placeOfWork.displayStock();
                   String cakeName = askQuestion("Cake name:", s);
                   customer.buy(baker, cakeName);
                 }),
@@ -194,6 +212,7 @@ public class Player {
                 () -> {
                   Baker baker = chooseEntity("Baker", s);
                   if (baker == null) return;
+                  baker.placeOfWork.displayStock();
                   int price = Integer.parseInt(askQuestion("Price:", s));
                   customer.buyCustom(baker, price);
                 }),
@@ -202,6 +221,7 @@ public class Player {
                 () -> {
                   Baker baker = chooseEntity("Baker", s);
                   if (baker == null) return;
+                  baker.placeOfWork.displayStock();
                   String cakeName = askQuestion("Cake name:", s);
                   double q = Double.parseDouble(askQuestion("Minimum quality:", s));
                   customer.buyQuality(baker, cakeName, q);
@@ -212,6 +232,7 @@ public class Player {
                   Baker baker = chooseEntity("Baker", s);
                   PTSA fundraiser = chooseEntity("PTSA", s);
                   if (baker == null || fundraiser == null) return;
+                  baker.placeOfWork.displayStock();
                   String cakeName = askQuestion("Cake name:", s);
                   customer.buyInFundraiser(baker, cakeName, fundraiser);
                 }),
@@ -221,6 +242,7 @@ public class Player {
                   Baker baker = chooseEntity("Baker", s);
                   PTSA fundraiser = chooseEntity("PTSA", s);
                   if (baker == null || fundraiser == null) return;
+                  baker.placeOfWork.displayStock();
                   String cakeName = askQuestion("Cake name:", s);
                   double q = Double.parseDouble(askQuestion("Minimum quality:", s));
                   customer.buyInFundraiserGoodQuality(baker, cakeName, fundraiser, q);
@@ -229,7 +251,7 @@ public class Player {
     loopOptions(options, actions, "Customer Options", false);
   }
 
-  // BAKER ACTIONS:
+  // BAKER/STORE ACTIONS:
   // Makes a Baker, with information about them taken from Command line
   private Store makeStore(Scanner s) {
     String defaultStore =

@@ -28,7 +28,7 @@ public class Baker implements Creatable {
 
   Cake bakeCake() {
     String answer = this.p.giveAnswer("what cake do you you want?");
-    return new Cake(answer, this.f);
+    return new Cake(answer, this.f, this.skill);
   }
 
   void takeJob(Store bakery) {

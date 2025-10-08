@@ -74,6 +74,11 @@ public class Customer implements Creatable {
     return cakesOwned;
   }
 
+  // Returns an balance of the Customer
+  double getBalance() {
+    return balance;
+  }
+
   // Same thing as the donate above, except there is no message in a succesful donation
   public void donateNoMSG(PTSA fundraiser, double amount) {
     if (balance < amount) {
@@ -89,11 +94,6 @@ public class Customer implements Creatable {
     System.out.println("----------------------------");
     if (!jailed) {
       System.out.println("Why are you trying to escape when not jailed, " + name + "?");
-      return;
-    }
-    if (race != "American") {
-      System.out.println("You can't escape from ICE agents " + name);
-      System.out.println("------------------------------------");
       return;
     }
     int random = (int) Math.floor(Math.random() * 2);
@@ -159,9 +159,6 @@ public class Customer implements Creatable {
       System.out.println("Your in jail " + name);
       return;
     }
-    if (race != "American") {
-      System.out.println("Uh oh, ICE agents might get you " + name);
-    }
     if (random == 0) {
       jailed = true;
       System.out.println(name + " got jailed for trying to steal a cake");
@@ -195,11 +192,6 @@ public class Customer implements Creatable {
       System.out.println("Your in jail " + name);
       return;
     }
-    if (race != "American") {
-      System.out.println("Uh oh, ICE agents got you " + name + ". You are deported");
-      System.out.println("-------------------------------------");
-      return;
-    }
     if (baker.placeOfWork.getCakeAmount(cakeName) < 1) {
       System.out.println(cakeName + " is out of stock");
       System.out.println(name + " please wait for the baker to restock");
@@ -230,11 +222,6 @@ public class Customer implements Creatable {
       System.out.println("Your in jail " + name);
       return;
     }
-    if (race != "American") {
-      System.out.println("Uh oh, ICE agents got you " + name + ". You are deported");
-      System.out.println("-------------------------------------");
-      return;
-    }
     Cake cake = baker.placeOfWork.getCakeByName(cakeName);
     if (cake.getQuality() < quality) {
       System.out.println("The cake " + cakeName + " is too yucky for " + name);
@@ -252,10 +239,6 @@ public class Customer implements Creatable {
     if (jailed) {
       System.out.println("Your in jail " + name);
       return;
-    }
-    if (race != "American") {
-      System.out.println("Uh oh, ICE agents got you " + name + ". You are deported");
-      System.out.println("-------------------------------------");
     }
     if (baker.placeOfWork.getCakeAmount(cakeName) < 1) {
       System.out.println("Out of stock of " + cakeName);
@@ -289,10 +272,6 @@ public class Customer implements Creatable {
     if (jailed) {
       System.out.println("Your in jail " + name);
       return;
-    }
-    if (race != "American") {
-      System.out.println("Uh oh, ICE agents got you " + name + ". You are deported");
-      System.out.println("-------------------------------------");
     }
     Cake cake = baker.placeOfWork.getCakeByName(cakeName);
     if (cake.getQuality() < quality) {

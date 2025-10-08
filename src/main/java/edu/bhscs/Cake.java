@@ -52,10 +52,11 @@ public class Cake {
   }
 
   // Makes a default cake, if only the name and flour are given
-  public Cake(String name, Flour f) {
+  public Cake(String name, Flour f, double skill) {
     this.name = name;
     this.flour = f;
     this.ingredients = base();
+    this.quality = skill;
     WEIGHTOG = 100;
   }
 
@@ -188,5 +189,12 @@ public class Cake {
     Bob.eat(cake, 10);
     // System.out.println(cake.amountLeftWeight());
     // cake.displayInfo();
+  }
+
+  // Returns the name of the type
+  @Override
+  public String toString() {
+    String stuff = Arrays.toString(ingredients);
+    return name + " cake " + " Has: " + stuff + " Weighs " + weightPounds + "lb";
   }
 }
