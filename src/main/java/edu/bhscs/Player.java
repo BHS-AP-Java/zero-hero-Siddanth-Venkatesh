@@ -142,7 +142,7 @@ public class Player {
   }
 
   // Makes a Baker, with information about them taken from Command line
-  // TODO: Fix this. We need a make store, maker baker and more. 
+  // TODO: Fix this. We need a make store, maker baker and more.
   private Baker makeBaker(Scanner s) {
     String storeName = askQuestion("Enter Baker name: ", s);
     double skill = Double.parseDouble(askQuestion("Enter Baker Skill: ", s));

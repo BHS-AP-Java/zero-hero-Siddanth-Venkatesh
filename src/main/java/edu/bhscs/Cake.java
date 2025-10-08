@@ -32,8 +32,10 @@ public class Cake {
   // quality is the quality of the cake. The price of the cake goes up with quality
   private double quality;
 
+
   // This is the constructor for a cake, and it makes an instance of a cake with it's ingredients
   // cost, weight, and name.
+  // CONSTRUCTOR
   public Cake(String ingredients[], double cost, double weight, String name, double quality) {
     Flour flour = new Flour("All-Purpose Flour", 20, 100, 10);
     this.flour = flour;
@@ -48,6 +50,14 @@ public class Cake {
     System.out.println("Baking the cake with... " + stuff);
     System.out.println("The cake will cost: $" + this.cost + "");
     System.out.println("This cake has " + flour.getQuality() + " quality");
+  }
+
+  // Makes a default cake, if only the name and flour are given
+  public Cake(String name, Flour f){
+    this.name = name;
+    this.flour = f;
+    this.ingredients = base();
+    WEIGHTOG = 100;
   }
 
   // This makes a cake using a specific type of flour
@@ -79,6 +89,7 @@ public class Cake {
     quality = other.getQuality();
   }
 
+  // METHODS
   // Returns the ingredients in a cake
   public String[] getIngredients() {
     return ingredients;
@@ -150,8 +161,13 @@ public class Cake {
   // PRECONDITION: Do not put ingredients with the same name as a base ingredient
   // The cake will contain a Flour object, as well as flour in the ingredients.
   public static String[] base(String[] ingredients) {
+    return concatenate(ingredients, base());
+  }
+
+  // Same method as above, just not adding any ingredients
+  public static String[] base() {
     String[] things = {"Flour", "Sugar", "Water", "Milk", "Egg", "Baking Powder", "Salt"};
-    return concatenate(things, ingredients);
+    return things;
   }
 
   // Takes two arrays and returns a new array where both are combined.

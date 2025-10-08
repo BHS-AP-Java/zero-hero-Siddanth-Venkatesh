@@ -7,7 +7,7 @@ public class Baker implements Creatable {
   Store placeOfWork;
   int cash;
 
-  // My methods
+  // Extra fields
   String name;
   double skill;
 
@@ -44,16 +44,28 @@ public class Baker implements Creatable {
   public void add(Cake cake, int amount) {
     placeOfWork.inventory.put(cake, placeOfWork.inventory.get(cake) + amount);
     if (amount < 0) {
-      System.out.println(name + " has sold " + -1 * amount + " cake(s) called " + cake.getName()
-          + " from their store");
+      System.out.println(
+          name
+              + " has sold "
+              + -1 * amount
+              + " cake(s) called "
+              + cake.getName()
+              + " from their store");
       return;
     }
-    System.out.println(name + " has stocked " + amount + " extra cake(s) called " + cake.getName()
-        + " to their store");
+    System.out.println(
+        name
+            + " has stocked "
+            + amount
+            + " extra cake(s) called "
+            + cake.getName()
+            + " to their store");
     skill += amount * 10;
     cake.setQuality(skill);
-    System.out.println("The Store's skill has increased to " + skill
-        + " meaning he bakes cakes with better quality");
+    System.out.println(
+        "The Store's skill has increased to "
+            + skill
+            + " meaning it bakes cakes with better quality");
     System.out.println("-----------------------------");
   }
 

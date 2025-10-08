@@ -173,6 +173,15 @@ public class Customer implements Creatable {
     System.out.println("----------------------------");
   }
 
+  public int pay(int amount){
+    balance -= amount;
+    return amount;
+  }
+
+  public void takeCake(Cake cake){
+    cakesOwned.add(cake);
+  }
+
   // Allows a costumer to buy a cake from a Baker with a specfic name. The customer must have
   // enough money to buy the cake and not be in jail. They lose money after buying the cake.
   public void buy(Baker baker, String cakeName) {
@@ -183,6 +192,7 @@ public class Customer implements Creatable {
     if (race != "American") {
       System.out.println("Uh oh, ICE agents got you " + name + ". You are deported");
       System.out.println("-------------------------------------");
+      return;
     }
     if (baker.placeOfWork.getCakeAmount(cakeName) < 1) {
       System.out.println(cakeName + " is out of stock");
@@ -202,6 +212,12 @@ public class Customer implements Creatable {
     baker.placeOfWork.getMoney(cake.getCost());
   }
 
+  // This buys a cake directly from the Baker. Since the baker can't use store ingredients
+  // it will just be a default cake with a custom name
+  public void buy(Baker b, int price){
+    b.takeOrder(price, this);
+  }
+
   // Makes a customer only buy a cake if it meets their quality expectation.
   public void buyQuality(Baker baker, String cakeName, double quality) {
     if (jailed) {
@@ -211,6 +227,7 @@ public class Customer implements Creatable {
     if (race != "American") {
       System.out.println("Uh oh, ICE agents got you " + name + ". You are deported");
       System.out.println("-------------------------------------");
+      return;
     }
     Cake cake = baker.placeOfWork.getCakeByName(cakeName);
     if (cake.getQuality() < quality) {

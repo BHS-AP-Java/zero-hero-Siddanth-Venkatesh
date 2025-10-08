@@ -19,19 +19,18 @@ package edu.bhscs;
 import java.util.HashMap;
 
 public class Store implements Creatable {
-  // Properties
+  // PROPERTIES AND FIELDS
   // The inventory represents a map from every cake the Store has to the amount of it they have.
   public HashMap<Cake, Integer> inventory = new HashMap<>();
   // name is the name of the Store.
   private String name;
   // balance is the amount of money the Store has.
   private double balance = 0.00;
-  // skill is the skill of the Store, which will determine the quality of the cakes they make
-  private double skill;
 
   // This is the constructor for this class. It takes in the cakes the Store will sell, the amounts
   // of the cakes,
   // and the storeName.
+  // CONSTRUCTOR
   public Store(Cake[] cakes, int[] amounts, String storeName, double skill) {
     if (cakes.length != amounts.length) {
       System.out.println("Need amounts for each type of Cake");
@@ -42,9 +41,9 @@ public class Store implements Creatable {
     for (int i = 0; i < cakes.length; i++) {
       inventory.put(cakes[i], amounts[i]);
     }
-    this.skill = skill;
   }
 
+  // METHODS
   // Returns the type of the object
   @Override
   public String getTypeName() {
@@ -86,7 +85,7 @@ public class Store implements Creatable {
 
   // This displays all the stock the Store has.
   public void displayStock() {
-    System.out.println("Welcome to our Storey by " + name + ". We sell the following: ");
+    System.out.println("Welcome to our Store called " + name + ". We sell the following: ");
     for (Cake key : inventory.keySet()) {
       key.displayInfo();
       System.out.println(
