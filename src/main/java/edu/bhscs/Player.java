@@ -43,10 +43,12 @@ public class Player {
 
     // These are the options the Player has
     options.add(new Option<Customer>(("Make Customer"), this::makeCustomer));
-    options.add(new Option<Baker>(("Make Bakery"), this::makeBaker));
+    options.add(new Option<Store>(("Make Store"), this::makeStore));
+    options.add(new Option<Baker>(("Make Baker"), this::makeBaker));
     options.add(new Option<PTSA>(("Make PTSA"), this::makePTSA));
     actions.add(
         new noReturnOption("View Customers and their actions ", () -> viewCustomerActions()));
+
   }
 
   // --------------- This is the wrapper for an "Option" a Player can do --------------------
@@ -133,7 +135,6 @@ public class Player {
     String race = askQuestion("Enter race: ", s);
 
     Customer customer = new Customer(name, weight, wealth, race);
-    // customers.add(customer);
     return customer;
   }
 
@@ -142,10 +143,8 @@ public class Player {
   }
 
   // Makes a Baker, with information about them taken from Command line
-  // TODO: Fix this. We need a make store, maker baker and more.
-  private Baker makeBaker(Scanner s) {
-    String storeName = askQuestion("Enter Baker name: ", s);
-    double skill = Double.parseDouble(askQuestion("Enter Baker Skill: ", s));
+  private Store makeStore(Scanner s) {
+    String storeName = askQuestion("Enter Store name: ", s);
     int numCakes = Integer.parseInt(askQuestion("How many Cakes does store have: ", s));
 
     Cake[] cakes = new Cake[numCakes];
@@ -156,8 +155,24 @@ public class Player {
       cakes[i] = makeCake(s);
       amounts[i] = Integer.parseInt(askQuestion("How many of this cake? ", s));
     }
-    Store store = new Store(cakes, amounts, storeName, skill);
+    Store store = new Store(cakes, amounts, storeName);
+    System.out.println("Store MADE -------------------");
     // bakers.add(baker);
+    return store;
+  }
+  private Baker makeBaker(Scanner s){
+    String name = askQuestion("Name of the baker? ", s);
+    double skill = Double.parseDouble(askQuestion("Enter Baker Skill: ", s));
+    Store store = chooseEntity("Store", s);
+    if (store == null){
+      System.out.println("No baker made");
+      return null;
+    }
+    Baker baker = new Baker(this);
+    baker.placeOfWork = store;
+    baker.giveName(name);
+    baker.giveSkill(skill);
+    baker.setCash(0);
     return baker;
   }
 

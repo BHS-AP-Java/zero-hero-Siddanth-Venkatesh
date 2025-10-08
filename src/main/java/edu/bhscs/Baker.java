@@ -16,11 +16,11 @@ public class Baker implements Creatable {
     this.p = p;
   }
 
+  // METHODS
   void setBakerStore(Store store) {
     placeOfWork = store;
   }
 
-  // METHODS
   void takeOrder(int price, Customer c) {
     cash += c.pay(price);
     c.takeCake(bakeCake());
@@ -37,6 +37,18 @@ public class Baker implements Creatable {
       this.placeOfWork = bakery;
       System.out.println(this.name + " now works at " + bakery.getName());
     }
+  }
+
+  void giveName(String name){
+    this.name = name;
+  }
+
+  void giveSkill(double skill) {
+    this.skill = skill;
+  }
+
+  void setCash(int cash) {
+    this.cash = cash;
   }
 
   // This adds a cake to Stores inventory. If the cake added has the same name as another cake,

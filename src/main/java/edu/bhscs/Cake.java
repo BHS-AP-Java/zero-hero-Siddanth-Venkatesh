@@ -32,7 +32,6 @@ public class Cake {
   // quality is the quality of the cake. The price of the cake goes up with quality
   private double quality;
 
-
   // This is the constructor for a cake, and it makes an instance of a cake with it's ingredients
   // cost, weight, and name.
   // CONSTRUCTOR
@@ -53,7 +52,7 @@ public class Cake {
   }
 
   // Makes a default cake, if only the name and flour are given
-  public Cake(String name, Flour f){
+  public Cake(String name, Flour f) {
     this.name = name;
     this.flour = f;
     this.ingredients = base();

@@ -173,12 +173,12 @@ public class Customer implements Creatable {
     System.out.println("----------------------------");
   }
 
-  public int pay(int amount){
+  public int pay(int amount) {
     balance -= amount;
     return amount;
   }
 
-  public void takeCake(Cake cake){
+  public void takeCake(Cake cake) {
     cakesOwned.add(cake);
   }
 
@@ -214,7 +214,7 @@ public class Customer implements Creatable {
 
   // This buys a cake directly from the Baker. Since the baker can't use store ingredients
   // it will just be a default cake with a custom name
-  public void buy(Baker b, int price){
+  public void buy(Baker b, int price) {
     b.takeOrder(price, this);
   }
 

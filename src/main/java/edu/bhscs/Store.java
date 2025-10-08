@@ -31,7 +31,7 @@ public class Store implements Creatable {
   // of the cakes,
   // and the storeName.
   // CONSTRUCTOR
-  public Store(Cake[] cakes, int[] amounts, String storeName, double skill) {
+  public Store(Cake[] cakes, int[] amounts, String storeName) {
     if (cakes.length != amounts.length) {
       System.out.println("Need amounts for each type of Cake");
       return;
@@ -52,12 +52,13 @@ public class Store implements Creatable {
 
   // This sets the default Store, with three types of cakes, each with the same default ingredients,
   // plus one different one.
-  public Store(String storeName, double skill) {
-    this(defaultCakeOptions(skill), new int[] {2, 4, 5}, storeName, skill);
+  public Store(String storeName) {
+    this(defaultCakeOptions(), new int[] {2, 4, 5}, storeName);
   }
 
   // List of the default cake options a store could sell
-  private static Cake[] defaultCakeOptions(double skill) {
+  private static Cake[] defaultCakeOptions() {
+    double skill = 10;
     String name = "Chocolate Cake";
     String[] ingredientsChocolate = {"Cocoa Powder"};
     Cake chocolateCake = new Cake(Cake.base(ingredientsChocolate), 150.00, 100, name, skill);
