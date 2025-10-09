@@ -58,6 +58,7 @@ public class Cake {
     this.ingredients = base();
     this.quality = skill;
     WEIGHTOG = 100;
+    weightPounds = WEIGHTOG;
   }
 
   // This makes a cake using a specific type of flour

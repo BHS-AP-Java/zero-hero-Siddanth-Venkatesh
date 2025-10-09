@@ -19,7 +19,7 @@ package edu.bhscs;
 public class Main {
 
   public static void main(String[] args) {
-    Player player = new Player("Sigma", new String[] {"Customer", "Baker", "PTSA", "Store"});
+    Player player = new Player("Sigma");
     player.showOptions();
   }
 

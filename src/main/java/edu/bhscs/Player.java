@@ -36,7 +36,8 @@ public class Player {
   Scanner s;
 
   // CONSTRUCTOR
-  public Player(String name, String[] typesOfInstitutionsOrPeoplePlayerControls) {
+  public Player(String name) {
+    String[] typesOfInstitutionsOrPeoplePlayerControls = {"Customer", "Baker", "PTSA", "Store"};
     for (String thing : typesOfInstitutionsOrPeoplePlayerControls) {
       lists.put(thing, new ArrayList<>());
     }
@@ -53,10 +54,12 @@ public class Player {
   }
 
   // --------------- This is the wrapper for an "Option" a Player can do --------------------
-  // This makes an option class that allows you to make an option the player can do
+  // This makes an option class that allows you to make an option the player can do. Each options
+  // has a label describing it, and a maker, which is a function.
   private record Option<T>(String label, Maker<T> maker) {}
 
-  // This is an option (or action) the Player can do, that doesn't return anything
+  // This is an option (or action) the Player can do, that doesn't return anything.
+  // Same as above, expcept that a "runner" doesn't return anything.
   private record noReturnOption(String label, Runnable action) {}
 
   // Each method for creating people can be abstracted into this Maker class, which
@@ -112,7 +115,7 @@ public class Player {
     }
   }
 
-  public void accomplishments(int amount){
+  public void accomplishments(int amount) {
     accomplishments += amount;
   }
 
@@ -154,7 +157,7 @@ public class Player {
   }
 
   private void showCustomerActions(Customer customer) {
-    List<Option<?>> options = List.of(); // no creation options
+    List<Option<?>> options = List.of(); // The customers actions don't return anything
 
     List<noReturnOption> actions =
         List.of(
@@ -174,7 +177,9 @@ public class Player {
             new noReturnOption(
                 "Eat a Cake",
                 () -> {
-                  Cake cake = customer.getCake(askQuestion("Name of the cake? ", s));
+                  System.out.println("Choose the cake you want out of the options");
+                  int choice = chooseElement(customer.getCakesOwned(), s);
+                  Cake cake = customer.getCakesOwned().get(choice);
                   double percent = Double.parseDouble(askQuestion("Percent to eat:", s));
                   customer.eat(cake, percent);
                 }),
@@ -191,7 +196,7 @@ public class Player {
                   System.out.println(balance);
                 }),
             new noReturnOption(
-                "Steal a Cake",
+                "Steal a Cake (you have to try to guess the name of Cake to steal it)",
                 () -> {
                   Baker baker = chooseEntity("Baker", s);
                   if (baker == null) return;
@@ -349,6 +354,7 @@ public class Player {
     return ptsa;
   }
 
+  // HELPER METHODS
   // Allows a Person to choose an Entity
   @SuppressWarnings("unchecked")
   private <T extends Creatable> T chooseEntity(String typeName, Scanner s) {
@@ -380,9 +386,38 @@ public class Player {
     return (T) list.get(choice - 1);
   }
 
+  // Returns the index of an element from an Array List.
+  public static <T> int chooseElement(ArrayList<T> list, Scanner sc) {
+    if (list.isEmpty()) {
+      System.out.println("The list is empty.");
+      return -1;
+    }
+    System.out.println("Choose an element:");
+    for (int i = 0; i < list.size(); i++) {
+      System.out.println((i + 1) + ". " + list.get(i));
+    }
+    int choice = -1;
+    while (true) {
+      System.out.print("Enter the number of your choice: ");
+      try {
+        choice = Integer.parseInt(sc.nextLine()) - 1;
+        if (choice >= 0 && choice < list.size()) {
+          break;
+        } else {
+          System.out.println(
+              "Invalid choice. Please enter a number between 1 and " + list.size() + ".");
+        }
+      } catch (NumberFormatException e) {
+        System.out.println("Please enter a valid number.");
+      }
+    }
+
+    return choice;
+  }
+
   // For testing purposes
   public static void main() {
-    Player player = new Player("Sigma", new String[] {"Customer", "Baker", "PTSA"});
+    Player player = new Player("Sigma");
     player.showOptions();
   }
 }
