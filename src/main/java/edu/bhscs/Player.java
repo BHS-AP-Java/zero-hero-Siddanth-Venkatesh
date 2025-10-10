@@ -10,7 +10,8 @@
  * information regarding what is being created when needed.
  * OUTPUT: Will constantly output all the actions the player can do in loop until the User breaks out of it
  * EDGE CASE: Don't name two different things the same thing, or else things will break. If put negatives numbers
- * when prompted for a number, sometimes things will break
+ * when prompted for a number, sometimes things will break. Additonally, trying to use something before it has been
+ * created can result in errors. 
  */
 package edu.bhscs;
 
