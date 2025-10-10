@@ -30,10 +30,12 @@ public class Customer implements Creatable {
   // name is the name of the customer
   private String name;
   // Is the race of Customer. Be careful if you aren't American.
+  // Currently has been left unused so that any race can be made. 
   private String race;
 
   // This is the constroctor for a customer. It takes in their name, weight, and wealth and makes a
   // customer.
+  // CONSTRUCTOR
   public Customer(String name, double weight, double wealth, String race) {
     this.name = name;
     this.weight = weight;
@@ -41,6 +43,7 @@ public class Customer implements Creatable {
     this.race = race;
   }
 
+  // METHODS
   // Creatable Methods
   // Returns the name of the type
   @Override

@@ -42,6 +42,7 @@ public class PTSA implements Creatable {
 
   // This is the PTSA contructor. It takes in the name of the school and
   // what it needs to fundraise for at what price using a HashMap.
+  // CONSTRUCTOR
   public PTSA(String name, Map<String, Double> necesities, double cut) {
     System.out.println("----------------------------");
     if (cut < 0 || cut > 100) {
@@ -69,6 +70,7 @@ public class PTSA implements Creatable {
     displayGoal();
   }
 
+  // METHODS
   // Returns the name of the school the PTSA represents.
   public String getName() {
     return name;

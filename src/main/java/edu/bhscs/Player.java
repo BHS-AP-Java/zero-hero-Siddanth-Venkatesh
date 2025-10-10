@@ -5,10 +5,12 @@
 
 /*
  * DESCRIPTION: A class that allows the terminal user input to make, destroy, buy, and sell
- * cakes, and control which bakers make it, and PTSA's.
- * Input: Name of player and the types of things that might be created it by them.
+ * cakes; also allows creation of bakers and ptsas and customers
+ * Input: Name of player and the types of things that might be created it by them. Also, will ask for
+ * information regarding what is being created when needed.
  * OUTPUT: Will constantly output all the actions the player can do in loop until the User breaks out of it
- * EDGE CASE: Don't name two different things the same thing, or else things will get messy. ):
+ * EDGE CASE: Don't name two different things the same thing, or else things will break. If put negatives numbers
+ * when prompted for a number, sometimes things will break
  */
 package edu.bhscs;
 
@@ -51,8 +53,10 @@ public class Player {
     options.add(new Option<PTSA>(("Make PTSA"), this::makePTSA));
     actions.add(
         new noReturnOption("View Customers and their actions ", () -> viewCustomerActions()));
+    actions.add(new noReturnOption("View PTSA Goals", () -> viewPTSAGoal()));
+    actions.add(new noReturnOption("Baker actions", () -> showBakerActions()));
   }
-
+  // METHODS
   // --------------- This is the wrapper for an "Option" a Player can do --------------------
   // This makes an option class that allows you to make an option the player can do. Each options
   // has a label describing it, and a maker, which is a function.
@@ -153,6 +157,9 @@ public class Player {
 
   private void viewCustomerActions() {
     Customer customer = chooseEntity("Customer", s);
+    if (customer == null){
+      return;
+    }
     showCustomerActions(customer);
   }
 
@@ -300,6 +307,43 @@ public class Player {
     return baker;
   }
 
+  private void showBakerActions(){
+    Baker baker = chooseEntity("Baker", s);
+    if (baker == null){
+      return;
+    }
+    List<Option<?>> options = List.of(); // The bakers actions don't return anything
+    List<noReturnOption> actions =
+        List.of(new noReturnOption("Add cakes to place of work by name", () -> {
+          baker.placeOfWork.displayStock();
+          String cakeName = askQuestion("Name of the Cake you want to add", s);
+          int amount = Integer.parseInt(askQuestion("How many cakes should they add? ",s));
+          baker.add(cakeName, amount);
+        }),
+        new noReturnOption("Add a new type of cake", () -> {
+          Cake cake = makeCake(s);
+          int amount = Integer.parseInt(askQuestion("Amount of these new cakes to add? ", s));
+          baker.addNewCake(cake, amount);
+        }),
+        new noReturnOption("View Balance", () -> {
+          System.out.println(baker.getBalance());
+        }),
+        new noReturnOption("Change place of work", () -> {
+          System.out.println("Choose the same store if the baker shouldn't change stores");
+          Store store = chooseEntity("Store", s);
+          baker.takeJob(store);
+        }),
+        new noReturnOption("View place of Work", () -> {
+          System.out.println(baker.placeOfWork);
+          baker.placeOfWork.displayStock();
+        })
+
+        );
+
+      loopOptions(options, actions, "Baker Actions", false);
+
+  }
+
   // CAKE ACTIONS:
   // Makes a cake, with information about the cake taken from Command line
   private Cake makeCake(Scanner s) {
@@ -352,6 +396,12 @@ public class Player {
     PTSA ptsa = new PTSA(name, needs, wealth, cut);
     // PTSAs.add(ptsa);
     return ptsa;
+  }
+
+  // View PTSA goal
+  private void viewPTSAGoal(){
+    PTSA ptsa = chooseEntity("PTSA", s);
+    ptsa.displayGoal();
   }
 
   // HELPER METHODS

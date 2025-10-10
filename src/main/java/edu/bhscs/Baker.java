@@ -2,6 +2,8 @@ package edu.bhscs;
 
 public class Baker implements Creatable {
   // PROPERTIES AND FIELDS
+  // placeOfWork should be a private field, but since I can't modify
+  // that variable, bad practice will exist in the code.
   Player p;
   Flour f;
   Store placeOfWork;
@@ -51,6 +53,10 @@ public class Baker implements Creatable {
     this.cash = cash;
   }
 
+  int getBalance(){
+    return cash;
+  }
+
   // This adds a cake to Stores inventory. If the cake added has the same name as another cake,
   // but different ingredients, it will still get added.
   public void add(Cake cake, int amount) {
@@ -89,6 +95,14 @@ public class Baker implements Creatable {
       return;
     }
     add(cake, amount);
+  }
+
+  public void addNewCake(Cake cake, int amount){
+    if(this.placeOfWork.getCakeAmount(cake.getName()) != 0){
+      System.out.println("This store already sells this cake");
+      return;
+    }
+    this.placeOfWork.inventory.put(cake, amount);
   }
 
   // Creatable Methods

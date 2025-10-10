@@ -6,9 +6,10 @@
 /*
  * DESCRIPTION: Allows you to make people and a baker where people can buy or steal from the baker. Additionally,
  * their is a fundraiser going on by a PTSA that is looking to make money through donations and by people buying cakes for the fundraiser.
+ * All classes will be controlled through the Player class, which is a wrapper for a scanner.
  * INPUT: Requires the people, the store, and the PTSA to all be made in the main function. Then actions can be written in main
- * such as buying, selling, stealing, and donating. No command line arguments.
- * OUTPUT: Shows the prices and wealth of the store, how succesful the fundraiser was, and how the person changes from buying a cake.
+ * such as buying, selling, stealing, and donating.
+ * OUTPUT: Infomration regarding the updated status of the PTSA, or Bakers, or Customers.
  * EDGE CASE: Don't name two different cakes the same thing. Don't give two cakes the same two ingredients. Don't make
  * the PTSA have to buy two of the sames things. All of these will result in doubled up behavior, where the actual thing that gets chosen
  * would be random. For example, if two cakes were named "Vanilla", then buying a cake named "Vanilla" would randomly pick one of them
@@ -23,6 +24,7 @@ public class Main {
     player.showOptions();
   }
 
+  // Set for debugging PTSA class
   // // Set up the fundraiser. It will be a fundraiser for a computer, sports maintenance, and some
   // new
   // // floors
