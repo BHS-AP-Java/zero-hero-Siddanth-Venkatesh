@@ -11,7 +11,7 @@
  * OUTPUT: Will constantly output all the actions the player can do in loop until the User breaks out of it
  * EDGE CASE: Don't name two different things the same thing, or else things will break. If put negatives numbers
  * when prompted for a number, sometimes things will break. Additonally, trying to use something before it has been
- * created can result in errors. 
+ * created can result in errors.
  */
 package edu.bhscs;
 
@@ -57,6 +57,7 @@ public class Player {
     actions.add(new noReturnOption("View PTSA Goals", () -> viewPTSAGoal()));
     actions.add(new noReturnOption("Baker actions", () -> showBakerActions()));
   }
+
   // METHODS
   // --------------- This is the wrapper for an "Option" a Player can do --------------------
   // This makes an option class that allows you to make an option the player can do. Each options
@@ -158,7 +159,7 @@ public class Player {
 
   private void viewCustomerActions() {
     Customer customer = chooseEntity("Customer", s);
-    if (customer == null){
+    if (customer == null) {
       return;
     }
     showCustomerActions(customer);
@@ -308,41 +309,50 @@ public class Player {
     return baker;
   }
 
-  private void showBakerActions(){
+  private void showBakerActions() {
     Baker baker = chooseEntity("Baker", s);
-    if (baker == null){
+    if (baker == null) {
       return;
     }
     List<Option<?>> options = List.of(); // The bakers actions don't return anything
     List<noReturnOption> actions =
-        List.of(new noReturnOption("Add cakes to place of work by name", () -> {
-          baker.placeOfWork.displayStock();
-          String cakeName = askQuestion("Name of the Cake you want to add", s);
-          int amount = Integer.parseInt(askQuestion("How many cakes should they add? ",s));
-          baker.add(cakeName, amount);
-        }),
-        new noReturnOption("Add a new type of cake", () -> {
-          Cake cake = makeCake(s);
-          int amount = Integer.parseInt(askQuestion("Amount of these new cakes to add? ", s));
-          baker.addNewCake(cake, amount);
-        }),
-        new noReturnOption("View Balance", () -> {
-          System.out.println(baker.getBalance());
-        }),
-        new noReturnOption("Change place of work", () -> {
-          System.out.println("Choose the same store if the baker shouldn't change stores");
-          Store store = chooseEntity("Store", s);
-          baker.takeJob(store);
-        }),
-        new noReturnOption("View place of Work", () -> {
-          System.out.println(baker.placeOfWork);
-          baker.placeOfWork.displayStock();
-        })
+        List.of(
+            new noReturnOption(
+                "Add cakes to place of work by name",
+                () -> {
+                  baker.placeOfWork.displayStock();
+                  String cakeName = askQuestion("Name of the Cake you want to add", s);
+                  int amount = Integer.parseInt(askQuestion("How many cakes should they add? ", s));
+                  baker.add(cakeName, amount);
+                }),
+            new noReturnOption(
+                "Add a new type of cake",
+                () -> {
+                  Cake cake = makeCake(s);
+                  int amount =
+                      Integer.parseInt(askQuestion("Amount of these new cakes to add? ", s));
+                  baker.addNewCake(cake, amount);
+                }),
+            new noReturnOption(
+                "View Balance",
+                () -> {
+                  System.out.println(baker.getBalance());
+                }),
+            new noReturnOption(
+                "Change place of work",
+                () -> {
+                  System.out.println("Choose the same store if the baker shouldn't change stores");
+                  Store store = chooseEntity("Store", s);
+                  baker.takeJob(store);
+                }),
+            new noReturnOption(
+                "View place of Work",
+                () -> {
+                  System.out.println(baker.placeOfWork);
+                  baker.placeOfWork.displayStock();
+                }));
 
-        );
-
-      loopOptions(options, actions, "Baker Actions", false);
-
+    loopOptions(options, actions, "Baker Actions", false);
   }
 
   // CAKE ACTIONS:
@@ -400,7 +410,7 @@ public class Player {
   }
 
   // View PTSA goal
-  private void viewPTSAGoal(){
+  private void viewPTSAGoal() {
     PTSA ptsa = chooseEntity("PTSA", s);
     ptsa.displayGoal();
   }

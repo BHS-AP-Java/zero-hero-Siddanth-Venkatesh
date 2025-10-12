@@ -53,7 +53,7 @@ public class Baker implements Creatable {
     this.cash = cash;
   }
 
-  int getBalance(){
+  int getBalance() {
     return cash;
   }
 
@@ -97,8 +97,8 @@ public class Baker implements Creatable {
     add(cake, amount);
   }
 
-  public void addNewCake(Cake cake, int amount){
-    if(this.placeOfWork.getCakeAmount(cake.getName()) != 0){
+  public void addNewCake(Cake cake, int amount) {
+    if (this.placeOfWork.getCakeAmount(cake.getName()) != 0) {
       System.out.println("This store already sells this cake");
       return;
     }

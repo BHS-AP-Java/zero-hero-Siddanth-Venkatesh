@@ -20,7 +20,7 @@ import java.util.HashMap;
 
 public class Store implements Creatable {
   // PROPERTIES AND FIELDS
-  // The inventory represents a map from every cake the Store has to the amount of it they have. 
+  // The inventory represents a map from every cake the Store has to the amount of it they have.
   public HashMap<Cake, Integer> inventory = new HashMap<>();
   // name is the name of the Store.
   private String name;
