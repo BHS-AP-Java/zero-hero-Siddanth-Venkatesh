@@ -10,6 +10,7 @@
  * EDGE CASE: Will throw error of some class did not properly implement this
  */
 package edu.bhscs;
+
 import java.util.Random;
 
 public class Burger {
@@ -27,13 +28,13 @@ public class Burger {
     int length = 10;
     int size = 25;
     int max = (int) (size * Math.sqrt(length - 1));
-    for (int i = 1; i < length; i++){
+    for (int i = 1; i < length; i++) {
 
       drawFlatLine((int) (size * Math.sqrt(i)), termninalWidth, "▓");
     }
     System.out.println();
     for (int i = 1; i < 15; i++) {
-      drawFlatLine((int) 60 , termninalWidth, "▓");
+      drawFlatLine((int) 60, termninalWidth, "▓");
     }
     System.out.println();
     for (int i = 1; i < 6; i++) {
@@ -49,7 +50,7 @@ public class Burger {
   public void drawFlatLine(int length, int termninalWidth, String c) {
     Random r = new Random();
     int random = r.nextInt(10);
-    if (random == 0){
+    if (random == 0) {
       c = " ";
     }
     System.out.print(" ".repeat((termninalWidth - length) / 2));

@@ -61,6 +61,10 @@ public class Cake {
     weightPounds = WEIGHTOG;
   }
 
+  public Cake() {
+    WEIGHTOG = 100;
+  }
+
   // This makes a cake using a specific type of flour
   public Cake(
       String ingredients[], double cost, double weight, String name, Flour flour, double quality) {
@@ -179,6 +183,34 @@ public class Cake {
     return result;
   }
 
+  // Returns the name of the type
+  @Override
+  public String toString() {
+    String stuff = Arrays.toString(ingredients);
+    return name + " cake " + " Has: " + stuff + " Weighs " + weightPounds + "lb";
+  }
+
+  // Drawing the Cake
+  public void draw(){
+    char[][] matrix =
+    {{'A', 'B', 'C'},
+    {'D', 'E', 'F'},
+    {'G', 'H', 'I'}};
+
+    matrix[1][2] = 'X';
+    draw(matrix);
+  }
+  // Draw a 2d Array
+  public void draw(char[][] things){
+    for (int i = 0; i < things[0].length; i++){
+      int length = things[i].length;
+      for (int j = 0; j < length; j++){
+        System.out.print(things[j][length - i - 1]);
+      }
+      System.out.println();
+    }
+  }
+
   // Main method, used for debugging the cake class
   public static void main(String[] args) {
     String[] ingredients = {
@@ -190,12 +222,5 @@ public class Cake {
     Bob.eat(cake, 10);
     // System.out.println(cake.amountLeftWeight());
     // cake.displayInfo();
-  }
-
-  // Returns the name of the type
-  @Override
-  public String toString() {
-    String stuff = Arrays.toString(ingredients);
-    return name + " cake " + " Has: " + stuff + " Weighs " + weightPounds + "lb";
   }
 }

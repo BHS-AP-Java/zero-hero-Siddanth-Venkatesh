@@ -20,8 +20,10 @@ package edu.bhscs;
 public class Main {
 
   public static void main(String[] args) {
-    Player player = new Player("Sigma");
-    player.showOptions();
+    // Player player = new Player("Sigma");
+    // player.showOptions();
+    Cake cake = new Cake();
+    cake.draw();
   }
 
   // Set for debugging PTSA class
