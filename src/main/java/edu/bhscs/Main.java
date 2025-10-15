@@ -20,10 +20,15 @@ package edu.bhscs;
 public class Main {
 
   public static void main(String[] args) {
-    // Player player = new Player("Sigma");
+    Player player = new Player("Sigma");
     // player.showOptions();
     Cake cake = new Cake();
+    // cake.draw(giveNumber(player));
     cake.draw();
+  }
+
+  public static int giveNumber(Player s){
+    return Integer.parseInt(s.giveAnswer("Give a number"));
   }
 
   // Set for debugging PTSA class

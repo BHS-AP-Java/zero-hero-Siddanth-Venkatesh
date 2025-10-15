@@ -31,6 +31,8 @@ public class Cake {
   private Flour flour;
   // quality is the quality of the cake. The price of the cake goes up with quality
   private double quality;
+  // color of the cake
+  private char color = '#';
 
   // This is the constructor for a cake, and it makes an instance of a cake with it's ingredients
   // cost, weight, and name.
@@ -191,21 +193,41 @@ public class Cake {
   }
 
   // Drawing the Cake
-  public void draw(){
-    char[][] matrix =
-    {{'A', 'B', 'C'},
-    {'D', 'E', 'F'},
-    {'G', 'H', 'I'}};
+  public void draw() {
+    // this.ingredients
+    // for (int i = 0; i < a; i++){
+    //   System.out.print(this.color);
+    // }
+    System.out.println();
+    char[][] matrix = new char[20][20];
+    char[] def = new char[20];
+    Arrays.fill(def, '?');
+    Arrays.fill(matrix, def);
+    // DrawingHelpers.plotLine(1, 1, 2, 5, matrix);
 
-    matrix[1][2] = 'X';
+
+    matrix[3][0] = 'X';
+    matrix[2][1] = '?';
+    System.out.println(matrix[3][1]);
+    System.out.println(matrix[3][0]);
+    System.out.println(matrix[2][0]);
+
+
     draw(matrix);
   }
+
+  public void putTriangle(char[][] things) {
+
+  }
+
   // Draw a 2d Array
-  public void draw(char[][] things){
-    for (int i = 0; i < things[0].length; i++){
-      int length = things[i].length;
-      for (int j = 0; j < length; j++){
-        System.out.print(things[j][length - i - 1]);
+  public void draw(char[][] things) {
+    for (int i = 0; i < things[0].length; i++) {
+      int length = things.length;
+      for (int j = 0; j < length; j++) {
+        System.out.print(things[j][length - i - 1] + " ");
+        System.out.flush();
+        // System.out.print(j + "jk" + i);
       }
       System.out.println();
     }
