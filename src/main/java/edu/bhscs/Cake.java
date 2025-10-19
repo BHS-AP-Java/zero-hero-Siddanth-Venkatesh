@@ -33,6 +33,11 @@ public class Cake {
   private double quality;
   // color of the cake
   private char color = '#';
+  // Shading (Taken from:
+  // https://stackoverflow.com/questions/30097953/ascii-art-sorting-an-array-of-ascii-characters-by-brightness-levels-c-c)
+  private final String SHADING = "$@B%8&WM#*oahkbdpqwmZO0QLCJUYXzcvunxrjft/\\|()1{}[]?-_+~<>i!lI;:,\"^`'.";
+  // Amount of characters in shading
+  private final int SHADINGAMOUNT = 70;
 
   // This is the constructor for a cake, and it makes an instance of a cake with it's ingredients
   // cost, weight, and name.
@@ -199,15 +204,50 @@ public class Cake {
     //   System.out.print(this.color);
     // }
     System.out.println();
-    int size = 56;
+    int size = 140;
     char[][] matrix = new char[size][size];
     char[] def = new char[size];
-    Arrays.fill(def, '-');
+    Arrays.fill(def, ' ');
     for (int i = 0; i < matrix.length; i++) {
       matrix[i] = def.clone();
     }
+    float radius = 50.0f;
+    float height = 10.0f;
+    int slices = 10;
+    float thetaStart = (float) 2.3;
+    float dTheta = 1.6f;
+    float thetaEnd = thetaStart + dTheta;
 
-    DrawingHelpers.fillTriangle(0, 0, 5, 6, 10, 4, matrix, 'C');
+    float[][] verts = DrawingHelpers.generateCylinderSliceVertices(radius, height, slices, thetaStart, thetaEnd);
+    int[][] facesOG = DrawingHelpers.generateCylinderSliceIndices(slices, thetaEnd, thetaStart);
+    DrawingHelpers.rotateVertices(verts, (float) (3 * Math.PI / 4), 0.0f, 0.0f);
+    int[][] faces = DrawingHelpers.zSortTriangles(facesOG, verts);
+
+    int length = faces.length;
+    for (int i = 0; i < length; i++){
+      // For now, simple orthographic projection is used
+      int shiftx = 70;
+      int shifty = 0;
+
+      int x0 = (int) verts[faces[i][0]][0] + shiftx;
+      int y0 = (int) verts[faces[i][0]][1] + shifty;
+      int z0 = (int) verts[faces[i][0]][2];
+
+      int x1 = (int) verts[faces[i][1]][0] + shiftx;
+      int y1 = (int) verts[faces[i][1]][1] + shifty;
+      int z1 = (int) verts[faces[i][1]][2];
+
+      int x2 = (int) verts[faces[i][2]][0] + shiftx;
+      int y2 = (int) verts[faces[i][2]][1] + shifty;
+      int z2 = (int) verts[faces[i][2]][2];
+
+      // Linear shading is used
+      int shadeIndex = Math.round( (((float) i / (float) length) * SHADINGAMOUNT));
+      char shade = SHADING.charAt(shadeIndex);
+      System.out.println(shade);
+
+      DrawingHelpers.fillTriangle(x0, y0, x1, y1, x2, y2, matrix, shade);
+    }
 
     draw(matrix);
   }
@@ -218,8 +258,9 @@ public class Cake {
   public void draw(char[][] things) {
     for (int i = 0; i < things[0].length; i++) {
       int length = things.length;
+      // Loops a triangle, going by rows then columns to simulate drawing x,y pairs.
       for (int j = 0; j < length; j++) {
-        System.out.print(things[j][length - i - 1] + " ");
+        System.out.print(things[j][length - i - 1] + "");
         System.out.flush();
         // System.out.print(j + "jk" + i);
       }

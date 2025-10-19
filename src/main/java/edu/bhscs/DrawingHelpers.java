@@ -1,22 +1,24 @@
 // Siddanth Venkatesh
 // P2
 // Cake
-// 9/19
+// 10/19
 
 /*
- * DESCRIPTION: Just a wrapper class so that all creatable objects can be refered to.
- * INPUT: Nothing
- * OUTPUT: Nothing
- * EDGE CASE: Will throw error of some class did not properly implement this
+ * DESCRIPTION: Collection of loose static functions that allow drawing in the terminal
+ * INPUT: Will require a static array of characters
+ * OUTPUT: Returns a matrix of values with filled in values
+ * EDGE CASE: Putting values outside the bounds of the matrix will cause them not to be drawn.
  */
 package edu.bhscs;
 
-import java.util.Comparator;
 import java.util.Arrays;
+import java.util.Comparator;
 
 // Information on how these work is avaliable on Wikipedia
 // (https://en.wikipedia.org/wiki/Triangle_mesh)
 public class DrawingHelpers {
+
+  // Plots a line
   public static void plotLine(int x0, int y0, int x1, int y1, char[][] things) {
     int dx = Math.abs(x1 - x0);
     int sx = x0 < x1 ? 1 : -1;
@@ -44,6 +46,7 @@ public class DrawingHelpers {
     }
   }
 
+  // Draws a filled in triangle
   public static void fillTriangle(
       int x0, int y0, int x1, int y1, int x2, int y2, char[][] things, char ch) {
     // Sort vertices by y-coordinate
@@ -76,9 +79,10 @@ public class DrawingHelpers {
     }
 
     int totalHeight = y2 - y0;
-    if (totalHeight == 0) return;
+    if (totalHeight == 0) return; // Triangle won't be drawn if it has no height
 
     // Scans each line and draws in the triangle
+    // Implementation has inspiration from wikipedia (made by me though)
     for (int i = 0; i < totalHeight; i++) {
       boolean secondHalf = i > y1 - y0 || y1 == y0;
       int segmentHeight = secondHalf ? y2 - y1 : y1 - y0;
@@ -109,11 +113,12 @@ public class DrawingHelpers {
   // Rotates a set of verticies
   // Implementation taken from Wikipedia (https://en.wikipedia.org/wiki/Rotation_matrix)
   public static void rotateVertices(float[][] vertices, float pitch, float yaw, float roll) {
-
     float x = 0f;
     float y = 0f;
     float z = 0f;
-    for (int i = 0; i < vertices.length; i++){
+
+    // Find the center to rotate them around
+    for (int i = 0; i < vertices.length; i++) {
       x += vertices[i][0];
       y += vertices[i][1];
       z += vertices[i][2];
@@ -157,14 +162,19 @@ public class DrawingHelpers {
     }
   }
 
-  // Sorts the triangle by their average z cordinate. This makes it so that triangles are draw in the correct order
+  // Sorts the triangle by their average z cordinate. This makes it so that triangles are draw in
+  // the correct order
   public static int[][] zSortTriangles(int[][] indices, float[][] vertices) {
-    return Arrays.stream(indices).sorted(Comparator.comparingDouble(tri -> {
-      float z0 = vertices[tri[0]][2];
-      float z1 = vertices[tri[1]][2];
-      float z2 = vertices[tri[2]][2];
-      return -((z0 + z1 + z2) / 3.0f); // negative for descending (back to front)
-    })).toArray(int[][]::new);
+    return Arrays.stream(indices)
+        .sorted(
+            Comparator.comparingDouble(
+                tri -> {
+                  float z0 = vertices[tri[0]][2];
+                  float z1 = vertices[tri[1]][2];
+                  float z2 = vertices[tri[2]][2];
+                  return ((z0 + z1 + z2)); // negative for descending (back to front)
+                }))
+        .toArray(int[][]::new);
   }
 
   // Printing the verticies for debugging
@@ -198,8 +208,8 @@ public class DrawingHelpers {
   }
 
   // Generates vertices
-  public static float[][] generateCylinderSliceVertices(float radius, float height, int slices,
-      float thetaStart, float thetaEnd) {
+  public static float[][] generateCylinderSliceVertices(
+      float radius, float height, int slices, float thetaStart, float thetaEnd) {
 
     // +2 extra rings for top & bottom cap centers
     int vertexCount = slices * 2 + 2;
@@ -211,8 +221,8 @@ public class DrawingHelpers {
     // Loops through a circle and adds the points (x, y, z) on the circle
     // Also adds the points (x, y, z + height) on the cirlce
     for (int i = 0; i < slices; i += 1) {
-      float x = (float) Math.cos(theta);
-      float y = (float) Math.sin(theta);
+      float x = (float) (radius * Math.cos(theta));
+      float y = (float) (radius * Math.sin(theta));
       vertices[i] = new float[] {x, y, 0};
       vertices[i + slices] = new float[] {x, y, height};
       theta += dTheta;
@@ -227,6 +237,8 @@ public class DrawingHelpers {
 
   // Generate indices for sides + caps
   public static int[][] generateCylinderSliceIndices(int slices, float thetaEnd, float thetaStart) {
+    // If dtheta is 2pi, the triangle should connect back up to itself
+    // setting a to 1 achieves that.
     int a = 0;
     if (thetaEnd - thetaStart > 2 * Math.PI - 0.001f) {
       a = 1;
@@ -260,19 +272,18 @@ public class DrawingHelpers {
 
   // Main method to debug this class
   public static void main(String[] args) {
-    float radius = 1.0f;
-    float height = 2.0f;
+    float radius = 20f;
+    float height = 1.0f;
     int slices = 4;
-    float thetaStart = - (float) 0;
-    float thetaEnd = (float) 1;
+    float thetaStart = (float) 2;
+    float thetaEnd = (float) 3;
 
     float[][] verts = generateCylinderSliceVertices(radius, height, slices, thetaStart, thetaEnd);
     int[][] facesOG = generateCylinderSliceIndices(slices, thetaEnd, thetaStart);
-    rotateVertices(verts, 2f, 0.0f, 0.0f);
+    rotateVertices(verts, (float) (3 * Math.PI/4), 0.0f, 0.0f);
     int[][] faces = zSortTriangles(facesOG, verts);
 
     printVertices(verts);
     printIndices(faces);
   }
-
 }
