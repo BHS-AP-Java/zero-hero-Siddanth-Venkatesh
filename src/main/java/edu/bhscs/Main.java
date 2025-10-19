@@ -27,7 +27,7 @@ public class Main {
     cake.draw();
   }
 
-  public static int giveNumber(Player s){
+  public static int giveNumber(Player s) {
     return Integer.parseInt(s.giveAnswer("Give a number"));
   }
 

@@ -199,26 +199,20 @@ public class Cake {
     //   System.out.print(this.color);
     // }
     System.out.println();
-    char[][] matrix = new char[20][20];
-    char[] def = new char[20];
-    Arrays.fill(def, '?');
-    Arrays.fill(matrix, def);
-    // DrawingHelpers.plotLine(1, 1, 2, 5, matrix);
+    int size = 56;
+    char[][] matrix = new char[size][size];
+    char[] def = new char[size];
+    Arrays.fill(def, '-');
+    for (int i = 0; i < matrix.length; i++) {
+      matrix[i] = def.clone(); 
+    }
 
-
-    matrix[3][0] = 'X';
-    matrix[2][1] = '?';
-    System.out.println(matrix[3][1]);
-    System.out.println(matrix[3][0]);
-    System.out.println(matrix[2][0]);
-
+    DrawingHelpers.plotLine(1, 1, 6, 5, matrix);
 
     draw(matrix);
   }
 
-  public void putTriangle(char[][] things) {
-
-  }
+  public void putTriangle(char[][] things) {}
 
   // Draw a 2d Array
   public void draw(char[][] things) {
@@ -235,13 +229,15 @@ public class Cake {
 
   // Main method, used for debugging the cake class
   public static void main(String[] args) {
-    String[] ingredients = {
-      "Chocolate Chips", "Flour", "Sugar", "Water", "Milk", "Egg", "Cocoa Powder"
-    };
-    String name = "Chocolate Cake";
-    Cake cake = new Cake(ingredients, 100.00, 100, name, 10.00);
-    Customer Bob = new Customer("Bob", 100, 500, "Mexican");
-    Bob.eat(cake, 10);
+    Cake cake = new Cake();
+    cake.draw();
+    // String[] ingredients = {
+    //   "Chocolate Chips", "Flour", "Sugar", "Water", "Milk", "Egg", "Cocoa Powder"
+    // };
+    // String name = "Chocolate Cake";
+    // Cake cake = new Cake(ingredients, 100.00, 100, name, 10.00);
+    // Customer Bob = new Customer("Bob", 100, 500, "Mexican");
+    // Bob.eat(cake, 10);
     // System.out.println(cake.amountLeftWeight());
     // cake.displayInfo();
   }
