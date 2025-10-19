@@ -33,11 +33,6 @@ public class Cake {
   private double quality;
   // color of the cake
   private char color = '#';
-  // Shading (Taken from:
-  // https://stackoverflow.com/questions/30097953/ascii-art-sorting-an-array-of-ascii-characters-by-brightness-levels-c-c)
-  private final String SHADING = "$@B%8&WM#*oahkbdpqwmZO0QLCJUYXzcvunxrjft/\\|()1{}[]?-_+~<>i!lI;:,\"^`'.";
-  // Amount of characters in shading
-  private final int SHADINGAMOUNT = 70;
 
   // This is the constructor for a cake, and it makes an instance of a cake with it's ingredients
   // cost, weight, and name.
@@ -215,7 +210,7 @@ public class Cake {
     float height = 10.0f;
     int slices = 10;
     float thetaStart = (float) 2.3;
-    float dTheta = 1.6f;
+    float dTheta = 1.0f;
     float thetaEnd = thetaStart + dTheta;
 
     float[][] verts = DrawingHelpers.generateCylinderSliceVertices(radius, height, slices, thetaStart, thetaEnd);
@@ -241,10 +236,8 @@ public class Cake {
       int y2 = (int) verts[faces[i][2]][1] + shifty;
       int z2 = (int) verts[faces[i][2]][2];
 
-      // Linear shading is used
-      int shadeIndex = Math.round( (((float) i / (float) length) * SHADINGAMOUNT));
-      char shade = SHADING.charAt(shadeIndex);
-      System.out.println(shade);
+      // Semi accurate shading is used
+      char shade = DrawingHelpers.findShading(x0,y0,z0,x1,y1,z1,x2,y2,z2);
 
       DrawingHelpers.fillTriangle(x0, y0, x1, y1, x2, y2, matrix, shade);
     }

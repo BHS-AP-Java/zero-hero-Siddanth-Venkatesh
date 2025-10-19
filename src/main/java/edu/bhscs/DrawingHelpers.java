@@ -17,6 +17,11 @@ import java.util.Comparator;
 // Information on how these work is avaliable on Wikipedia
 // (https://en.wikipedia.org/wiki/Triangle_mesh)
 public class DrawingHelpers {
+  // Shading (Taken from:
+  // https://stackoverflow.com/questions/30097953/ascii-art-sorting-an-array-of-ascii-characters-by-brightness-levels-c-c)
+  private static final String SHADING = "$@B%8&WM#*oahkbdpqwmZO0QLCJUYXzcvunxrjft/\\|()1{}[]?-_+~<>i!lI;:,\"^`'.";
+  // Amount of characters in shading
+  private static final int SHADINGAMOUNT = 70;
 
   // Plots a line
   public static void plotLine(int x0, int y0, int x1, int y1, char[][] things) {
@@ -268,6 +273,37 @@ public class DrawingHelpers {
     indices[4 * slices + 2] = new int[] {slices - 1, slices + slices - 1, 2 * slices};
     indices[4 * slices + 3] = new int[] {slices - 1 + slices, 2 * slices, 2 * slices + 1};
     return indices;
+  }
+
+  public static char findShading(int x0, int y0, int z0, int x1, int y1, int z1, int x2, int y2, int z2){
+    // Face normal via cross product
+    float ux = x1 - x0, uy = y1 - y0, uz = z1 - z0;
+    float vx = x2 - x0, vy = y2 - y0, vz = z2 - z0;
+
+    float nx = uy * vz - uz * vy;
+    float ny = uz * vx - ux * vz;
+    float nz = ux * vy - uy * vx;
+
+    // Normalize normal
+    float len = (float) Math.sqrt(nx * nx + ny * ny + nz * nz);
+    if (len != 0) {
+      nx /= len;
+      ny /= len;
+      nz /= len;
+    }
+
+    // Light direction (towards viewer)
+    float lx = 0, ly = 0, lz = -1;
+
+    // Dot product = cosine of angle between light and normal
+    float intensity = nx * lx + ny * ly + nz * lz;
+    intensity = Math.max(0, intensity); // clamp to [0,1]
+
+    // Convert to shading index
+    int shadeIndex = Math.round(intensity * (SHADING.length() - 1));
+    char shade = SHADING.charAt(shadeIndex);
+    return shade;
+
   }
 
   // Main method to debug this class
