@@ -268,7 +268,7 @@ public class DrawingHelpers {
 
     float[][] verts = generateCylinderSliceVertices(radius, height, slices, thetaStart, thetaEnd);
     int[][] facesOG = generateCylinderSliceIndices(slices, thetaEnd, thetaStart);
-    rotateVertices(verts, 0.0f, 0.0f, 0.0f);
+    rotateVertices(verts, 2f, 0.0f, 0.0f);
     int[][] faces = zSortTriangles(facesOG, verts);
 
     printVertices(verts);
