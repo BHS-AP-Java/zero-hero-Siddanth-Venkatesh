@@ -3,6 +3,13 @@
   "configurations": [
     {
       "type": "java",
+      "name": "DrawingHelpers",
+      "request": "launch",
+      "mainClass": "edu.bhscs.DrawingHelpers",
+      "projectName": "ap-java-starter"
+    },
+    {
+      "type": "java",
       "name": "Burger",
       "request": "launch",
       "mainClass": "edu.bhscs.Burger",

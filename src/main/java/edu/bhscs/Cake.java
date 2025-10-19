@@ -207,7 +207,7 @@ public class Cake {
       matrix[i] = def.clone();
     }
 
-    DrawingHelpers.fillTriangle(0, 0, 5, 6,10, 4, matrix, 'C');
+    DrawingHelpers.fillTriangle(0, 0, 5, 6, 10, 4, matrix, 'C');
 
     draw(matrix);
   }

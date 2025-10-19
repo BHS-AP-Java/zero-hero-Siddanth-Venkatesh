@@ -1,5 +1,21 @@
+// Siddanth Venkatesh
+// P2
+// Cake
+// 9/19
+
+/*
+ * DESCRIPTION: Just a wrapper class so that all creatable objects can be refered to.
+ * INPUT: Nothing
+ * OUTPUT: Nothing
+ * EDGE CASE: Will throw error of some class did not properly implement this
+ */
 package edu.bhscs;
 
+import java.util.Comparator;
+import java.util.Arrays;
+
+// Information on how these work is avaliable on Wikipedia
+// (https://en.wikipedia.org/wiki/Triangle_mesh)
 public class DrawingHelpers {
   public static void plotLine(int x0, int y0, int x1, int y1, char[][] things) {
     int dx = Math.abs(x1 - x0);
@@ -62,6 +78,7 @@ public class DrawingHelpers {
     int totalHeight = y2 - y0;
     if (totalHeight == 0) return;
 
+    // Scans each line and draws in the triangle
     for (int i = 0; i < totalHeight; i++) {
       boolean secondHalf = i > y1 - y0 || y1 == y0;
       int segmentHeight = secondHalf ? y2 - y1 : y1 - y0;
@@ -84,7 +101,178 @@ public class DrawingHelpers {
     }
   }
 
+  // Puts a point in an array in needed
   public static void plot(int x, int y, char[][] things, char ch) {
     if (x >= 0 && x < things.length && y >= 0 && y < things[0].length) things[x][y] = ch;
   }
+
+  // Rotates a set of verticies
+  // Implementation taken from Wikipedia (https://en.wikipedia.org/wiki/Rotation_matrix)
+  public static void rotateVertices(float[][] vertices, float pitch, float yaw, float roll) {
+
+    float x = 0f;
+    float y = 0f;
+    float z = 0f;
+    for (int i = 0; i < vertices.length; i++){
+      x += vertices[i][0];
+      y += vertices[i][1];
+      z += vertices[i][2];
+    }
+    float avgX = x / vertices.length;
+    float avgY = y / vertices.length;
+    float avgZ = z / vertices.length;
+
+    // Breaks down the rotation into their cos and sin components
+    float cp = (float) Math.cos(pitch);
+    float sp = (float) Math.sin(pitch);
+    float cy = (float) Math.cos(yaw);
+    float sy = (float) Math.sin(yaw);
+    float cr = (float) Math.cos(roll);
+    float sr = (float) Math.sin(roll);
+
+    for (int i = 0; i < vertices.length; i++) {
+      x = vertices[i][0] - avgX;
+      y = vertices[i][1] - avgY;
+      z = vertices[i][2] - avgZ;
+
+      // Apply pitch (x-axis)
+      float y1 = y * cp - z * sp;
+      float z1 = y * sp + z * cp;
+      y = y1;
+      z = z1;
+
+      // Apply yaw (y-axis)
+      float x2 = x * cy + z * sy;
+      float z2 = -x * sy + z * cy;
+      x = x2;
+      z = z2;
+
+      // Apply roll (z-axis)
+      float x3 = x * cr - y * sr;
+      float y3 = x * sr + y * cr;
+
+      vertices[i][0] = x3 + avgX;
+      vertices[i][1] = y3 + avgY;
+      vertices[i][2] = z + avgZ;
+    }
+  }
+
+  // Sorts the triangle by their average z cordinate. This makes it so that triangles are draw in the correct order
+  public static int[][] zSortTriangles(int[][] indices, float[][] vertices) {
+    return Arrays.stream(indices).sorted(Comparator.comparingDouble(tri -> {
+      float z0 = vertices[tri[0]][2];
+      float z1 = vertices[tri[1]][2];
+      float z2 = vertices[tri[2]][2];
+      return -((z0 + z1 + z2) / 3.0f); // negative for descending (back to front)
+    })).toArray(int[][]::new);
+  }
+
+  // Printing the verticies for debugging
+  public static void printVertices(float[][] vertices) {
+    System.out.println("Vertices (" + vertices.length + "):");
+    System.out.print("[");
+    for (int i = 0; i < vertices.length; i++) {
+      float[] v = vertices[i];
+      if (i == vertices.length - 1) {
+        System.out.printf("(%.4f, %.4f, %.4f)] ", v[0], v[1], v[2]);
+        break;
+      }
+      System.out.printf("(%.4f, %.4f, %.4f), ", v[0], v[1], v[2]);
+    }
+    System.out.println();
+  }
+
+  // Prints the indicies for debugigng
+  public static void printIndices(int[][] indices) {
+    System.out.println("Triangles (" + indices.length + "):");
+    System.out.print("[");
+    for (int i = 0; i < indices.length; i++) {
+      int[] tri = indices[i];
+      if (i == indices.length - 1) {
+        System.out.printf("(%d, %d, %d)]", tri[0], tri[1], tri[2]);
+        break;
+      }
+      System.out.printf("(%d, %d, %d), ", tri[0], tri[1], tri[2]);
+    }
+    System.out.println();
+  }
+
+  // Generates vertices
+  public static float[][] generateCylinderSliceVertices(float radius, float height, int slices,
+      float thetaStart, float thetaEnd) {
+
+    // +2 extra rings for top & bottom cap centers
+    int vertexCount = slices * 2 + 2;
+    float[][] vertices = new float[vertexCount][3];
+
+    float dTheta = (thetaEnd - thetaStart) / slices;
+    float theta = (float) thetaStart;
+
+    // Loops through a circle and adds the points (x, y, z) on the circle
+    // Also adds the points (x, y, z + height) on the cirlce
+    for (int i = 0; i < slices; i += 1) {
+      float x = (float) Math.cos(theta);
+      float y = (float) Math.sin(theta);
+      vertices[i] = new float[] {x, y, 0};
+      vertices[i + slices] = new float[] {x, y, height};
+      theta += dTheta;
+    }
+
+    // Adds two points, one in center of the top cap, and one in the bottom
+    vertices[2 * slices] = new float[] {0.0f, 0.0f, 0.0f};
+    vertices[2 * slices + 1] = new float[] {0.0f, 0.0f, height};
+
+    return vertices;
+  }
+
+  // Generate indices for sides + caps
+  public static int[][] generateCylinderSliceIndices(int slices, float thetaEnd, float thetaStart) {
+    int a = 0;
+    if (thetaEnd - thetaStart > 2 * Math.PI - 0.001f) {
+      a = 1;
+    }
+    // Sides + caps
+    int bottomTriCount = slices;
+    int topTriCount = slices;
+
+    int totalTriCount = 2 * slices + bottomTriCount + topTriCount + 4;
+    int[][] indices = new int[totalTriCount][3];
+
+    // Side triangles
+    for (int i = 0; i < slices - 1 + a; i++) {
+      indices[i] = new int[] {i, (i + 1) % slices, (i % slices) + slices};
+      indices[i + slices] =
+          new int[] {(i + 1) % slices, (i + 1) % slices + slices, (i % slices) + slices};
+    }
+    // Top and bottom caps
+    for (int i = 0; i < slices - 1 + a; i++) {
+      indices[2 * slices + i] = new int[] {(i % slices), ((i + 1) % slices), 2 * slices};
+      indices[3 * slices + i] =
+          new int[] {(i % slices) + slices, ((i + 1) % slices) + slices, 2 * slices + 1};
+    }
+
+    indices[4 * slices + 0] = new int[] {0, slices, 2 * slices};
+    indices[4 * slices + 1] = new int[] {2 * slices + 1, slices, 2 * slices};
+    indices[4 * slices + 2] = new int[] {slices - 1, slices + slices - 1, 2 * slices};
+    indices[4 * slices + 3] = new int[] {slices - 1 + slices, 2 * slices, 2 * slices + 1};
+    return indices;
+  }
+
+  // Main method to debug this class
+  public static void main(String[] args) {
+    float radius = 1.0f;
+    float height = 2.0f;
+    int slices = 4;
+    float thetaStart = - (float) 0;
+    float thetaEnd = (float) 1;
+
+    float[][] verts = generateCylinderSliceVertices(radius, height, slices, thetaStart, thetaEnd);
+    int[][] facesOG = generateCylinderSliceIndices(slices, thetaEnd, thetaStart);
+    rotateVertices(verts, 0.0f, 0.0f, 0.0f);
+    int[][] faces = zSortTriangles(facesOG, verts);
+
+    printVertices(verts);
+    printIndices(faces);
+  }
+
 }
