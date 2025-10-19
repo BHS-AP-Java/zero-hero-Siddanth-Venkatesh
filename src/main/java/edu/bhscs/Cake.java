@@ -65,6 +65,8 @@ public class Cake {
 
   public Cake() {
     WEIGHTOG = 100;
+    weightPounds = WEIGHTOG;
+    ingredients = base();
   }
 
   // This makes a cake using a specific type of flour
@@ -199,28 +201,24 @@ public class Cake {
     //   System.out.prnt(this.color);
     // }
     System.out.println();
-    int size = 140;
-    char[][] matrix = new char[size][size];
-    char[] def = new char[size];
-    Arrays.fill(def, ' ');
-    for (int i = 0; i < matrix.length; i++) {
-      matrix[i] = def.clone();
-    }
-    float radius = 40.0f;
+    char[][] matrix = DrawingHelpers.generateMatrix(140);
+
+    float radius = 40.0f + ingredients.length;
     float height = 10.0f;
     int slices = 10;
     float thetaStart = (float)((3f / 4f) * Math.PI);
-    float dTheta = (float) ((weightPounds / WEIGHTOG) * Math.PI);
+    float dTheta = (float) ((weightPounds / WEIGHTOG) * 2f *  Math.PI);
     float thetaEnd = thetaStart + dTheta;
 
-    float[][] verts =
-        DrawingHelpers.generateCylinderSliceVertices(radius, height, slices, thetaStart, thetaEnd);
+    // Generates the mesh of the Cake
+    float[][] verts = DrawingHelpers.generateCylinderSliceVertices(radius, height, slices, thetaStart, thetaEnd);
     int[][] facesOG = DrawingHelpers.generateCylinderSliceIndices(slices, thetaEnd, thetaStart);
     DrawingHelpers.rotateVertices(verts, (float) (3 * Math.PI / 4), 0.0f, 0.0f);
     int[][] faces = DrawingHelpers.zSortTriangles(facesOG, verts);
 
-    DrawingHelpers.printVertices(verts);
-    DrawingHelpers.printIndices(faces);
+    // // Debugging reasons
+    // DrawingHelpers.printVertices(verts);
+    // DrawingHelpers.printIndices(faces);
 
     int length = faces.length;
     for (int i = 0; i < length; i++) {
@@ -242,14 +240,11 @@ public class Cake {
 
       // Semi accurate shading is used
       char shade = DrawingHelpers.findShading(x0, y0, z0, x1, y1, z1, x2, y2, z2);
-
       DrawingHelpers.fillTriangle(x0, y0, x1, y1, x2, y2, matrix, shade);
     }
 
     draw(matrix);
   }
-
-  public void putTriangle(char[][] things) {}
 
   // Draw a 2d Array
   public void draw(char[][] things) {

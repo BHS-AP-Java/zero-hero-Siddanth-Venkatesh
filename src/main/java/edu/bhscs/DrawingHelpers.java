@@ -330,4 +330,13 @@ public class DrawingHelpers {
     printVertices(verts);
     printIndices(faces);
   }
+  public static char[][] generateMatrix(int size){
+    char[][] matrix = new char[size][size];
+    char[] def = new char[size];
+    Arrays.fill(def, ' ');
+    for (int i = 0; i < matrix.length; i++) {
+      matrix[i] = def.clone();
+    }
+    return matrix;
+  }
 }
