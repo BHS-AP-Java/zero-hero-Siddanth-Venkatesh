@@ -204,10 +204,10 @@ public class Cake {
     char[] def = new char[size];
     Arrays.fill(def, '-');
     for (int i = 0; i < matrix.length; i++) {
-      matrix[i] = def.clone(); 
+      matrix[i] = def.clone();
     }
 
-    DrawingHelpers.plotLine(1, 1, 6, 5, matrix);
+    DrawingHelpers.fillTriangle(0, 0, 5, 6,10, 4, matrix, 'C');
 
     draw(matrix);
   }
