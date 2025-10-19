@@ -19,7 +19,8 @@ import java.util.Comparator;
 public class DrawingHelpers {
   // Shading (Taken from:
   // https://stackoverflow.com/questions/30097953/ascii-art-sorting-an-array-of-ascii-characters-by-brightness-levels-c-c)
-  private static final String SHADING = "$@B%8&WM#*oahkbdpqwmZO0QLCJUYXzcvunxrjft/\\|()1{}[]?-_+~<>i!lI;:,\"^`'.";
+  private static final String SHADING =
+      "$@B%8&WM#*oahkbdpqwmZO0QLCJUYXzcvunxrjft/\\|()1{}[]?-_+~<>i!lI;:,\"^`'.";
   // Amount of characters in shading
   private static final int SHADINGAMOUNT = 70;
 
@@ -122,15 +123,22 @@ public class DrawingHelpers {
     float y = 0f;
     float z = 0f;
 
-    // Find the center to rotate them around
-    for (int i = 0; i < vertices.length; i++) {
-      x += vertices[i][0];
-      y += vertices[i][1];
-      z += vertices[i][2];
-    }
-    float avgX = x / vertices.length;
-    float avgY = y / vertices.length;
-    float avgZ = z / vertices.length;
+    // // Find the center to rotate them around
+    // for (int i = 0; i < vertices.length; i++) {
+    //   x += vertices[i][0];
+    //   y += vertices[i][1];
+    //   z += vertices[i][2];
+    // }
+    // float avgX = x / vertices.length;
+    // float avgY = y / vertices.length;
+    // float avgZ = z / vertices.length;
+
+    // For now, making it so that it is not rotated around center
+    float avgX = 0f;
+    float avgY = 0f;
+    float avgZ = 0f;
+
+
 
     // Breaks down the rotation into their cos and sin components
     float cp = (float) Math.cos(pitch);
@@ -275,7 +283,8 @@ public class DrawingHelpers {
     return indices;
   }
 
-  public static char findShading(int x0, int y0, int z0, int x1, int y1, int z1, int x2, int y2, int z2){
+  public static char findShading(
+      int x0, int y0, int z0, int x1, int y1, int z1, int x2, int y2, int z2) {
     // Face normal via cross product
     float ux = x1 - x0, uy = y1 - y0, uz = z1 - z0;
     float vx = x2 - x0, vy = y2 - y0, vz = z2 - z0;
@@ -303,7 +312,6 @@ public class DrawingHelpers {
     int shadeIndex = Math.round(intensity * (SHADING.length() - 1));
     char shade = SHADING.charAt(shadeIndex);
     return shade;
-
   }
 
   // Main method to debug this class
@@ -316,7 +324,7 @@ public class DrawingHelpers {
 
     float[][] verts = generateCylinderSliceVertices(radius, height, slices, thetaStart, thetaEnd);
     int[][] facesOG = generateCylinderSliceIndices(slices, thetaEnd, thetaStart);
-    rotateVertices(verts, (float) (3 * Math.PI/4), 0.0f, 0.0f);
+    rotateVertices(verts, (float) (3 * Math.PI / 4), 0.0f, 0.0f);
     int[][] faces = zSortTriangles(facesOG, verts);
 
     printVertices(verts);

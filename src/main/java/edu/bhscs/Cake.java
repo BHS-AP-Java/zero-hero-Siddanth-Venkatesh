@@ -196,7 +196,7 @@ public class Cake {
   public void draw() {
     // this.ingredients
     // for (int i = 0; i < a; i++){
-    //   System.out.print(this.color);
+    //   System.out.prnt(this.color);
     // }
     System.out.println();
     int size = 140;
@@ -206,38 +206,42 @@ public class Cake {
     for (int i = 0; i < matrix.length; i++) {
       matrix[i] = def.clone();
     }
-    float radius = 50.0f;
+    float radius = 40.0f;
     float height = 10.0f;
     int slices = 10;
-    float thetaStart = (float) 2.3;
-    float dTheta = 1.0f;
+    float thetaStart = (float)((3f / 4f) * Math.PI);
+    float dTheta = (float) ((weightPounds / WEIGHTOG) * Math.PI);
     float thetaEnd = thetaStart + dTheta;
 
-    float[][] verts = DrawingHelpers.generateCylinderSliceVertices(radius, height, slices, thetaStart, thetaEnd);
+    float[][] verts =
+        DrawingHelpers.generateCylinderSliceVertices(radius, height, slices, thetaStart, thetaEnd);
     int[][] facesOG = DrawingHelpers.generateCylinderSliceIndices(slices, thetaEnd, thetaStart);
     DrawingHelpers.rotateVertices(verts, (float) (3 * Math.PI / 4), 0.0f, 0.0f);
     int[][] faces = DrawingHelpers.zSortTriangles(facesOG, verts);
 
+    DrawingHelpers.printVertices(verts);
+    DrawingHelpers.printIndices(faces);
+
     int length = faces.length;
-    for (int i = 0; i < length; i++){
+    for (int i = 0; i < length; i++) {
       // For now, simple orthographic projection is used
-      int shiftx = 70;
-      int shifty = 0;
+      int shiftx = 80;
+      int shifty = 40;
 
-      int x0 = (int) verts[faces[i][0]][0] + shiftx;
-      int y0 = (int) verts[faces[i][0]][1] + shifty;
-      int z0 = (int) verts[faces[i][0]][2];
+      int x0 = Math.round(verts[faces[i][0]][0]) + shiftx;
+      int y0 = Math.round(verts[faces[i][0]][1]) + shifty;
+      int z0 = Math.round(verts[faces[i][0]][2]);
 
-      int x1 = (int) verts[faces[i][1]][0] + shiftx;
-      int y1 = (int) verts[faces[i][1]][1] + shifty;
-      int z1 = (int) verts[faces[i][1]][2];
+      int x1 = Math.round(verts[faces[i][1]][0]) + shiftx;
+      int y1 = Math.round(verts[faces[i][1]][1]) + shifty;
+      int z1 = Math.round(verts[faces[i][1]][2]);
 
-      int x2 = (int) verts[faces[i][2]][0] + shiftx;
-      int y2 = (int) verts[faces[i][2]][1] + shifty;
-      int z2 = (int) verts[faces[i][2]][2];
+      int x2 = Math.round(verts[faces[i][2]][0]) + shiftx;
+      int y2 = Math.round(verts[faces[i][2]][1]) + shifty;
+      int z2 = Math.round(verts[faces[i][2]][2]);
 
       // Semi accurate shading is used
-      char shade = DrawingHelpers.findShading(x0,y0,z0,x1,y1,z1,x2,y2,z2);
+      char shade = DrawingHelpers.findShading(x0, y0, z0, x1, y1, z1, x2, y2, z2);
 
       DrawingHelpers.fillTriangle(x0, y0, x1, y1, x2, y2, matrix, shade);
     }
