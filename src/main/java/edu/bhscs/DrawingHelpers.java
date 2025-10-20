@@ -183,7 +183,8 @@ public class DrawingHelpers {
                   float z0 = vertices[tri[0]][2];
                   float z1 = vertices[tri[1]][2];
                   float z2 = vertices[tri[2]][2];
-                  return ((z0 + z1 + z2)); // negative for descending (back to front), positive if front to back
+                  return ((z0 + z1
+                      + z2)); // negative for descending (back to front), positive if front to back
                 }))
         .toArray(int[][]::new);
   }

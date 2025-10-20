@@ -233,7 +233,7 @@ public class Cake {
   public void putInMatrix(float[][] verts, int[][] faces, char[][] matrix, int length) {
     for (int i = 0; i < length; i++) {
       // For now, simple orthographic projection is used
-      int shiftx = 80;
+      int shiftx = 60;
       int shifty = 40;
 
       int x0 = Math.round(verts[faces[i][0]][0]) + shiftx;
@@ -323,8 +323,8 @@ public class Cake {
   public static void main(String[] args) {
 
     Cake cake = new Cake();
-    cake.eat(80);
-    cake.draw(1, "Sigma SIGMA SIGMA SIGMA SIGMA");
+    cake.eat(90);
+    cake.draw(1, "Name");
     // String[] ingredients = {
     //   "Chocolate Chips", "Flour", "Sugar", "Water", "Milk", "Egg", "Cocoa Powder"
     // };
