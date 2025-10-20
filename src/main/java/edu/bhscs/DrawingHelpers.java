@@ -183,7 +183,7 @@ public class DrawingHelpers {
                   float z0 = vertices[tri[0]][2];
                   float z1 = vertices[tri[1]][2];
                   float z2 = vertices[tri[2]][2];
-                  return ((z0 + z1 + z2)); // negative for descending (back to front)
+                  return ((z0 + z1 + z2)); // negative for descending (back to front), positive if front to back
                 }))
         .toArray(int[][]::new);
   }
@@ -307,9 +307,20 @@ public class DrawingHelpers {
     intensity = Math.max(0, intensity); // clamp to [0,1]
 
     // Convert to shading index
-    int shadeIndex = Math.round(intensity * (SHADING.length() - 1));
+    int shadeIndex = Math.round(intensity * (SHADINGAMOUNT - 1));
     char shade = SHADING.charAt(shadeIndex);
     return shade;
+  }
+
+  // Makes a blank 2x2 matrix
+  public static char[][] generateMatrix(int size) {
+    char[][] matrix = new char[size][size];
+    char[] def = new char[size];
+    Arrays.fill(def, ' ');
+    for (int i = 0; i < matrix.length; i++) {
+      matrix[i] = def.clone();
+    }
+    return matrix;
   }
 
   // Main method to debug this class
@@ -327,15 +338,5 @@ public class DrawingHelpers {
 
     printVertices(verts);
     printIndices(faces);
-  }
-
-  public static char[][] generateMatrix(int size) {
-    char[][] matrix = new char[size][size];
-    char[] def = new char[size];
-    Arrays.fill(def, ' ');
-    for (int i = 0; i < matrix.length; i++) {
-      matrix[i] = def.clone();
-    }
-    return matrix;
   }
 }
