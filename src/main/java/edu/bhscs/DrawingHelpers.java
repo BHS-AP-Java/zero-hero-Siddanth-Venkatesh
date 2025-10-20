@@ -138,8 +138,6 @@ public class DrawingHelpers {
     float avgY = 0f;
     float avgZ = 0f;
 
-
-
     // Breaks down the rotation into their cos and sin components
     float cp = (float) Math.cos(pitch);
     float sp = (float) Math.sin(pitch);
@@ -330,7 +328,8 @@ public class DrawingHelpers {
     printVertices(verts);
     printIndices(faces);
   }
-  public static char[][] generateMatrix(int size){
+
+  public static char[][] generateMatrix(int size) {
     char[][] matrix = new char[size][size];
     char[] def = new char[size];
     Arrays.fill(def, ' ');
