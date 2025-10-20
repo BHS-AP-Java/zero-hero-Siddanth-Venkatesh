@@ -24,7 +24,7 @@ public class Main {
     // player.showOptions();
     Cake cake = new Cake();
     // cake.draw(giveNumber(player));
-    cake.draw();
+    // cake.draw();
   }
 
   public static int giveNumber(Player s) {

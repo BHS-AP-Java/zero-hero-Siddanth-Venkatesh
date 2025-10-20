@@ -31,8 +31,10 @@ public class Cake {
   private Flour flour;
   // quality is the quality of the cake. The price of the cake goes up with quality
   private double quality;
-  // color of the cake
-  private char color = '#';
+  // colors of the cake. Will be Green and Gray if the cake has gone bad
+  public static final String RESET = "\u001B[0m";
+  public static final String GREEN = "\u001B[32m";
+  public static final String GRAY = "\u001B[90m";
 
   // This is the constructor for a cake, and it makes an instance of a cake with it's ingredients
   // cost, weight, and name.
@@ -67,6 +69,7 @@ public class Cake {
     WEIGHTOG = 100;
     weightPounds = WEIGHTOG;
     ingredients = base();
+    flour = new Flour("ALl purpose flour", 1.0, 10.0, 0);
   }
 
   // This makes a cake using a specific type of flour
@@ -195,7 +198,7 @@ public class Cake {
   }
 
   // Drawing the Cake
-  public void draw() {
+  public void draw(int age) {
     // this.ingredients
     // for (int i = 0; i < a; i++){
     //   System.out.prnt(this.color);
@@ -210,17 +213,33 @@ public class Cake {
     float dTheta = (float) ((weightPounds / WEIGHTOG) * 2f *  Math.PI);
     float thetaEnd = thetaStart + dTheta;
 
-    // Generates the mesh of the Cake
+
+    // Generates the mesh of the Cake, with correcting rotation and zSorting.
     float[][] verts = DrawingHelpers.generateCylinderSliceVertices(radius, height, slices, thetaStart, thetaEnd);
     int[][] facesOG = DrawingHelpers.generateCylinderSliceIndices(slices, thetaEnd, thetaStart);
     DrawingHelpers.rotateVertices(verts, (float) (3 * Math.PI / 4), 0.0f, 0.0f);
     int[][] faces = DrawingHelpers.zSortTriangles(facesOG, verts);
-
-    // // Debugging reasons
-    // DrawingHelpers.printVertices(verts);
-    // DrawingHelpers.printIndices(faces);
-
     int length = faces.length;
+    putInMatrix(verts, faces, matrix, length);
+
+    float[][] candleVerts = DrawingHelpers.generateCylinderSliceVertices(3, 80, 4, 0f, 6.29f);
+    int[][] candleFacesOG = DrawingHelpers.generateCylinderSliceIndices(4, 0f, 6.29f);
+    DrawingHelpers.rotateVertices(candleVerts, (float) (3 * Math.PI / 4), 0.0f, 0.0f);
+    int[][] candleFaces = DrawingHelpers.zSortTriangles(candleFacesOG, verts);
+    int candleAmount = candleFaces.length;
+    for (int i = 0; i < age; i++){
+      candleVerts[i][0] += 1f;
+      putInMatrix(candleVerts, candleFaces, matrix, candleAmount);
+
+    }
+    if (flour.quality < 1){
+      draw(matrix, true);
+      return;
+    }
+    draw(matrix, false);
+  }
+
+  public void putInMatrix(float[][] verts, int[][] faces, char[][] matrix, int length){
     for (int i = 0; i < length; i++) {
       // For now, simple orthographic projection is used
       int shiftx = 80;
@@ -242,28 +261,32 @@ public class Cake {
       char shade = DrawingHelpers.findShading(x0, y0, z0, x1, y1, z1, x2, y2, z2);
       DrawingHelpers.fillTriangle(x0, y0, x1, y1, x2, y2, matrix, shade);
     }
-
-    draw(matrix);
   }
-
   // Draw a 2d Array
-  public void draw(char[][] things) {
-    for (int i = 0; i < things[0].length; i++) {
-      int length = things.length;
-      // Loops a triangle, going by rows then columns to simulate drawing x,y pairs.
-      for (int j = 0; j < length; j++) {
-        System.out.print(things[j][length - i - 1] + "");
-        System.out.flush();
-        // System.out.print(j + "jk" + i);
+  public void draw(char[][] things, boolean goneBad) {
+    int height = things[0].length;
+    int width = things.length;
+
+    for (int i = 0; i < height; i++) {
+      for (int j = 0; j < width; j++) {
+        char c = things[j][height - i - 1];
+        if (goneBad) {
+          String color = j % 2 == 0 ? GREEN: GRAY;
+          System.out.print(color + c + RESET);
+        } else {
+          System.out.print(c);
+        }
       }
       System.out.println();
     }
+    System.out.println(!goneBad ? "" : "Cake " + name + " is moldy");
   }
 
   // Main method, used for debugging the cake class
   public static void main(String[] args) {
+
     Cake cake = new Cake();
-    cake.draw();
+    cake.draw(5);
     // String[] ingredients = {
     //   "Chocolate Chips", "Flour", "Sugar", "Water", "Milk", "Egg", "Cocoa Powder"
     // };
