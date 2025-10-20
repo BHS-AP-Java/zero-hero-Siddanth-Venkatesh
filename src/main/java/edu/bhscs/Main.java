@@ -22,9 +22,12 @@ public class Main {
   public static void main(String[] args) {
     Player player = new Player("Sigma");
     // player.showOptions();
+    int age = Integer.parseInt(player.giveAnswer("Age? "));
+    String name = player.giveAnswer("Name? ");
+
     Cake cake = new Cake();
     // cake.draw(giveNumber(player));
-    // cake.draw();
+    cake.draw(age, name);
   }
 
   public static int giveNumber(Player s) {

@@ -69,7 +69,7 @@ public class Cake {
     WEIGHTOG = 100;
     weightPounds = WEIGHTOG;
     ingredients = base();
-    flour = new Flour("ALl purpose flour", 1.0, 10.0, 0);
+    flour = new Flour("ALl purpose flour", 1.0, 10.0, 2);
   }
 
   // This makes a cake using a specific type of flour
@@ -198,15 +198,9 @@ public class Cake {
   }
 
   // Drawing the Cake
-  public void draw(int age) {
-    // this.ingredients
-    // for (int i = 0; i < a; i++){
-    //   System.out.prnt(this.color);
-    // }
-    System.out.println();
+  public void draw(int age, String name) {
     char[][] matrix = DrawingHelpers.generateMatrix(140);
-
-    float radius = 40.0f + ingredients.length;
+    float radius = 40.0f;
     float height = 10.0f;
     int slices = 10;
     float thetaStart = (float)((3f / 4f) * Math.PI);
@@ -222,16 +216,12 @@ public class Cake {
     int length = faces.length;
     putInMatrix(verts, faces, matrix, length);
 
-    float[][] candleVerts = DrawingHelpers.generateCylinderSliceVertices(3, 80, 4, 0f, 6.29f);
-    int[][] candleFacesOG = DrawingHelpers.generateCylinderSliceIndices(4, 0f, 6.29f);
-    DrawingHelpers.rotateVertices(candleVerts, (float) (3 * Math.PI / 4), 0.0f, 0.0f);
-    int[][] candleFaces = DrawingHelpers.zSortTriangles(candleFacesOG, verts);
-    int candleAmount = candleFaces.length;
-    for (int i = 0; i < age; i++){
-      candleVerts[i][0] += 1f;
-      putInMatrix(candleVerts, candleFaces, matrix, candleAmount);
-
+    // Only put candles on Cake if it has not been eaten.
+    if (weightPounds == WEIGHTOG){
+      putCandlesInMatrix(matrix, age, (int) radius);
     }
+    putNameOnCake(matrix, name, (int) radius + 40, 20);
+
     if (flour.quality < 1){
       draw(matrix, true);
       return;
@@ -239,6 +229,7 @@ public class Cake {
     draw(matrix, false);
   }
 
+  // Takes in a set of verticies and faces and draws them into the matrix
   public void putInMatrix(float[][] verts, int[][] faces, char[][] matrix, int length){
     for (int i = 0; i < length; i++) {
       // For now, simple orthographic projection is used
@@ -262,6 +253,54 @@ public class Cake {
       DrawingHelpers.fillTriangle(x0, y0, x1, y1, x2, y2, matrix, shade);
     }
   }
+
+  // Puts a bunch of candles in the matrix, as specified by age. Size will be the size of the cake, so the candles can be correctly spaced.
+  public void putCandlesInMatrix(char[][] matrix, int age, int size) {
+    // Candles without rotations
+    float[][] baseCandleVerts = DrawingHelpers.generateCylinderSliceVertices(3, 100, 2, 0f, 6.29f);
+    int[][] candleFacesOG = DrawingHelpers.generateCylinderSliceIndices(2, 6.29f, 0f);
+
+    // Rotate the candle
+    DrawingHelpers.rotateVertices(baseCandleVerts, (float) (3 * Math.PI / 4), 0.0f, 0.0f);
+
+    int[][] candleFaces = DrawingHelpers.zSortTriangles(candleFacesOG, baseCandleVerts);
+    int candleTriangleAmount = candleFaces.length;
+    float radius = size / 2f;
+
+    // This makes copies of the candles and places them in a circle
+    for (int i = 0; i < age; i++) {
+      float[][] candleVerts = new float[baseCandleVerts.length][3];
+      for (int j = 0; j < baseCandleVerts.length; j++) {
+        System.arraycopy(baseCandleVerts[j], 0, candleVerts[j], 0, 3);
+      }
+
+      // Evenly spaced candle positions around the circle
+      float angle = (float) (i * 2.0f * Math.PI / age);
+      float offsetX = (float) (radius * Math.cos(angle));
+      float offsetY = (float) (radius * Math.sin(angle));
+
+
+      // Translates the candles
+      for (float[] v : candleVerts) {
+        v[0] += offsetX;
+        v[1] += offsetY;
+      }
+
+      // Render candle into matrix
+      putInMatrix(candleVerts, candleFaces, matrix, candleTriangleAmount);
+    }
+  }
+
+  // Puts the name on the cake.
+  public void putNameOnCake(char[][] matrix, String name, int width, int height) {
+
+    for (int i = width; i < width + name.length(); i++){
+      matrix[i][height] = name.charAt(i - width);
+    }
+
+  }
+
+
   // Draw a 2d Array
   public void draw(char[][] things, boolean goneBad) {
     int height = things[0].length;
@@ -286,7 +325,7 @@ public class Cake {
   public static void main(String[] args) {
 
     Cake cake = new Cake();
-    cake.draw(5);
+    cake.draw(1, "Sigma SIGMA SIGMA SIGMA SIGMA");
     // String[] ingredients = {
     //   "Chocolate Chips", "Flour", "Sugar", "Water", "Milk", "Egg", "Cocoa Powder"
     // };
