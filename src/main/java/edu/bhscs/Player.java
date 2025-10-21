@@ -41,6 +41,7 @@ public class Player {
   // CONSTRUCTOR
   public Player(String name) {
     this.name = name;
+    s = new Scanner(System.in);
   }
 
   public void setOptions(String name) {
@@ -484,11 +485,5 @@ public class Player {
   public static void main() {
     // Player player = new Player("Sigma");
     // player.showOptions();
-    Scanner S = new Scanner(System.in);
-    int choice = 0;
-
-    choice = S.nextInt();
-
-    S.close();
   }
 }

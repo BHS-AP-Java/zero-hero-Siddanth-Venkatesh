@@ -8,7 +8,8 @@
  * INPUT: You need the ingredients, cost, weight, name. You can include some base ingredients
  * OUTPUT: You can ouput information regarding the cake, including how much was eaten, cost, name, weight.
  * EDGE CASE: If two ingredients have the same name, then they will be treated as two seperate ingredients.
- * The cake has a Flour field and could have flour in it's ingredients list.
+ * The cake has a Flour field and could have flour in it's ingredients list. When rendering a cake,
+ * if the name is not on the Cake, the name will not be printed on the cake
  */
 
 package edu.bhscs;
@@ -199,6 +200,7 @@ public class Cake {
 
   // Drawing the Cake
   public void draw(String name, int age) {
+    // Properties of how you draw the cake
     char[][] matrix = DrawingHelpers.generateMatrix(140);
     float radius = 40.0f;
     float height = 10.0f;
@@ -222,11 +224,8 @@ public class Cake {
     }
     putNameOnCake(matrix, name, (int) radius + 40, 20);
 
-    if (flour.quality < 1) {
-      draw(matrix, true);
-      return;
-    }
-    draw(matrix, false);
+    boolean goneBad = flour.quality < 1;
+    draw(matrix, goneBad);
   }
 
   // Takes in a set of verticies and faces and draws them into the matrix
@@ -303,11 +302,12 @@ public class Cake {
   public void draw(char[][] things, boolean goneBad) {
     int height = things[0].length;
     int width = things.length;
-
     for (int i = 0; i < height; i++) {
       for (int j = 0; j < width; j++) {
         char c = things[j][height - i - 1];
         if (goneBad) {
+          // Swaps the color from Gray and Green every character
+          // Simulates looking moldy
           String color = j % 2 == 0 ? GREEN : GRAY;
           System.out.print(color + c + RESET);
         } else {
