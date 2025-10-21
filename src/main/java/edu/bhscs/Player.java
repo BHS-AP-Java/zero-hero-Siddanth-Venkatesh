@@ -40,6 +40,10 @@ public class Player {
 
   // CONSTRUCTOR
   public Player(String name) {
+    this.name = name;
+  }
+
+  public void setOptions(String name) {
     String[] typesOfInstitutionsOrPeoplePlayerControls = {"Customer", "Baker", "PTSA", "Store"};
     for (String thing : typesOfInstitutionsOrPeoplePlayerControls) {
       lists.put(thing, new ArrayList<>());
@@ -108,7 +112,7 @@ public class Player {
         } else {
           opt = options.get(choice - 1);
           Object obj = opt.maker.make(s);
-          // ONLY executed when outer loop does something.
+          // ONLY executed when outer loop needs something to happen
           if (returnHandling && obj instanceof Creatable creatable) {
             String type = creatable.getTypeName();
             System.out.println("Created a new " + type);
@@ -166,7 +170,7 @@ public class Player {
   }
 
   private void showCustomerActions(Customer customer) {
-    List<Option<?>> options = List.of(); // The customers actions don't return anything
+    List<Option<?>> options = List.of(); // The customers actions don't return anything yet.
 
     List<noReturnOption> actions =
         List.of(
@@ -478,7 +482,13 @@ public class Player {
 
   // For testing purposes
   public static void main() {
-    Player player = new Player("Sigma");
-    player.showOptions();
+    // Player player = new Player("Sigma");
+    // player.showOptions();
+    Scanner S = new Scanner(System.in);
+    int choice = 0;
+
+    choice = S.nextInt();
+
+    S.close();
   }
 }

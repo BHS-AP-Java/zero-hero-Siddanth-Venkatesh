@@ -198,7 +198,7 @@ public class Cake {
   }
 
   // Drawing the Cake
-  public void draw(int age, String name) {
+  public void draw(String name, int age) {
     char[][] matrix = DrawingHelpers.generateMatrix(140);
     float radius = 40.0f;
     float height = 10.0f;
@@ -324,7 +324,7 @@ public class Cake {
 
     Cake cake = new Cake();
     cake.eat(90);
-    cake.draw(1, "Name");
+    cake.draw("Name", 1);
     // String[] ingredients = {
     //   "Chocolate Chips", "Flour", "Sugar", "Water", "Milk", "Egg", "Cocoa Powder"
     // };

@@ -3,6 +3,13 @@
   "configurations": [
     {
       "type": "java",
+      "name": "App",
+      "request": "launch",
+      "mainClass": "edu.bhscs.App",
+      "projectName": "ap-java-starter"
+    },
+    {
+      "type": "java",
       "name": "DrawingHelpers",
       "request": "launch",
       "mainClass": "edu.bhscs.DrawingHelpers",

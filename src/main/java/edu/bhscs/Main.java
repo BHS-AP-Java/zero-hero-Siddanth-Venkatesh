@@ -27,7 +27,7 @@ public class Main {
 
     Cake cake = new Cake();
     // cake.draw(giveNumber(player));
-    cake.draw(age, name);
+    cake.draw(name, age);
   }
 
   public static int giveNumber(Player s) {
