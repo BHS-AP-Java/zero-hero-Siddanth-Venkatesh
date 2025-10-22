@@ -33,6 +33,8 @@ public class Cake {
   private Flour flour;
   // quality is the quality of the cake. The price of the cake goes up with quality
   private double quality;
+  // height of the cake
+  float height = 10f;
   // colors of the cake. Will be Green and Gray if the cake has gone bad
   public static final String RESET = "\u001B[0m";
   public static final String GREEN = "\u001B[32m";
@@ -101,12 +103,18 @@ public class Cake {
     ingredients = other.getIngredients();
     flour = other.getFlour();
     quality = other.getQuality();
+    height = other.height;
   }
 
   // METHODS
   // Returns the ingredients in a cake
   public String[] getIngredients() {
     return ingredients;
+  }
+
+  // Sets the height of the cake
+  public void setHeight(float height){
+    this.height = height;
   }
 
   // Returns the flour object in a cake
@@ -204,15 +212,13 @@ public class Cake {
     // Properties of how you draw the cake
     char[][] matrix = DrawingHelpers.generateMatrix(140);
     float radius = 40.0f;
-    float height = 10.0f;
     int slices = 10;
     float thetaStart = (float) ((3f / 4f) * Math.PI);
     float dTheta = (float) ((weightPounds / WEIGHTOG) * 2f * Math.PI);
     float thetaEnd = thetaStart + dTheta;
 
     // Generates the mesh of the Cake, with correcting rotation and zSorting.
-    float[][] verts =
-        DrawingHelpers.generateCylinderSliceVertices(radius, height, slices, thetaStart, thetaEnd);
+    float[][] verts = DrawingHelpers.generateCylinderSliceVertices(radius, height, slices, thetaStart, thetaEnd);
     int[][] facesOG = DrawingHelpers.generateCylinderSliceIndices(slices, thetaEnd, thetaStart);
     DrawingHelpers.rotateVertices(verts, (float) (3 * Math.PI / 4), 0.0f, 0.0f);
     int[][] faces = DrawingHelpers.zSortTriangles(facesOG, verts);
