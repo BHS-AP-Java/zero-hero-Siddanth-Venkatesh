@@ -103,7 +103,7 @@ public class Cake {
     ingredients = other.getIngredients();
     flour = other.getFlour();
     quality = other.getQuality();
-    height = other.height;
+    height = other.getHeight();
   }
 
   // METHODS
@@ -140,6 +140,11 @@ public class Cake {
   // Returns name of the cake.
   public String getName() {
     return name;
+  }
+
+  // Returns height of the cake
+  public float getHeight(){
+    return height;
   }
 
   // Returns cost of the cake
@@ -204,7 +209,7 @@ public class Cake {
   @Override
   public String toString() {
     String stuff = Arrays.toString(ingredients);
-    return name + " cake " + " Has: " + stuff + " Weighs " + weightPounds + "lb";
+    return name + " cake Has: " + stuff + " Weighs " + weightPounds + "lb";
   }
 
   // Drawing the Cake
@@ -233,7 +238,7 @@ public class Cake {
     putNameOnCake(matrix, name, (int) radius + 40, 20);
 
     boolean goneBad = flour.quality < 1;
-    draw(matrix, goneBad);
+    drawCakeOnScreen(matrix, goneBad);
   }
 
   // Takes in a set of verticies and faces and draws them into the matrix
@@ -309,7 +314,7 @@ public class Cake {
   }
 
   // Draw a 2d Array
-  public void draw(char[][] things, boolean goneBad) {
+  public void drawCakeOnScreen(char[][] things, boolean goneBad) {
     int height = things[0].length;
     int width = things.length;
     for (int i = 0; i < height; i++) {
@@ -319,6 +324,7 @@ public class Cake {
           // Swaps the color from Gray and Green every character
           // Simulates looking moldy
           String color = j % 2 == 0 ? GREEN : GRAY;
+
           System.out.print(color + c + RESET);
         } else {
           System.out.print(c);
@@ -332,9 +338,11 @@ public class Cake {
   // Main method, used for debugging the cake class
   public static void main(String[] args) {
 
-    Cake cake = new Cake();
-    cake.eat(0);
-    cake.draw("Name", "5");
+    // Cake cake = new Cake();
+    // cake.getFlour().goBad();
+
+    // cake.eat(0);
+    // cake.draw("Name", "5");
     // String[] ingredients = {
     //   "Chocolate Chips", "Flour", "Sugar", "Water", "Milk", "Egg", "Cocoa Powder"
     // };
