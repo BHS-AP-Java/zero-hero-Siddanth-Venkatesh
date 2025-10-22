@@ -22,7 +22,7 @@ public class Main {
   public static void main(String[] args) {
     Player player = new Player("Sigma");
     // player.showOptions();
-    int age = Integer.parseInt(player.giveAnswer("Age? "));
+    String age = player.giveAnswer("Age? ");
     String name = player.giveAnswer("Name? ");
 
     Cake cake = new Cake();

@@ -15,6 +15,7 @@
 package edu.bhscs;
 
 import java.util.Arrays;
+import java.util.Random;
 
 public class Cake {
   // PROPERTIES AND FIELDS
@@ -199,7 +200,7 @@ public class Cake {
   }
 
   // Drawing the Cake
-  public void draw(String name, int age) {
+  public void draw(String name, String ageString) {
     // Properties of how you draw the cake
     char[][] matrix = DrawingHelpers.generateMatrix(140);
     float radius = 40.0f;
@@ -220,6 +221,7 @@ public class Cake {
 
     // Only put candles on Cake if it has not been eaten.
     if (weightPounds == WEIGHTOG) {
+      int age = Integer.parseInt(ageString);
       putCandlesInMatrix(matrix, age, (int) radius);
     }
     putNameOnCake(matrix, name, (int) radius + 40, 20);
@@ -256,8 +258,10 @@ public class Cake {
   // Puts a bunch of candles in the matrix, as specified by age. Size will be the size of the cake,
   // so the candles can be correctly spaced.
   public void putCandlesInMatrix(char[][] matrix, int age, int size) {
+    Random rand = new Random();
+
     // Candles without rotations
-    float[][] baseCandleVerts = DrawingHelpers.generateCylinderSliceVertices(3, 100, 2, 0f, 6.29f);
+    float[][] baseCandleVerts = DrawingHelpers.generateCylinderSliceVertices(1, 100, 2, 0f, 6.29f);
     int[][] candleFacesOG = DrawingHelpers.generateCylinderSliceIndices(2, 6.29f, 0f);
 
     // Rotate the candle
@@ -276,8 +280,8 @@ public class Cake {
 
       // Evenly spaced candle positions around the circle
       float angle = (float) (i * 2.0f * Math.PI / age);
-      float offsetX = (float) (radius * Math.cos(angle));
-      float offsetY = (float) (radius * Math.sin(angle));
+      float offsetX = (float) (radius * Math.cos(angle)) + radius * (rand.nextFloat() - 0.5f);
+      float offsetY = (float) (radius * Math.sin(angle)) + radius;
 
       // Translates the candles
       for (float[] v : candleVerts) {
@@ -323,8 +327,8 @@ public class Cake {
   public static void main(String[] args) {
 
     Cake cake = new Cake();
-    cake.eat(90);
-    cake.draw("Name", 1);
+    cake.eat(0);
+    cake.draw("Name", "5");
     // String[] ingredients = {
     //   "Chocolate Chips", "Flour", "Sugar", "Water", "Milk", "Egg", "Cocoa Powder"
     // };

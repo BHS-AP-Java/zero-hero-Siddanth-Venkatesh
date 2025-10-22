@@ -8,7 +8,7 @@ public class App {
     String name = user.giveAnswer("What is your name?");
     String age = user.giveAnswer("How old are you?");
 
-    new Cake().draw(name, Integer.parseInt(age));
+    new Cake().draw(name, age);
   }
 
   public static void date_01() {
