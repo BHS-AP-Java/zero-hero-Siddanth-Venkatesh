@@ -113,7 +113,7 @@ public class Cake {
   }
 
   // Sets the height of the cake
-  public void setHeight(float height){
+  public void setHeight(float height) {
     this.height = height;
   }
 
@@ -143,7 +143,7 @@ public class Cake {
   }
 
   // Returns height of the cake
-  public float getHeight(){
+  public float getHeight() {
     return height;
   }
 
@@ -223,7 +223,8 @@ public class Cake {
     float thetaEnd = thetaStart + dTheta;
 
     // Generates the mesh of the Cake, with correcting rotation and zSorting.
-    float[][] verts = DrawingHelpers.generateCylinderSliceVertices(radius, height, slices, thetaStart, thetaEnd);
+    float[][] verts =
+        DrawingHelpers.generateCylinderSliceVertices(radius, height, slices, thetaStart, thetaEnd);
     int[][] facesOG = DrawingHelpers.generateCylinderSliceIndices(slices, thetaEnd, thetaStart);
     DrawingHelpers.rotateVertices(verts, (float) (3 * Math.PI / 4), 0.0f, 0.0f);
     int[][] faces = DrawingHelpers.zSortTriangles(facesOG, verts);

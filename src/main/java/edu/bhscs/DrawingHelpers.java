@@ -25,6 +25,7 @@ public class DrawingHelpers {
   private static final int SHADINGAMOUNT = 70;
 
   // Plots a line
+  // (x0,y0) to (x1,y1) are the starting and ending of the lines (this is done in 2d)
   public static void plotLine(int x0, int y0, int x1, int y1, char[][] things) {
     int dx = Math.abs(x1 - x0);
     int sx = x0 < x1 ? 1 : -1;
@@ -53,6 +54,7 @@ public class DrawingHelpers {
   }
 
   // Draws a filled in triangle
+  // (x0, y0) - (x2, y2) are 2d points that are the end points of the triangle
   public static void fillTriangle(
       int x0, int y0, int x1, int y1, int x2, int y2, char[][] things, char ch) {
     // Sort vertices by y-coordinate
