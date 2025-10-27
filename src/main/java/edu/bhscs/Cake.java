@@ -263,9 +263,9 @@ public class Cake {
     int length = faces.length;
     putInMatrix(verts, faces, matrix, length);
 
-    System.out.println("The CAKE");
-    DrawingHelpers.printVertices(verts);
-    DrawingHelpers.printIndices(faces);
+    // System.out.println("The CAKE");
+    // DrawingHelpers.printVertices(verts);
+    // DrawingHelpers.printIndices(faces);
 
     // Only put candles on Cake if it has not been eaten.
     if (weightPounds == WEIGHTOG) {
@@ -274,7 +274,51 @@ public class Cake {
     putNameOnCake(matrix, nameOnTheCake, (int) radius + 40, 20);
 
     boolean goneBad = flour.quality < 1;
-    // drawCakeOnScreen(matrix, goneBad);
+    drawCakeOnScreen(matrix, goneBad);
+  }
+
+  // Puts a bunch of candles in the matrix, as specified by age. Size will be the size of the cake,
+  // so the candles can be correctly spaced.
+  public void putCandlesInMatrix(char[][] matrix, int age, int size) {
+    Random rand = new Random();
+
+    // Candles without rotations
+    float[][] baseCandleVerts = DrawingHelpers.generateCylinderSliceVertices(1, 100, 2, 0f, 6.29f);
+    int[][] candleFacesOG = DrawingHelpers.generateCylinderSliceIndices(2, 6.29f, 0f);
+
+    // Rotate the candle
+    DrawingHelpers.rotateVertices(baseCandleVerts, (float) ((3 * Math.PI / 4) + (Math.PI / 2)),
+        0.0f, 0.0f);
+
+    int[][] candleFaces = DrawingHelpers.zSortTriangles(candleFacesOG, baseCandleVerts);
+    int candleTriangleAmount = candleFaces.length;
+    float radius = size / 2f;
+
+    // System.out.println("CANDLES: ");
+    // DrawingHelpers.printVertices(baseCandleVerts);
+    // DrawingHelpers.printIndices(candleFaces);
+
+    // This makes copies of the candles and places them in a circle
+    for (int i = 0; i < age; i++) {
+      float[][] candleVerts = new float[baseCandleVerts.length][3];
+      for (int j = 0; j < baseCandleVerts.length; j++) {
+        System.arraycopy(baseCandleVerts[j], 0, candleVerts[j], 0, 3);
+      }
+
+      // Evenly spaced candle positions around the circle
+      float angle = (float) (i * 2.0f * Math.PI / age);
+      float offsetX = (float) (radius * Math.cos(angle));
+      float offsetY = (float) (radius * Math.sin(angle));
+
+      // Translates the candles
+      for (float[] v : candleVerts) {
+        v[0] += offsetX;
+        v[1] += offsetY;
+      }
+
+      // Render candle into matrix
+      putInMatrix(candleVerts, candleFaces, matrix, candleTriangleAmount);
+    }
   }
 
   // Takes in a set of verticies and faces and draws them into the matrix
@@ -299,49 +343,6 @@ public class Cake {
       // Semi accurate shading is used
       char shade = DrawingHelpers.findShading(x0, y0, z0, x1, y1, z1, x2, y2, z2);
       DrawingHelpers.fillTriangle(x0, y0, x1, y1, x2, y2, matrix, shade);
-    }
-  }
-
-  // Puts a bunch of candles in the matrix, as specified by age. Size will be the size of the cake,
-  // so the candles can be correctly spaced.
-  public void putCandlesInMatrix(char[][] matrix, int age, int size) {
-    Random rand = new Random();
-
-    // Candles without rotations
-    float[][] baseCandleVerts = DrawingHelpers.generateCylinderSliceVertices(1, 100, 2, 0f, 6.29f);
-    int[][] candleFacesOG = DrawingHelpers.generateCylinderSliceIndices(2, 6.29f, 0f);
-
-    // Rotate the candle
-    DrawingHelpers.rotateVertices(baseCandleVerts, (float)( (3 * Math.PI / 4) + (Math.PI / 2) ), 0.0f, 0.0f);
-
-    int[][] candleFaces = DrawingHelpers.zSortTriangles(candleFacesOG, baseCandleVerts);
-    int candleTriangleAmount = candleFaces.length;
-    float radius = size / 2f;
-
-    System.out.println("CANDLES: ");
-    DrawingHelpers.printVertices(baseCandleVerts);
-    DrawingHelpers.printIndices(candleFaces);
-
-    // This makes copies of the candles and places them in a circle
-    for (int i = 0; i < age; i++) {
-      float[][] candleVerts = new float[baseCandleVerts.length][3];
-      for (int j = 0; j < baseCandleVerts.length; j++) {
-        System.arraycopy(baseCandleVerts[j], 0, candleVerts[j], 0, 3);
-      }
-
-      // Evenly spaced candle positions around the circle
-      float angle = (float) (i * 2.0f * Math.PI / age);
-      float offsetX = (float) (radius * Math.cos(angle)) + radius * (rand.nextFloat() - 0.5f);
-      float offsetY = (float) (radius * Math.sin(angle)) + radius;
-
-      // Translates the candles
-      for (float[] v : candleVerts) {
-        v[0] += offsetX;
-        v[1] += offsetY;
-      }
-
-      // Render candle into matrix
-      putInMatrix(candleVerts, candleFaces, matrix, candleTriangleAmount);
     }
   }
 
