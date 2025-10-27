@@ -35,6 +35,13 @@ public class Cake {
   private double quality;
   // height of the cake
   float height = 10f;
+
+  // Things on the cake
+  // Name on the Cake
+  private String nameOnTheCake;
+  // Amount of candles on the Cake
+  private int candlesOnTheCake;
+
   // colors of the cake. Will be Green and Gray if the cake has gone bad
   public static final String RESET = "\u001B[0m";
   public static final String GREEN = "\u001B[32m";
@@ -76,6 +83,15 @@ public class Cake {
     flour = new Flour("ALl purpose flour", 1.0, 10.0, 2);
   }
 
+  public Cake(int age, String name) {
+    WEIGHTOG = 100;
+    weightPounds = WEIGHTOG;
+    ingredients = base();
+    flour = new Flour("ALl purpose flour", 1.0, 10.0, 2);
+    candlesOnTheCake = age;
+    nameOnTheCake = name;
+  }
+
   // This makes a cake using a specific type of flour
   public Cake(
       String ingredients[], double cost, double weight, String name, Flour flour, double quality) {
@@ -107,6 +123,7 @@ public class Cake {
   }
 
   // METHODS
+  // Getters and Setters:
   // Returns the ingredients in a cake
   public String[] getIngredients() {
     return ingredients;
@@ -129,6 +146,7 @@ public class Cake {
 
   // Let's you eat a percent of the cake. The percent you eat is based on the amount of cake
   // remaining, not the total cake.
+  // Technically not a getter or setter, but I count it because you are setting how much of the cake you eat.
   public void eat(double percent) {
     if (percent < 0 || percent > 100) {
       System.out.println("You can't eat more than 100 or less than 0 percent of a cake");
@@ -184,6 +202,7 @@ public class Cake {
     System.out.println();
   }
 
+  // Static methods:
   // Takes extra ingredients and appends them to a list of base ingredients in a cake
   // PRECONDITION: Do not put ingredients with the same name as a base ingredient
   // The cake will contain a Flour object, as well as flour in the ingredients.
@@ -212,8 +231,21 @@ public class Cake {
     return name + " cake Has: " + stuff + " Weighs " + weightPounds + "lb";
   }
 
+  // Drawing methods
+  public void draw(){
+    draw(nameOnTheCake, "" + candlesOnTheCake);
+  }
+
+  public void draw(Table T) {
+    draw(nameOnTheCake, "" + candlesOnTheCake);
+    T.draw();
+  }
+
   // Drawing the Cake
   public void draw(String name, String ageString) {
+    nameOnTheCake = name;
+    int age = Integer.parseInt(ageString);
+
     // Properties of how you draw the cake
     char[][] matrix = DrawingHelpers.generateMatrix(140);
     float radius = 40.0f;
@@ -231,15 +263,18 @@ public class Cake {
     int length = faces.length;
     putInMatrix(verts, faces, matrix, length);
 
+    System.out.println("The CAKE");
+    DrawingHelpers.printVertices(verts);
+    DrawingHelpers.printIndices(faces);
+
     // Only put candles on Cake if it has not been eaten.
     if (weightPounds == WEIGHTOG) {
-      int age = Integer.parseInt(ageString);
       putCandlesInMatrix(matrix, age, (int) radius);
     }
-    putNameOnCake(matrix, name, (int) radius + 40, 20);
+    putNameOnCake(matrix, nameOnTheCake, (int) radius + 40, 20);
 
     boolean goneBad = flour.quality < 1;
-    drawCakeOnScreen(matrix, goneBad);
+    // drawCakeOnScreen(matrix, goneBad);
   }
 
   // Takes in a set of verticies and faces and draws them into the matrix
@@ -277,11 +312,15 @@ public class Cake {
     int[][] candleFacesOG = DrawingHelpers.generateCylinderSliceIndices(2, 6.29f, 0f);
 
     // Rotate the candle
-    DrawingHelpers.rotateVertices(baseCandleVerts, (float) (3 * Math.PI / 4), 0.0f, 0.0f);
+    DrawingHelpers.rotateVertices(baseCandleVerts, (float)( (3 * Math.PI / 4) + (Math.PI / 2) ), 0.0f, 0.0f);
 
     int[][] candleFaces = DrawingHelpers.zSortTriangles(candleFacesOG, baseCandleVerts);
     int candleTriangleAmount = candleFaces.length;
     float radius = size / 2f;
+
+    System.out.println("CANDLES: ");
+    DrawingHelpers.printVertices(baseCandleVerts);
+    DrawingHelpers.printIndices(candleFaces);
 
     // This makes copies of the candles and places them in a circle
     for (int i = 0; i < age; i++) {
@@ -308,7 +347,6 @@ public class Cake {
 
   // Puts the name on the cake.
   public void putNameOnCake(char[][] matrix, String name, int width, int height) {
-
     for (int i = width; i < width + name.length(); i++) {
       matrix[i][height] = name.charAt(i - width);
     }

@@ -27,12 +27,14 @@ public class Main {
     // String name = player.giveAnswer("Name? ");
 
     // Cake cake = new Cake();
-    // cake.draw(giveNumber(player));
     // cake.draw(name, age);
   }
 
-  public static int giveNumber(Player s) {
-    return Integer.parseInt(s.giveAnswer("Give a number"));
+  public static void date10_27() {
+    Baker bob = new Baker("Bob");
+    Table t = new Table(3, 15);
+    Cake bDay = bob.bakes(5, "Suzzie");
+    bDay.draw(t);
   }
 
   // Set for debugging PTSA class

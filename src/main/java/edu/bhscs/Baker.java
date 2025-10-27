@@ -17,6 +17,10 @@ public class Baker implements Creatable {
   Baker(Player p) {
     this.p = p;
   }
+  // Based of na,e
+  Baker(String name) {
+    this.name = name;
+  }
 
   // METHODS
   void setBakerStore(Store store) {
@@ -51,6 +55,10 @@ public class Baker implements Creatable {
 
   void setCash(int cash) {
     this.cash = cash;
+  }
+
+  Cake bakes(int age, String name){
+    return new Cake(age, name);
   }
 
   int getBalance() {
