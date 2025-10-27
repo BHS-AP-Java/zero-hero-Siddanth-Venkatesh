@@ -5,7 +5,7 @@
 
 /*
  * DESCRIPTION: Allows you to make people and a baker where people can buy or steal from the baker. Additionally,
- * their is a fundraiser going on by a PTSA that is looking to make money through donations and by people buying cakes for the fundraiser.
+ * there is a fundraiser going on by a PTSA that is looking to make money through donations and by people buying cakes for the fundraiser.
  * All classes will be controlled through the Player class, which is a wrapper for a scanner.
  * INPUT: Requires the people, the store, and the PTSA to all be made in the main function. Then actions can be written in main
  * such as buying, selling, stealing, and donating.
@@ -21,13 +21,14 @@ public class Main {
 
   public static void main(String[] args) {
     Player player = new Player("Sigma");
-    // player.showOptions();
-    String age = player.giveAnswer("Age? ");
-    String name = player.giveAnswer("Name? ");
+    player.setOptions("Sigma");
+    player.showOptions();
+    // String age = player.giveAnswer("Age? ");
+    // String name = player.giveAnswer("Name? ");
 
-    Cake cake = new Cake();
+    // Cake cake = new Cake();
     // cake.draw(giveNumber(player));
-    cake.draw(name, age);
+    // cake.draw(name, age);
   }
 
   public static int giveNumber(Player s) {

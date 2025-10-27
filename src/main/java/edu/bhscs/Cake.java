@@ -339,11 +339,11 @@ public class Cake {
   // Main method, used for debugging the cake class
   public static void main(String[] args) {
 
-    // Cake cake = new Cake();
+    Cake cake = new Cake();
     // cake.getFlour().goBad();
 
-    // cake.eat(0);
-    // cake.draw("Name", "5");
+    cake.eat(0);
+    cake.draw("Name", "5");
     // String[] ingredients = {
     //   "Chocolate Chips", "Flour", "Sugar", "Water", "Milk", "Egg", "Cocoa Powder"
     // };
