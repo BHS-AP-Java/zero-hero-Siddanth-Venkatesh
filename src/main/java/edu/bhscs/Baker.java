@@ -17,6 +17,7 @@ public class Baker implements Creatable {
   Baker(Player p) {
     this.p = p;
   }
+
   // Based of na,e
   Baker(String name) {
     this.name = name;
@@ -57,7 +58,7 @@ public class Baker implements Creatable {
     this.cash = cash;
   }
 
-  Cake bakes(int age, String name){
+  Cake bakes(int age, String name) {
     return new Cake(age, name);
   }
 

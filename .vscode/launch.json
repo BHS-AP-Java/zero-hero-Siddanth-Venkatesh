@@ -3,6 +3,13 @@
   "configurations": [
     {
       "type": "java",
+      "name": "Table",
+      "request": "launch",
+      "mainClass": "edu.bhscs.Table",
+      "projectName": "ap-java-starter"
+    },
+    {
+      "type": "java",
       "name": "App",
       "request": "launch",
       "mainClass": "edu.bhscs.App",

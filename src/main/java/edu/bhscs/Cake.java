@@ -38,9 +38,9 @@ public class Cake {
 
   // Things on the cake
   // Name on the Cake
-  private String nameOnTheCake;
+  private String nameOnTheCake = "no name";
   // Amount of candles on the Cake
-  private int candlesOnTheCake;
+  private int candlesOnTheCake = 0;
 
   // colors of the cake. Will be Green and Gray if the cake has gone bad
   public static final String RESET = "\u001B[0m";
@@ -146,7 +146,8 @@ public class Cake {
 
   // Let's you eat a percent of the cake. The percent you eat is based on the amount of cake
   // remaining, not the total cake.
-  // Technically not a getter or setter, but I count it because you are setting how much of the cake you eat.
+  // Technically not a getter or setter, but I count it because you are setting how much of the cake
+  // you eat.
   public void eat(double percent) {
     if (percent < 0 || percent > 100) {
       System.out.println("You can't eat more than 100 or less than 0 percent of a cake");
@@ -232,7 +233,7 @@ public class Cake {
   }
 
   // Drawing methods
-  public void draw(){
+  public void draw() {
     draw(nameOnTheCake, "" + candlesOnTheCake);
   }
 
@@ -287,8 +288,8 @@ public class Cake {
     int[][] candleFacesOG = DrawingHelpers.generateCylinderSliceIndices(2, 6.29f, 0f);
 
     // Rotate the candle
-    DrawingHelpers.rotateVertices(baseCandleVerts, (float) ((3 * Math.PI / 4) + (Math.PI / 2)),
-        0.0f, 0.0f);
+    DrawingHelpers.rotateVertices(
+        baseCandleVerts, (float) ((3 * Math.PI / 4) + (Math.PI / 2)), 0.0f, 0.0f);
 
     int[][] candleFaces = DrawingHelpers.zSortTriangles(candleFacesOG, baseCandleVerts);
     int candleTriangleAmount = candleFaces.length;

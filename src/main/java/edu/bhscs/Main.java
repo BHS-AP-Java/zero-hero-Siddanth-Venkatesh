@@ -20,14 +20,15 @@ package edu.bhscs;
 public class Main {
 
   public static void main(String[] args) {
-    Player player = new Player("Sigma");
-    player.setOptions("Sigma");
-    player.showOptions();
+    // Player player = new Player("Sigma");
+    // player.setOptions("Sigma");
+    // player.showOptions();
     // String age = player.giveAnswer("Age? ");
     // String name = player.giveAnswer("Name? ");
 
     // Cake cake = new Cake();
     // cake.draw(name, age);
+    date10_27();
   }
 
   public static void date10_27() {
