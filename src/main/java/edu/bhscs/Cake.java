@@ -33,8 +33,12 @@ public class Cake {
   private Flour flour;
   // quality is the quality of the cake. The price of the cake goes up with quality
   private double quality;
-  // height of the cake
+
+  // height of the cake (for drawing)
   float height = 10f;
+  // center of the cake
+  float[] center;
+
 
   // Things on the cake
   // Name on the Cake
@@ -239,8 +243,8 @@ public class Cake {
 
   public void draw(Table T) {
     draw(nameOnTheCake, "" + candlesOnTheCake);
-    verti
-    T.draw();
+    int x = Math.round(center[0]);
+    T.draw(x);
   }
 
   // Drawing the Cake
@@ -263,6 +267,7 @@ public class Cake {
     DrawingHelpers.rotateVertices(verts, (float) (3 * Math.PI / 4), 0.0f, 0.0f);
     int[][] faces = DrawingHelpers.zSortTriangles(facesOG, verts);
     int length = faces.length;
+    center = DrawingHelpers.findCenter(verts);
     putInMatrix(verts, faces, matrix, length);
 
     // System.out.println("The CAKE");
@@ -359,13 +364,14 @@ public class Cake {
     int height = things[0].length;
     int width = things.length;
     for (int i = 0; i < height; i++) {
-      char[] empty = new char[height];
-      Arrays.fill(empty, ' ');
-      Arrays.equals(empty, things[i]);
+      // char[] empty = new char[height];
+      // Arrays.fill(empty, ' ');
+      // Arrays.equals(empty, things[i]);
       for (int j = 0; j < width; j++) {
         char c = things[j][height - i - 1];
         String mold = j % 2 == 0 ? GREEN : GRAY;
         String piece = goneBad ? mold + c: "" + c;
+
         System.out.print(piece + RESET);
       }
       System.out.println();

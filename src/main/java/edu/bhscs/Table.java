@@ -60,8 +60,9 @@ public class Table {
     drawLegs(layers - 1);
   }
 
-  public void draw() {
+  public void draw(int x) {
     width += (legs - 1) - width % (legs - 1);
+    int offset = width - x;
     drawTop(TABLEHEIGHT);
     drawLegs(LEGHEIGHT);
   }
