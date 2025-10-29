@@ -68,6 +68,6 @@ public class Table {
   }
 
   public static void main(String[] args) {
-    new Table(7, 70).draw();
+    new Table(7, 70).draw(7);
   }
 }
