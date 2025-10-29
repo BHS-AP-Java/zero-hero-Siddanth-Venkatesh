@@ -118,22 +118,28 @@ public class DrawingHelpers {
     if (x >= 0 && x < things.length && y >= 0 && y < things[0].length) things[x][y] = ch;
   }
 
+  // Finds the center to rotate them around
+  public static float[] findCenter(float vertices[][]){
+    float x = 0f;
+    float y = 0f;
+    float z = 0f;
+    for (int i = 0; i < vertices.length; i++) {
+      x += vertices[i][0];
+      y += vertices[i][1];
+      z += vertices[i][2];
+    }
+    float avgX = x / vertices.length;
+    float avgY = y / vertices.length;
+    float avgZ = z / vertices.length;
+    return new float[]{avgX, avgY, avgZ};
+  }
+
   // Rotates a set of verticies
   // Implementation taken from Wikipedia (https://en.wikipedia.org/wiki/Rotation_matrix)
   public static void rotateVertices(float[][] vertices, float pitch, float yaw, float roll) {
     float x = 0f;
     float y = 0f;
     float z = 0f;
-
-    // // Find the center to rotate them around
-    // for (int i = 0; i < vertices.length; i++) {
-    //   x += vertices[i][0];
-    //   y += vertices[i][1];
-    //   z += vertices[i][2];
-    // }
-    // float avgX = x / vertices.length;
-    // float avgY = y / vertices.length;
-    // float avgZ = z / vertices.length;
 
     // For now, making it so that it is not rotated around center
     float avgX = 0f;

@@ -239,6 +239,7 @@ public class Cake {
 
   public void draw(Table T) {
     draw(nameOnTheCake, "" + candlesOnTheCake);
+    verti
     T.draw();
   }
 
@@ -268,12 +269,11 @@ public class Cake {
     // DrawingHelpers.printVertices(verts);
     // DrawingHelpers.printIndices(faces);
 
-    // Only put candles on Cake if it has not been eaten.
+    // Only put candles and name on Cake if it has not been eaten.
     if (weightPounds == WEIGHTOG) {
       putCandlesInMatrix(matrix, age, (int) radius);
+      putNameOnCake(matrix, nameOnTheCake, (int) radius + 40, 20);
     }
-    putNameOnCake(matrix, nameOnTheCake, (int) radius + 40, 20);
-
     boolean goneBad = flour.quality < 1;
     drawCakeOnScreen(matrix, goneBad);
   }
@@ -359,21 +359,18 @@ public class Cake {
     int height = things[0].length;
     int width = things.length;
     for (int i = 0; i < height; i++) {
+      char[] empty = new char[height];
+      Arrays.fill(empty, ' ');
+      Arrays.equals(empty, things[i]);
       for (int j = 0; j < width; j++) {
         char c = things[j][height - i - 1];
-        if (goneBad) {
-          // Swaps the color from Gray and Green every character
-          // Simulates looking moldy
-          String color = j % 2 == 0 ? GREEN : GRAY;
-
-          System.out.print(color + c + RESET);
-        } else {
-          System.out.print(c);
-        }
+        String mold = j % 2 == 0 ? GREEN : GRAY;
+        String piece = goneBad ? mold + c: "" + c;
+        System.out.print(piece + RESET);
       }
       System.out.println();
     }
-    System.out.println(!goneBad ? "" : "Cake " + name + " is moldy");
+    System.out.print(!goneBad ? "" : "Cake " + name + " is moldy");
   }
 
   // Main method, used for debugging the cake class

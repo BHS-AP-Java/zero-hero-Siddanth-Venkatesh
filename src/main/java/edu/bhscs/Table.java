@@ -10,12 +10,6 @@
  * EDGE CASE: If the tables width can't evenly put legs, the width of the table is made wider till it can.
  */
 
-
-
-
-
-
-
 package edu.bhscs;
 
 public class Table {
@@ -25,7 +19,7 @@ public class Table {
   final int LEGHEIGHT = 5;
 
   String tableTopChars = "XY";
-  String leg = "ABC";
+  String leg = "AB";
 
   public Table(int x, int y) {
     legs = x;
@@ -56,7 +50,7 @@ public class Table {
     }
     int legSpacing = legs == 1 ? width + 10 : width / (legs - 1);
     String legWithSpace = leg;
-    for (int i = leg.length(); i < legSpacing; i++){
+    for (int i = leg.length(); i < legSpacing; i++) {
       legWithSpace += " ";
     }
     for (int i = 0; i <= width; i += legSpacing) {
@@ -73,6 +67,6 @@ public class Table {
   }
 
   public static void main(String[] args) {
-    new Table(7, 100).draw();
+    new Table(7, 70).draw();
   }
 }
