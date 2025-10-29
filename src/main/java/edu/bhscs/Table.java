@@ -1,3 +1,21 @@
+// Siddanth Venkatesh
+// P: 2
+// The cake project
+// 9/19
+
+/*
+ * DESCRIPTION: Makes a Table
+ * INPUT: Needs Width and legs of the table
+ * OUTPUT: Can draw the table with legs
+ * EDGE CASE: If the tables width can't evenly put legs, the width of the table is made wider till it can.
+ */
+
+
+
+
+
+
+
 package edu.bhscs;
 
 public class Table {
@@ -7,7 +25,7 @@ public class Table {
   final int LEGHEIGHT = 5;
 
   String tableTopChars = "XY";
-  String leg = "AB";
+  String leg = "ABC";
 
   public Table(int x, int y) {
     legs = x;
@@ -19,7 +37,7 @@ public class Table {
       return;
     }
     int length = tableTopChars.length();
-    drawLine(width + 2, length, tableTopChars);
+    drawLine(width + leg.length(), length, tableTopChars);
     System.out.println();
     drawTop(layers - 1);
   }
@@ -49,7 +67,7 @@ public class Table {
   }
 
   public void draw() {
-    width -= width % (legs - 1);
+    width += (legs - 1) - width % (legs - 1);
     drawTop(TABLEHEIGHT);
     drawLegs(LEGHEIGHT);
   }
