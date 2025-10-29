@@ -19,7 +19,7 @@ public class Table {
       return;
     }
     int length = tableTopChars.length();
-    drawLine(width, length, tableTopChars);
+    drawLine(width + 2, length, tableTopChars);
     System.out.println();
     drawTop(layers - 1);
   }
@@ -38,10 +38,10 @@ public class Table {
     }
     int legSpacing = legs == 1 ? width + 10 : width / (legs - 1);
     String legWithSpace = leg;
-    for (int i = leg.length() + 1; i < legSpacing; i++){
+    for (int i = leg.length(); i < legSpacing; i++){
       legWithSpace += " ";
     }
-    for (int i = 0; i < width; i += legSpacing) {
+    for (int i = 0; i <= width; i += legSpacing) {
       drawLine(legSpacing, legWithSpace.length(), legWithSpace);
     }
     System.out.println();
@@ -49,11 +49,12 @@ public class Table {
   }
 
   public void draw() {
+    width -= width % (legs - 1);
     drawTop(TABLEHEIGHT);
     drawLegs(LEGHEIGHT);
   }
 
   public static void main(String[] args) {
-    new Table(5, 40).draw();
+    new Table(7, 100).draw();
   }
 }
