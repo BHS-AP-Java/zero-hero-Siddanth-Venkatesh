@@ -119,7 +119,7 @@ public class DrawingHelpers {
   }
 
   // Finds the center to rotate them around
-  public static float[] findCenter(float vertices[][]){
+  public static float[] findCenter(float vertices[][]) {
     float x = 0f;
     float y = 0f;
     float z = 0f;
@@ -131,7 +131,7 @@ public class DrawingHelpers {
     float avgX = x / vertices.length;
     float avgY = y / vertices.length;
     float avgZ = z / vertices.length;
-    return new float[]{avgX, avgY, avgZ};
+    return new float[] {avgX, avgY, avgZ};
   }
 
   // Rotates a set of verticies

@@ -39,7 +39,6 @@ public class Cake {
   // center of the cake
   float[] center;
 
-
   // Things on the cake
   // Name on the Cake
   private String nameOnTheCake = "no name";
@@ -370,7 +369,7 @@ public class Cake {
       for (int j = 0; j < width; j++) {
         char c = things[j][height - i - 1];
         String mold = j % 2 == 0 ? GREEN : GRAY;
-        String piece = goneBad ? mold + c: "" + c;
+        String piece = goneBad ? mold + c : "" + c;
 
         System.out.print(piece + RESET);
       }
