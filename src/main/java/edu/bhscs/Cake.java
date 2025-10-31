@@ -34,6 +34,10 @@ public class Cake {
   // quality is the quality of the cake. The price of the cake goes up with quality
   private double quality;
 
+  // Just the shift for the projection. Make sure everything lands in camera
+  private final int SHIFTX = 60;
+  private final int SHIFTY = 40;
+
   // height of the cake (for drawing)
   float height = 10f;
   // center of the cake
@@ -243,7 +247,7 @@ public class Cake {
   public void draw(Table T) {
     draw(nameOnTheCake, "" + candlesOnTheCake);
     int x = Math.round(center[0]);
-    T.draw(x);
+    T.draw(x + SHIFTX);
   }
 
   // Drawing the Cake
@@ -267,6 +271,7 @@ public class Cake {
     int[][] faces = DrawingHelpers.zSortTriangles(facesOG, verts);
     int length = faces.length;
     center = DrawingHelpers.findCenter(verts);
+    System.out.println(Arrays.toString(center));
     putInMatrix(verts, faces, matrix, length);
 
     // System.out.println("The CAKE");
@@ -285,7 +290,7 @@ public class Cake {
   // Puts a bunch of candles in the matrix, as specified by age. Size will be the size of the cake,
   // so the candles can be correctly spaced.
   public void putCandlesInMatrix(char[][] matrix, int age, int size) {
-    Random rand = new Random();
+    // Random rand = new Random();
 
     // Candles without rotations
     float[][] baseCandleVerts = DrawingHelpers.generateCylinderSliceVertices(1, 100, 2, 0f, 6.29f);
@@ -330,19 +335,17 @@ public class Cake {
   public void putInMatrix(float[][] verts, int[][] faces, char[][] matrix, int length) {
     for (int i = 0; i < length; i++) {
       // For now, simple orthographic projection is used
-      int shiftx = 60;
-      int shifty = 40;
 
-      int x0 = Math.round(verts[faces[i][0]][0]) + shiftx;
-      int y0 = Math.round(verts[faces[i][0]][1]) + shifty;
+      int x0 = Math.round(verts[faces[i][0]][0]) + SHIFTX;
+      int y0 = Math.round(verts[faces[i][0]][1]) + SHIFTY;
       int z0 = Math.round(verts[faces[i][0]][2]);
 
-      int x1 = Math.round(verts[faces[i][1]][0]) + shiftx;
-      int y1 = Math.round(verts[faces[i][1]][1]) + shifty;
+      int x1 = Math.round(verts[faces[i][1]][0]) + SHIFTX;
+      int y1 = Math.round(verts[faces[i][1]][1]) + SHIFTY;
       int z1 = Math.round(verts[faces[i][1]][2]);
 
-      int x2 = Math.round(verts[faces[i][2]][0]) + shiftx;
-      int y2 = Math.round(verts[faces[i][2]][1]) + shifty;
+      int x2 = Math.round(verts[faces[i][2]][0]) + SHIFTX;
+      int y2 = Math.round(verts[faces[i][2]][1]) + SHIFTY;
       int z2 = Math.round(verts[faces[i][2]][2]);
 
       // Semi accurate shading is used

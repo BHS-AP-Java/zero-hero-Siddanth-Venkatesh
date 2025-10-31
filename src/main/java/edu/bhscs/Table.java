@@ -26,48 +26,43 @@ public class Table {
     width = y;
   }
 
-  public void drawTop(int layers) {
-    if (layers == 0) {
+  public void drawTop(int layers, int offset) {
+    if (layers-- == 0)
       return;
-    }
-    int length = tableTopChars.length();
-    drawLine(width + leg.length(), length, tableTopChars);
+    drawLine(offset, 1, " ");
+    drawLine(width + leg.length(), tableTopChars.length(), tableTopChars);
     System.out.println();
-    drawTop(layers - 1);
+    drawTop(layers, offset);
   }
 
-  public void drawLine(int width, int lengthOfChars, String chars) {
-    for (int i = 0; i < width; i++) {
-      int moddedI = i % lengthOfChars;
-      String c = chars.substring(moddedI, moddedI + 1);
-      System.out.print(c);
-    }
+  public void drawLine(int width, int len, String chars) {
+    for (int i = 0; i < width; i++)
+      System.out.print(chars.substring(i % len, i % len + 1));
   }
 
-  public void drawLegs(int layers) {
-    if (layers == 0) {
+  public void drawLegs(int layers, int offset) {
+    if (layers-- == 0)
       return;
-    }
-    int legSpacing = legs == 1 ? width + 10 : width / (legs - 1);
+    drawLine(offset, 1, " ");
+    int legSpacing = (legs == 1) ? width + 10 : width / (legs - 1);
     String legWithSpace = leg;
-    for (int i = leg.length(); i < legSpacing; i++) {
+    for (int i = leg.length(); i < legSpacing; i++)
       legWithSpace += " ";
-    }
-    for (int i = 0; i <= width; i += legSpacing) {
+    for (int i = 0; i <= width; i += legSpacing)
       drawLine(legSpacing, legWithSpace.length(), legWithSpace);
-    }
     System.out.println();
-    drawLegs(layers - 1);
+    drawLegs(layers, offset);
   }
 
   public void draw(int x) {
     width += (legs - 1) - width % (legs - 1);
-    int offset = width - x;
-    drawTop(TABLEHEIGHT);
-    drawLegs(LEGHEIGHT);
+    int offset = x - (width + leg.length()) / 2;
+    drawTop(TABLEHEIGHT, offset);
+    drawLegs(LEGHEIGHT, offset);
   }
 
+
   public static void main(String[] args) {
-    new Table(7, 70).draw(7);
+    new Table(7, 70).draw(50);
   }
 }
