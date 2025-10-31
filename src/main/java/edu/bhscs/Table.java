@@ -65,6 +65,9 @@ public class Table implements Offsetable {
   public int getLength() {
     return width;
   }
+  public void setOffset(){
+    return;
+  }
 
   public static void main(String[] args) {
     new Table(7, 70).draw(50);

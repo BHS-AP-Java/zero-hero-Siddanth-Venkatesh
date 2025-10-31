@@ -32,6 +32,8 @@ public class Cake {
   private Flour flour;
   // quality is the quality of the cake. The price of the cake goes up with quality
   private double quality;
+  // Width of the Cake
+  private int width;
 
   // Just the shift for the projection. Make sure everything lands in camera
   private final int SHIFTX = 60;
