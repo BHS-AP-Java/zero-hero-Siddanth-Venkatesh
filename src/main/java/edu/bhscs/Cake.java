@@ -15,7 +15,6 @@
 package edu.bhscs;
 
 import java.util.Arrays;
-import java.util.Random;
 
 public class Cake {
   // PROPERTIES AND FIELDS
@@ -286,6 +285,8 @@ public class Cake {
     boolean goneBad = flour.quality < 1;
     drawCakeOnScreen(matrix, goneBad);
   }
+
+
 
   // Puts a bunch of candles in the matrix, as specified by age. Size will be the size of the cake,
   // so the candles can be correctly spaced.

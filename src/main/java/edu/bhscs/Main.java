@@ -25,9 +25,9 @@ public class Main {
     // player.showOptions();
     // String age = player.giveAnswer("Age? ");
     // String name = player.giveAnswer("Name? ");
-    System.out.println("TESTING ");
+    // System.out.println("TESTING ");
 
-    Cake cake = new Cake();
+    // Cake cake = new Cake();
     // cake.draw(name, age);
     date10_27();
   }

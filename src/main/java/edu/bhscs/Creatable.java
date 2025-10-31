@@ -12,7 +12,7 @@
 
 package edu.bhscs;
 
-// CONSTRUCTOR
+// CONSTRUCTOR (NA, it's an interface)
 public interface Creatable {
   String getTypeName(); // The type of the object
 }
