@@ -16,7 +16,7 @@ package edu.bhscs;
 
 import java.util.Arrays;
 
-public class Cake {
+public class Cake implements Offsetable{
   // PROPERTIES AND FIELDS
   // weightPounds is the current weight, WEIGHTOG is the original weight of the cake.
   private double weightPounds;
@@ -54,6 +54,8 @@ public class Cake {
   public static final String RESET = "\u001B[0m";
   public static final String GREEN = "\u001B[32m";
   public static final String GRAY = "\u001B[90m";
+
+  private int offset; 
 
   // This is the constructor for a cake, and it makes an instance of a cake with it's ingredients
   // cost, weight, and name.
@@ -382,6 +384,15 @@ public class Cake {
       System.out.println();
     }
     System.out.print(!goneBad ? "" : "Cake " + name + " is moldy");
+  }
+
+  public int getLength(){
+    return 0;
+  }
+
+  public void setOffset(){
+
+    return;
   }
 
   // Main method, used for debugging the cake class
