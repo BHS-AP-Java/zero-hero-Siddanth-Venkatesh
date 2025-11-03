@@ -23,6 +23,10 @@ public class DrawingHelpers {
       "$@B%8&WM#*oahkbdpqwmZO0QLCJUYXzcvunxrjft/\\|()1{}[]?-_+~<>i!lI;:,\"^`'.";
   // Amount of characters in shading
   private static final int SHADINGAMOUNT = 70;
+  // colors of the cake. Will be Green and Gray if the cake has gone bad
+  public static final String RESET = "\u001B[0m";
+  public static final String GREEN = "\u001B[32m";
+  public static final String GRAY = "\u001B[90m";
 
   // Plots a line
   // (x0,y0) to (x1,y1) are the starting and ending of the lines (this is done in 2d)
@@ -330,6 +334,45 @@ public class DrawingHelpers {
       matrix[i] = def.clone();
     }
     return matrix;
+  }
+
+  public static int getMax(float[][] verts) {
+    float max = 0f;
+    for (float[] vert : verts) {
+      if (vert[0] > max) {
+        max = vert[0];
+      }
+    }
+    return (int) (max);
+  }
+
+  public static int getMin(float[][] verts) {
+    float min = 1000000f;
+    for (float[] vert : verts) {
+      if (vert[0] < min) {
+        min = vert[0];
+      }
+    }
+    return (int) (min);
+  }
+
+  // Draw a 2d Array
+  public static void drawCakeOnScreen(char[][] things, boolean goneBad) {
+    int height = things[0].length;
+    int width = things.length;
+    for (int i = 0; i < height; i++) {
+      // char[] empty = new char[height];
+      // Arrays.fill(empty, ' ');
+      // Arrays.equals(empty, things[i]);
+      for (int j = 0; j < width; j++) {
+        char c = things[j][height - i - 1];
+        String mold = j % 2 == 0 ? GREEN : GRAY;
+        String piece = goneBad ? mold + c : "" + c;
+
+        System.out.print(piece + RESET);
+      }
+      System.out.println();
+    }
   }
 
   // Main method to debug this class

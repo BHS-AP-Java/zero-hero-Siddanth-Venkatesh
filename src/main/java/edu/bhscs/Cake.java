@@ -50,11 +50,6 @@ public class Cake implements Offsetable{
   // Amount of candles on the Cake
   private int candlesOnTheCake = 0;
 
-  // colors of the cake. Will be Green and Gray if the cake has gone bad
-  public static final String RESET = "\u001B[0m";
-  public static final String GREEN = "\u001B[32m";
-  public static final String GRAY = "\u001B[90m";
-
   // offset of the cake
   private int offset;
 
@@ -256,7 +251,6 @@ public class Cake implements Offsetable{
 
   // Drawing the Cake
   public void draw(String name, String ageString) {
-    shiftX = -1 * getMin();
     nameOnTheCake = name;
     int age = Integer.parseInt(ageString);
 
@@ -272,6 +266,7 @@ public class Cake implements Offsetable{
         DrawingHelpers.generateCylinderSliceVertices(radius, height, slices, thetaStart, thetaEnd);
     int[][] facesOG = DrawingHelpers.generateCylinderSliceIndices(slices, thetaEnd, thetaStart);
     DrawingHelpers.rotateVertices(verts, (float) (3 * Math.PI / 4), 0.0f, 0.0f);
+    shiftX = -1 * DrawingHelpers.getMin(verts);
     int[][] faces = DrawingHelpers.zSortTriangles(facesOG, verts);
     int length = faces.length;
     center = DrawingHelpers.findCenter(verts);
@@ -288,7 +283,7 @@ public class Cake implements Offsetable{
       putNameOnCake(matrix, nameOnTheCake, (int) radius + 40, 20);
     }
     boolean goneBad = flour.quality < 1;
-    drawCakeOnScreen(matrix, goneBad);
+    DrawingHelpers.drawCakeOnScreen(matrix, goneBad);
   }
 
 
@@ -368,62 +363,14 @@ public class Cake implements Offsetable{
     }
   }
 
-  // Draw a 2d Array
-  public void drawCakeOnScreen(char[][] things, boolean goneBad) {
-    int height = things[0].length;
-    int width = things.length;
-    for (int i = 0; i < height; i++) {
-      // char[] empty = new char[height];
-      // Arrays.fill(empty, ' ');
-      // Arrays.equals(empty, things[i]);
-      for (int j = 0; j < width; j++) {
-        char c = things[j][height - i - 1];
-        String mold = j % 2 == 0 ? GREEN : GRAY;
-        String piece = goneBad ? mold + c : "" + c;
-
-        System.out.print(piece + RESET);
-      }
-      System.out.println();
-    }
-    System.out.print(!goneBad ? "" : "Cake " + name + " is moldy");
-  }
-
-  public int getMax(){
-    int slices = 10;
-    float thetaStart = (float) ((3f / 4f) * Math.PI);
-    float dTheta = (float) ((weightPounds / WEIGHTOG) * 2f * Math.PI);
-    float thetaEnd = thetaStart + dTheta;
-    // Generates the mesh of the Cake, with correcting rotation and zSorting.
-    float[][] verts =
-        DrawingHelpers.generateCylinderSliceVertices(radius, height, slices, thetaStart, thetaEnd);
-    float max = 0f;
-    for (float[] vert : verts) {
-      if (vert[0] > max) {
-        max = vert[0];
-      }
-    }
-    return (int) (max);
-  }
-
-  public int getMin() {
-    int slices = 10;
-    float thetaStart = (float) ((3f / 4f) * Math.PI);
-    float dTheta = (float) ((weightPounds / WEIGHTOG) * 2f * Math.PI);
-    float thetaEnd = thetaStart + dTheta;
-    // Generates the mesh of the Cake, with correcting rotation and zSorting.
-    float[][] verts =
-        DrawingHelpers.generateCylinderSliceVertices(radius, height, slices, thetaStart, thetaEnd);
-    float min = 1000000f;
-    for (float[] vert : verts) {
-      if (vert[0] < min) {
-        min = vert[0];
-      }
-    }
-    return (int) (min);
-  }
-
   public int getLength(){
-    return getMax() - getMin();
+  int slices = 10;
+  float thetaStart = (float) ((3f / 4f) * Math.PI);
+  float dTheta = (float) ((weightPounds / WEIGHTOG) * 2f * Math.PI);
+  float thetaEnd = thetaStart + dTheta;
+  float[][] verts =
+      DrawingHelpers.generateCylinderSliceVertices(radius, height, slices, thetaStart, thetaEnd);
+  return DrawingHelpers.getMax(verts) - DrawingHelpers.getMin(verts);
   }
   public void setOffset(){
 
@@ -438,7 +385,7 @@ public class Cake implements Offsetable{
 
     cake.eat(0);
     // cake.draw("Name", "5");
-    Table T = new Table(3 , 70);
+    Table T = new Table(3 , 140);
     cake.draw(T);
     System.out.println(cake.getLength());
     // cake.draw();
