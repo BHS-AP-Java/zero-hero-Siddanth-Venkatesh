@@ -32,8 +32,6 @@ public class Cake implements Offsetable{
   private Flour flour;
   // quality is the quality of the cake. The price of the cake goes up with quality
   private double quality;
-  // Width of the Cake
-  private int width;
 
   // Just the shift for the projection. Make sure everything lands in camera
   private final int SHIFTX = 60;
@@ -43,6 +41,8 @@ public class Cake implements Offsetable{
   float height = 10f;
   // center of the cake
   float[] center;
+  // radius of the cake
+  private float radius = 40.0f;
 
   // Things on the cake
   // Name on the Cake
@@ -55,7 +55,8 @@ public class Cake implements Offsetable{
   public static final String GREEN = "\u001B[32m";
   public static final String GRAY = "\u001B[90m";
 
-  private int offset; 
+  // offset of the cake
+  private int offset;
 
   // This is the constructor for a cake, and it makes an instance of a cake with it's ingredients
   // cost, weight, and name.
@@ -260,7 +261,6 @@ public class Cake implements Offsetable{
 
     // Properties of how you draw the cake
     char[][] matrix = DrawingHelpers.generateMatrix(140);
-    float radius = 40.0f;
     int slices = 10;
     float thetaStart = (float) ((3f / 4f) * Math.PI);
     float dTheta = (float) ((weightPounds / WEIGHTOG) * 2f * Math.PI);
@@ -387,6 +387,7 @@ public class Cake implements Offsetable{
   }
 
   public int getLength(){
+
     return 0;
   }
 
