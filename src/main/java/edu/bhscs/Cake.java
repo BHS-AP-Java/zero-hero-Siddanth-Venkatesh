@@ -386,11 +386,43 @@ public class Cake implements Offsetable{
     System.out.print(!goneBad ? "" : "Cake " + name + " is moldy");
   }
 
-  public int getLength(){
-
-    return 0;
+  public int getMax(){
+    int slices = 10;
+    float thetaStart = (float) ((3f / 4f) * Math.PI);
+    float dTheta = (float) ((weightPounds / WEIGHTOG) * 2f * Math.PI);
+    float thetaEnd = thetaStart + dTheta;
+    // Generates the mesh of the Cake, with correcting rotation and zSorting.
+    float[][] verts =
+        DrawingHelpers.generateCylinderSliceVertices(radius, height, slices, thetaStart, thetaEnd);
+    float max = 0f;
+    for (float[] vert : verts) {
+      if (vert[0] > max) {
+        max = vert[0];
+      }
+    }
+    return (int) (max);
   }
 
+  public int getMin() {
+    int slices = 10;
+    float thetaStart = (float) ((3f / 4f) * Math.PI);
+    float dTheta = (float) ((weightPounds / WEIGHTOG) * 2f * Math.PI);
+    float thetaEnd = thetaStart + dTheta;
+    // Generates the mesh of the Cake, with correcting rotation and zSorting.
+    float[][] verts =
+        DrawingHelpers.generateCylinderSliceVertices(radius, height, slices, thetaStart, thetaEnd);
+    float min = 1000000f;
+    for (float[] vert : verts) {
+      if (vert[0] < min) {
+        min = vert[0];
+      }
+    }
+    return (int) (min);
+  }
+
+  public int getLength(){
+    return getMax() - getMin();
+  }
   public void setOffset(){
 
     return;
@@ -403,7 +435,11 @@ public class Cake implements Offsetable{
     // cake.getFlour().goBad();
 
     cake.eat(0);
-    cake.draw("Name", "5");
+    // cake.draw("Name", "5");
+    Table T = new Table(3 , 70);
+    cake.draw(T);
+    System.out.println(cake.getLength());
+    // cake.draw();
     // String[] ingredients = {
     //   "Chocolate Chips", "Flour", "Sugar", "Water", "Milk", "Egg", "Cocoa Powder"
     // };
