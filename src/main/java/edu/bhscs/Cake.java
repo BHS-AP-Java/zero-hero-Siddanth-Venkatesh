@@ -34,8 +34,8 @@ public class Cake implements Offsetable{
   private double quality;
 
   // Just the shift for the projection. Make sure everything lands in camera
-  private final int SHIFTX = 60;
-  private final int SHIFTY = 40;
+  private int shiftX = 60;
+  private int shiftY = 40;
 
   // height of the cake (for drawing)
   float height = 10f;
@@ -251,11 +251,12 @@ public class Cake implements Offsetable{
   public void draw(Table T) {
     draw(nameOnTheCake, "" + candlesOnTheCake);
     int x = Math.round(center[0]);
-    T.draw(x + SHIFTX);
+    T.draw(x + shiftX);
   }
 
   // Drawing the Cake
   public void draw(String name, String ageString) {
+    shiftX = -1 * getMin();
     nameOnTheCake = name;
     int age = Integer.parseInt(ageString);
 
@@ -341,16 +342,17 @@ public class Cake implements Offsetable{
     for (int i = 0; i < length; i++) {
       // For now, simple orthographic projection is used
 
-      int x0 = Math.round(verts[faces[i][0]][0]) + SHIFTX;
-      int y0 = Math.round(verts[faces[i][0]][1]) + SHIFTY;
+
+      int x0 = Math.round(verts[faces[i][0]][0]) + shiftX;
+      int y0 = Math.round(verts[faces[i][0]][1]) + shiftY;
       int z0 = Math.round(verts[faces[i][0]][2]);
 
-      int x1 = Math.round(verts[faces[i][1]][0]) + SHIFTX;
-      int y1 = Math.round(verts[faces[i][1]][1]) + SHIFTY;
+      int x1 = Math.round(verts[faces[i][1]][0]) + shiftX;
+      int y1 = Math.round(verts[faces[i][1]][1]) + shiftY;
       int z1 = Math.round(verts[faces[i][1]][2]);
 
-      int x2 = Math.round(verts[faces[i][2]][0]) + SHIFTX;
-      int y2 = Math.round(verts[faces[i][2]][1]) + SHIFTY;
+      int x2 = Math.round(verts[faces[i][2]][0]) + shiftX;
+      int y2 = Math.round(verts[faces[i][2]][1]) + shiftY;
       int z2 = Math.round(verts[faces[i][2]][2]);
 
       // Semi accurate shading is used
