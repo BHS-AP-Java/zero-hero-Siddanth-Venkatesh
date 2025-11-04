@@ -356,24 +356,37 @@ public class DrawingHelpers {
     return (int) (min);
   }
 
-  // Draw a 2d Array
   public static void drawCakeOnScreen(char[][] things, boolean goneBad) {
-    int height = things[0].length;
     int width = things.length;
-    for (int i = 0; i < height; i++) {
-      // char[] empty = new char[height];
-      // Arrays.fill(empty, ' ');
-      // Arrays.equals(empty, things[i]);
-      for (int j = 0; j < width; j++) {
-        char c = things[j][height - i - 1];
-        String mold = j % 2 == 0 ? GREEN : GRAY;
-        String piece = goneBad ? mold + c : "" + c;
+    int height = things[0].length;
 
+    // Find top and bottom bounds to print cake
+    int top = -1, bottom = -1;
+    for (int y = 0; y < height; y++) {
+      for (int x = 0; x < width; x++) {
+        if (things[x][y] != ' ') {
+          if (bottom == -1)
+            bottom = y;
+          top = y;
+        }
+      }
+    }
+
+    if (bottom == -1)
+      return; // Entire matrix blank — nothing to draw
+
+    // Prints the cake properly
+    for (int y = top; y >= bottom; y--) {
+      for (int x = 0; x < width; x++) {
+        char c = things[x][y];
+        String mold = x % 2 == 0 ? GREEN : GRAY;
+        String piece = goneBad ? mold + c : "" + c;
         System.out.print(piece + RESET);
       }
       System.out.println();
     }
   }
+
 
   // Takes in a set of verticies and faces and draws them into the matrix
   public static void putInMatrix(float[][] verts, int[][] faces, char[][] matrix, int length, int shiftX, int shiftY) {

@@ -20,6 +20,7 @@ public class Table implements Offsetable {
 
   String tableTopChars = "XY";
   String leg = "AB";
+  int offset;
 
   public Table(int x, int y) {
     legs = x;
@@ -59,7 +60,7 @@ public class Table implements Offsetable {
 
   public void draw(int x) {
     width += (legs - 1) - width % (legs - 1);
-    int offset = x - (width + leg.length()) / 2;
+    setOffset(x - (width + leg.length()) / 2);
     drawTop(TABLEHEIGHT, offset);
     drawLegs(LEGHEIGHT, offset);
   }
@@ -68,7 +69,8 @@ public class Table implements Offsetable {
     return width + ((legs - 1) - width % (legs - 1)) + leg.length();
   }
 
-  public void setOffset() {
+  public void setOffset(int x) {
+    offset = x;
     return;
   }
 

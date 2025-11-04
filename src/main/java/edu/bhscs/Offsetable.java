@@ -16,5 +16,5 @@ package edu.bhscs;
 public interface Offsetable {
   int getLength(); // The length of the object
 
-  void setOffset();
+  void setOffset(int x);
 }

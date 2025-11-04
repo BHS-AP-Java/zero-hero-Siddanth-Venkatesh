@@ -250,13 +250,13 @@ public class Cake implements Offsetable {
     int cakeLength = getLength();
     int tableLength = T.getLength();
     if (cakeLength > tableLength){
-      draw();
+      this.draw();
       int x = (cakeLength - tableLength) / 2;
       T.draw(x);
       return;
     }
-    shiftX = (tableLength - cakeLength) / 2;
-    draw();
+    setOffset((tableLength - cakeLength) / 2);
+    this.draw();
     T.draw(0);
   }
 
@@ -310,7 +310,8 @@ public class Cake implements Offsetable {
     return DrawingHelpers.getMax(verts) - DrawingHelpers.getMin(verts);
   }
 
-  public void setOffset() {
+  public void setOffset(int x) {
+    shiftX = x;
     return;
   }
 
@@ -332,13 +333,12 @@ public class Cake implements Offsetable {
 
   // Main method, used for debugging the cake class
   public static void main(String[] args) {
-
     Cake cake = new Cake();
     // cake.getFlour().goBad();
 
     cake.eat(90);
     // cake.draw("Name", "5");
-    Table T = new Table(3, 100);
+    Table T = new Table(3, 50);
     cake.draw(T);
   }
 }
