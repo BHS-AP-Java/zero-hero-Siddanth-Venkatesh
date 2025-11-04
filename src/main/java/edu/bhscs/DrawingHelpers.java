@@ -375,6 +375,29 @@ public class DrawingHelpers {
     }
   }
 
+  // Takes in a set of verticies and faces and draws them into the matrix
+  public static void putInMatrix(float[][] verts, int[][] faces, char[][] matrix, int length, int shiftX, int shiftY) {
+    for (int i = 0; i < length; i++) {
+      // For now, simple orthographic projection is used
+
+      int x0 = Math.round(verts[faces[i][0]][0]) + shiftX;
+      int y0 = Math.round(verts[faces[i][0]][1]) + shiftY;
+      int z0 = Math.round(verts[faces[i][0]][2]);
+
+      int x1 = Math.round(verts[faces[i][1]][0]) + shiftX;
+      int y1 = Math.round(verts[faces[i][1]][1]) + shiftY;
+      int z1 = Math.round(verts[faces[i][1]][2]);
+
+      int x2 = Math.round(verts[faces[i][2]][0]) + shiftX;
+      int y2 = Math.round(verts[faces[i][2]][1]) + shiftY;
+      int z2 = Math.round(verts[faces[i][2]][2]);
+
+      // Semi accurate shading is used
+      char shade = DrawingHelpers.findShading(x0, y0, z0, x1, y1, z1, x2, y2, z2);
+      DrawingHelpers.fillTriangle(x0, y0, x1, y1, x2, y2, matrix, shade);
+    }
+  }
+
   // Main method to debug this class
   public static void main(String[] args) {
     float radius = 20f;
@@ -391,4 +414,5 @@ public class DrawingHelpers {
     printVertices(verts);
     printIndices(faces);
   }
+
 }

@@ -63,9 +63,10 @@ public class Table implements Offsetable {
   }
 
   public int getLength() {
-    return width;
+    return width + ((legs - 1) - width % (legs - 1)) + leg.length();
   }
-  public void setOffset(){
+
+  public void setOffset() {
     return;
   }
 

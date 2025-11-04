@@ -16,7 +16,7 @@ package edu.bhscs;
 
 import java.util.Arrays;
 
-public class Cake implements Offsetable{
+public class Cake implements Offsetable {
   // PROPERTIES AND FIELDS
   // weightPounds is the current weight, WEIGHTOG is the original weight of the cake.
   private double weightPounds;
@@ -34,13 +34,11 @@ public class Cake implements Offsetable{
   private double quality;
 
   // Just the shift for the projection. Make sure everything lands in camera
-  private int shiftX = 60;
+  private int shiftX = 0;
   private int shiftY = 40;
 
   // height of the cake (for drawing)
   float height = 10f;
-  // center of the cake
-  float[] center;
   // radius of the cake
   private float radius = 40.0f;
 
@@ -49,9 +47,6 @@ public class Cake implements Offsetable{
   private String nameOnTheCake = "no name";
   // Amount of candles on the Cake
   private int candlesOnTheCake = 0;
-
-  // offset of the cake
-  private int offset;
 
   // This is the constructor for a cake, and it makes an instance of a cake with it's ingredients
   // cost, weight, and name.
@@ -244,9 +239,17 @@ public class Cake implements Offsetable{
   }
 
   public void draw(Table T) {
-    draw(nameOnTheCake, "" + candlesOnTheCake);
-    int x = Math.round(center[0]);
-    T.draw(x + shiftX);
+    int cakeLength = getLength();
+    int tableLength = T.getLength();
+    if (cakeLength > tableLength){
+      draw();
+      int x = (cakeLength - tableLength) / 2;
+      T.draw(x);
+      return;
+    }
+    shiftX = (tableLength - cakeLength) / 2;
+    draw();
+    T.draw(0);
   }
 
   // Drawing the Cake
@@ -262,16 +265,14 @@ public class Cake implements Offsetable{
     float thetaEnd = thetaStart + dTheta;
 
     // Generates the mesh of the Cake, with correcting rotation and zSorting.
-    float[][] verts =
-        DrawingHelpers.generateCylinderSliceVertices(radius, height, slices, thetaStart, thetaEnd);
+    float[][] verts = DrawingHelpers.generateCylinderSliceVertices(radius, height, slices, thetaStart, thetaEnd);
     int[][] facesOG = DrawingHelpers.generateCylinderSliceIndices(slices, thetaEnd, thetaStart);
     DrawingHelpers.rotateVertices(verts, (float) (3 * Math.PI / 4), 0.0f, 0.0f);
-    shiftX = -1 * DrawingHelpers.getMin(verts);
+    shiftX += -1 * DrawingHelpers.getMin(verts);
     int[][] faces = DrawingHelpers.zSortTriangles(facesOG, verts);
     int length = faces.length;
-    center = DrawingHelpers.findCenter(verts);
-    System.out.println(Arrays.toString(center));
-    putInMatrix(verts, faces, matrix, length);
+    System.out.println(shiftX);
+    DrawingHelpers.putInMatrix(verts, faces, matrix, length, shiftX, shiftY);
 
     // System.out.println("The CAKE");
     // DrawingHelpers.printVertices(verts);
@@ -285,8 +286,6 @@ public class Cake implements Offsetable{
     boolean goneBad = flour.quality < 1;
     DrawingHelpers.drawCakeOnScreen(matrix, goneBad);
   }
-
-
 
   // Puts a bunch of candles in the matrix, as specified by age. Size will be the size of the cake,
   // so the candles can be correctly spaced.
@@ -328,31 +327,7 @@ public class Cake implements Offsetable{
       }
 
       // Render candle into matrix
-      putInMatrix(candleVerts, candleFaces, matrix, candleTriangleAmount);
-    }
-  }
-
-  // Takes in a set of verticies and faces and draws them into the matrix
-  public void putInMatrix(float[][] verts, int[][] faces, char[][] matrix, int length) {
-    for (int i = 0; i < length; i++) {
-      // For now, simple orthographic projection is used
-
-
-      int x0 = Math.round(verts[faces[i][0]][0]) + shiftX;
-      int y0 = Math.round(verts[faces[i][0]][1]) + shiftY;
-      int z0 = Math.round(verts[faces[i][0]][2]);
-
-      int x1 = Math.round(verts[faces[i][1]][0]) + shiftX;
-      int y1 = Math.round(verts[faces[i][1]][1]) + shiftY;
-      int z1 = Math.round(verts[faces[i][1]][2]);
-
-      int x2 = Math.round(verts[faces[i][2]][0]) + shiftX;
-      int y2 = Math.round(verts[faces[i][2]][1]) + shiftY;
-      int z2 = Math.round(verts[faces[i][2]][2]);
-
-      // Semi accurate shading is used
-      char shade = DrawingHelpers.findShading(x0, y0, z0, x1, y1, z1, x2, y2, z2);
-      DrawingHelpers.fillTriangle(x0, y0, x1, y1, x2, y2, matrix, shade);
+      DrawingHelpers.putInMatrix(candleVerts, candleFaces, matrix, candleTriangleAmount, shiftX, shiftY);
     }
   }
 
@@ -363,18 +338,24 @@ public class Cake implements Offsetable{
     }
   }
 
-  public int getLength(){
-  int slices = 10;
-  float thetaStart = (float) ((3f / 4f) * Math.PI);
-  float dTheta = (float) ((weightPounds / WEIGHTOG) * 2f * Math.PI);
-  float thetaEnd = thetaStart + dTheta;
-  float[][] verts =
-      DrawingHelpers.generateCylinderSliceVertices(radius, height, slices, thetaStart, thetaEnd);
-  return DrawingHelpers.getMax(verts) - DrawingHelpers.getMin(verts);
+  public int getLength() {
+    int slices = 10;
+    float thetaStart = (float) ((3f / 4f) * Math.PI);
+    float dTheta = (float) ((weightPounds / WEIGHTOG) * 2f * Math.PI);
+    float thetaEnd = thetaStart + dTheta;
+    float[][] verts =
+        DrawingHelpers.generateCylinderSliceVertices(radius, height, slices, thetaStart, thetaEnd);
+    return DrawingHelpers.getMax(verts) - DrawingHelpers.getMin(verts);
   }
-  public void setOffset(){
+
+  public void setOffset() {
 
     return;
+  }
+
+  // This sets up the cakes Verts and Faces with a certain radius
+  public void setCakeDrawing(){
+
   }
 
   // Main method, used for debugging the cake class
@@ -383,11 +364,11 @@ public class Cake implements Offsetable{
     Cake cake = new Cake();
     // cake.getFlour().goBad();
 
-    cake.eat(0);
+    cake.eat(90);
     // cake.draw("Name", "5");
-    Table T = new Table(3 , 140);
+    Table T = new Table(3, 140);
     cake.draw(T);
-    System.out.println(cake.getLength());
+    // System.out.println(cake.getLength());
     // cake.draw();
     // String[] ingredients = {
     //   "Chocolate Chips", "Flour", "Sugar", "Water", "Milk", "Egg", "Cocoa Powder"
