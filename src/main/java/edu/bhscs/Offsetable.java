@@ -15,6 +15,5 @@ package edu.bhscs;
 // NO CONSTRUCTOR (it's an interface)
 public interface Offsetable {
   int getLength(); // The length of the object
-
   void setOffset(int x);
 }

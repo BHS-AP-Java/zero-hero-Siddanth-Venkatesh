@@ -336,6 +336,7 @@ public class DrawingHelpers {
     return matrix;
   }
 
+  // get min and max x-values, used to print cake properly
   public static int getMax(float[][] verts) {
     float max = 0f;
     for (float[] vert : verts) {
@@ -373,7 +374,7 @@ public class DrawingHelpers {
     }
 
     if (bottom == -1)
-      return; // Entire matrix blank — nothing to draw
+      return; // matrix is blank so nothing to draw
 
     // Prints the cake properly
     for (int y = top; y >= bottom; y--) {
@@ -412,6 +413,7 @@ public class DrawingHelpers {
   }
 
 
+  // Helper methods for drawing candles
   public static float[][] createBaseCandleVertices() {
     float[][] verts = DrawingHelpers.generateCylinderSliceVertices(1, 100, 2, 0f, 6.29f);
     DrawingHelpers.rotateVertices(verts, (float) ((3 * Math.PI / 4) + (Math.PI / 2)), 0f, 0f);

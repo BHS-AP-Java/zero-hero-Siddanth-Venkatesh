@@ -6,7 +6,7 @@
 /*
  * DESCRIPTION: Makes a Table
  * INPUT: Needs Width and legs of the table
- * OUTPUT: Can draw the table with legs
+ * OUTPUT: Can draw the table with legs. Will know to center itself
  * EDGE CASE: If the tables width can't evenly put legs, the width of the table is made wider till it can.
  */
 
@@ -58,11 +58,17 @@ public class Table implements Offsetable {
     drawLegs(layers, offset);
   }
 
+  // draws centered around x
   public void draw(int x) {
     width += (legs - 1) - width % (legs - 1);
     setOffset(x - (width + leg.length()) / 2);
     drawTop(TABLEHEIGHT, offset);
     drawLegs(LEGHEIGHT, offset);
+  }
+
+  // Draws without centering
+  public void draw(){
+    draw(0);
   }
 
   public int getLength() {

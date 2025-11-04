@@ -245,6 +245,7 @@ public class Cake implements Offsetable {
     draw(nameOnTheCake, "" + candlesOnTheCake);
   }
 
+  // Draws the cake with a table
   public void draw(Table T) {
     setCakeDrawing();
     int cakeLength = getLength();
@@ -257,7 +258,7 @@ public class Cake implements Offsetable {
     }
     setOffset((tableLength - cakeLength) / 2);
     this.draw();
-    T.draw(0);
+    T.draw();
   }
 
   // Drawing the Cake
@@ -306,10 +307,12 @@ public class Cake implements Offsetable {
     }
   }
 
+  // returns the length of the cake
   public int getLength() {
     return DrawingHelpers.getMax(verts) - DrawingHelpers.getMin(verts);
   }
 
+  // sets the offset of the cake
   public void setOffset(int x) {
     shiftX = x;
     return;
