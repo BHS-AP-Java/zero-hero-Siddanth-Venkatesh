@@ -41,6 +41,12 @@ public class Cake implements Offsetable {
   float height = 10f;
   // radius of the cake
   private float radius = 40.0f;
+  // the cake's points
+  float[][] verts;
+  // the cake's faces
+  int[][] faces;
+  // what the cake is drawn on
+  char[][] matrix;
 
   // Things on the cake
   // Name on the Cake
@@ -235,10 +241,12 @@ public class Cake implements Offsetable {
 
   // Drawing methods
   public void draw() {
+    setCakeDrawing();
     draw(nameOnTheCake, "" + candlesOnTheCake);
   }
 
   public void draw(Table T) {
+    setCakeDrawing();
     int cakeLength = getLength();
     int tableLength = T.getLength();
     if (cakeLength > tableLength){
@@ -254,25 +262,13 @@ public class Cake implements Offsetable {
 
   // Drawing the Cake
   public void draw(String name, String ageString) {
+    setCakeDrawing();
     nameOnTheCake = name;
     int age = Integer.parseInt(ageString);
 
-    // Properties of how you draw the cake
-    char[][] matrix = DrawingHelpers.generateMatrix(140);
-    int slices = 10;
-    float thetaStart = (float) ((3f / 4f) * Math.PI);
-    float dTheta = (float) ((weightPounds / WEIGHTOG) * 2f * Math.PI);
-    float thetaEnd = thetaStart + dTheta;
-
-    // Generates the mesh of the Cake, with correcting rotation and zSorting.
-    float[][] verts = DrawingHelpers.generateCylinderSliceVertices(radius, height, slices, thetaStart, thetaEnd);
-    int[][] facesOG = DrawingHelpers.generateCylinderSliceIndices(slices, thetaEnd, thetaStart);
-    DrawingHelpers.rotateVertices(verts, (float) (3 * Math.PI / 4), 0.0f, 0.0f);
+    // Ensures Cake is drawn from edge of screen
     shiftX += -1 * DrawingHelpers.getMin(verts);
-    int[][] faces = DrawingHelpers.zSortTriangles(facesOG, verts);
-    int length = faces.length;
-    System.out.println(shiftX);
-    DrawingHelpers.putInMatrix(verts, faces, matrix, length, shiftX, shiftY);
+    DrawingHelpers.putInMatrix(verts, faces, matrix, faces.length, shiftX, shiftY);
 
     // Only put candles and name on Cake if it has not been eaten.
     if (weightPounds == WEIGHTOG) {
@@ -303,7 +299,6 @@ public class Cake implements Offsetable {
     }
   }
 
-
   // Puts the name on the cake.
   public void putNameOnCake(char[][] matrix, String name, int width, int height) {
     for (int i = width; i < width + name.length(); i++) {
@@ -312,12 +307,6 @@ public class Cake implements Offsetable {
   }
 
   public int getLength() {
-    int slices = 10;
-    float thetaStart = (float) ((3f / 4f) * Math.PI);
-    float dTheta = (float) ((weightPounds / WEIGHTOG) * 2f * Math.PI);
-    float thetaEnd = thetaStart + dTheta;
-    float[][] verts =
-        DrawingHelpers.generateCylinderSliceVertices(radius, height, slices, thetaStart, thetaEnd);
     return DrawingHelpers.getMax(verts) - DrawingHelpers.getMin(verts);
   }
 
@@ -327,7 +316,18 @@ public class Cake implements Offsetable {
 
   // This sets up the cakes Verts and Faces with a certain radius
   public void setCakeDrawing(){
+    // Properties of how you draw the cake
+    matrix = DrawingHelpers.generateMatrix(140);
+    int slices = 10;
+    float thetaStart = (float) ((3f / 4f) * Math.PI);
+    float dTheta = (float) ((weightPounds / WEIGHTOG) * 2f * Math.PI);
+    float thetaEnd = thetaStart + dTheta;
 
+    // Generates the mesh of the Cake, with correcting rotation and zSorting.
+    verts = DrawingHelpers.generateCylinderSliceVertices(radius, height, slices, thetaStart, thetaEnd);
+    int[][] facesOG = DrawingHelpers.generateCylinderSliceIndices(slices, thetaEnd, thetaStart);
+    DrawingHelpers.rotateVertices(verts, (float) (3 * Math.PI / 4), 0.0f, 0.0f);
+    faces = DrawingHelpers.zSortTriangles(facesOG, verts);
   }
 
   // Main method, used for debugging the cake class
@@ -338,18 +338,7 @@ public class Cake implements Offsetable {
 
     cake.eat(90);
     // cake.draw("Name", "5");
-    Table T = new Table(3, 140);
+    Table T = new Table(3, 100);
     cake.draw(T);
-    // System.out.println(cake.getLength());
-    // cake.draw();
-    // String[] ingredients = {
-    //   "Chocolate Chips", "Flour", "Sugar", "Water", "Milk", "Egg", "Cocoa Powder"
-    // };
-    // String name = "Chocolate Cake";
-    // Cake cake = new Cake(ingredients, 100.00, 100, name, 10.00);
-    // Customer Bob = new Customer("Bob", 100, 500, "Mexican");
-    // Bob.eat(cake, 10);
-    // System.out.println(cake.amountLeftWeight());
-    // cake.displayInfo();
   }
 }

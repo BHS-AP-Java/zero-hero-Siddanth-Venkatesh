@@ -35,7 +35,9 @@ public class Table implements Offsetable {
   }
 
   public void drawLine(int width, int len, String chars) {
-    for (int i = 0; i < width; i++) System.out.print(chars.substring(i % len, i % len + 1));
+    for (int i = 0; i < width; i++){
+      System.out.print(chars.substring(i % len, i % len + 1));
+    }
   }
 
   public void drawLegs(int layers, int offset) {
