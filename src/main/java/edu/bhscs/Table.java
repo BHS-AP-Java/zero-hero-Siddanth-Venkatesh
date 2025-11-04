@@ -35,9 +35,10 @@ public class Table implements Offsetable {
     drawTop(layers, offset);
   }
 
-  public void drawLine(int width, int len, String chars) {
-    for (int i = 0; i < width; i++){
-      System.out.print(chars.substring(i % len, i % len + 1));
+  // Draws a line made of String chars, where width is how long it is, and len is the lenght of the chars
+  public void drawLine(int width, int lengthOfChars, String chars) {
+    for (int i = 0; i < width; i++) {
+      System.out.print(chars.substring(i % lengthOfChars, i % lengthOfChars + 1));
     }
   }
 
@@ -52,6 +53,10 @@ public class Table implements Offsetable {
       legWithSpace += " ";
     }
     for (int i = 0; i <= width; i += legSpacing) {
+      if (i == width){
+        drawLine(leg.length(), leg.length(), leg);
+        break;
+      }
       drawLine(legSpacing, legWithSpace.length(), legWithSpace);
     }
     System.out.println();
@@ -60,24 +65,26 @@ public class Table implements Offsetable {
 
   // draws centered around x
   public void draw(int x) {
-    width += (legs - 1) - width % (legs - 1);
+    width = getLength();
     setOffset(x - (width + leg.length()) / 2);
     drawTop(TABLEHEIGHT, offset);
     drawLegs(LEGHEIGHT, offset);
   }
 
   // Draws without centering
-  public void draw(){
+  public void draw() {
     draw(0);
   }
 
   public int getLength() {
+    if (legs == 1){
+      return width;
+    }
     return width + ((legs - 1) - width % (legs - 1)) + leg.length();
   }
 
   public void setOffset(int x) {
     offset = x;
-    return;
   }
 
   public static void main(String[] args) {

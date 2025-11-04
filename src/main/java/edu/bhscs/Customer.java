@@ -9,8 +9,7 @@
  * INPUT: Requires the name, weight, and wealth
  * OUTPUT: Either returns a customer, or that a customer can't do something because they are either in jail, or don't have enough money
  * EDGE CASE: A jailed customer is restricted in their activities. Customer randomly eats
- * one of two cakes if they are named the same. If the race of the customer
- * is not American, they are very limited in the activities they can do.
+ * one of two cakes if they are named the same.
  */
 
 package edu.bhscs;
@@ -29,9 +28,6 @@ public class Customer implements Creatable {
   private boolean jailed = false;
   // name is the name of the customer
   private String name;
-  // Is the race of Customer. Be careful if you aren't American.
-  // Currently has been left unused so that any race can be made.
-  private String race;
 
   // This is the constroctor for a customer. It takes in their name, weight, and wealth and makes a
   // customer.
@@ -40,7 +36,6 @@ public class Customer implements Creatable {
     this.name = name;
     this.weight = weight;
     this.balance = wealth;
-    this.race = race;
   }
 
   // METHODS

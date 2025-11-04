@@ -33,26 +33,14 @@ public class Cake implements Offsetable {
   // quality is the quality of the cake. The price of the cake goes up with quality
   private double quality;
 
-  // Just the shift for the projection. Make sure everything lands in camera
-  private int shiftX = 0;
-  private int shiftY = 40;
-
-  // height of the cake (for drawing)
-  float height = 10f;
-  // radius of the cake
-  private float radius = 40.0f;
-  // the cake's points
-  float[][] verts;
-  // the cake's faces
-  int[][] faces;
-  // what the cake is drawn on
-  char[][] matrix;
-
   // Things on the cake
   // Name on the Cake
   private String nameOnTheCake = "no name";
   // Amount of candles on the Cake
   private int candlesOnTheCake = 0;
+
+  // Rendering of the Cake object
+  CakeRendering rendering;
 
   // This is the constructor for a cake, and it makes an instance of a cake with it's ingredients
   // cost, weight, and name.
@@ -126,7 +114,6 @@ public class Cake implements Offsetable {
     ingredients = other.getIngredients();
     flour = other.getFlour();
     quality = other.getQuality();
-    height = other.getHeight();
   }
 
   // METHODS
@@ -138,7 +125,7 @@ public class Cake implements Offsetable {
 
   // Sets the height of the cake
   public void setHeight(float height) {
-    this.height = height;
+    this.rendering.height = height;
   }
 
   // Returns the flour object in a cake
@@ -170,7 +157,7 @@ public class Cake implements Offsetable {
 
   // Returns height of the cake
   public float getHeight() {
-    return height;
+    return rendering.height;
   }
 
   // Returns cost of the cake
@@ -241,16 +228,21 @@ public class Cake implements Offsetable {
 
   // Drawing methods
   public void draw() {
-    setCakeDrawing();
-    draw(nameOnTheCake, "" + candlesOnTheCake);
+    rendering = new CakeRendering(weightPounds, WEIGHTOG);
+    this.draw(nameOnTheCake, "" + candlesOnTheCake);
+  }
+
+  public void draw(String name, String ageString){
+    boolean goneBad = flour.quality < 1;
+    rendering.draw(nameOnTheCake, "" + candlesOnTheCake, goneBad);
   }
 
   // Draws the cake with a table
   public void draw(Table T) {
-    setCakeDrawing();
+    rendering = new CakeRendering(weightPounds, WEIGHTOG);
     int cakeLength = getLength();
     int tableLength = T.getLength();
-    if (cakeLength > tableLength){
+    if (cakeLength > tableLength) {
       this.draw();
       int x = (cakeLength - tableLength) / 2;
       T.draw(x);
@@ -261,77 +253,16 @@ public class Cake implements Offsetable {
     T.draw();
   }
 
-  // Drawing the Cake
-  public void draw(String name, String ageString) {
-    setCakeDrawing();
-    nameOnTheCake = name;
-    int age = Integer.parseInt(ageString);
-
-    // Ensures Cake is drawn from edge of screen
-    shiftX += -1 * DrawingHelpers.getMin(verts);
-    DrawingHelpers.putInMatrix(verts, faces, matrix, faces.length, shiftX, shiftY);
-
-    // Only put candles and name on Cake if it has not been eaten.
-    if (weightPounds == WEIGHTOG) {
-      putCandlesInMatrix(matrix, age, (int) radius);
-      putNameOnCake(matrix, nameOnTheCake, (int) radius + 40, 20);
-    }
-    boolean goneBad = flour.quality < 1;
-    DrawingHelpers.drawCakeOnScreen(matrix, goneBad);
-  }
-
-  // Puts a bunch of candles in the matrix, as specified by age. Size will be the size of the cake,
-  // so the candles can be correctly spaced.
-  public void putCandlesInMatrix(char[][] matrix, int age, int size) {
-    float radius = size / 2f;
-
-    // Create a base candle model once
-    float[][] baseVerts = DrawingHelpers.createBaseCandleVertices();
-    int[][] faces = DrawingHelpers.createBaseCandleFaces(baseVerts);
-
-    // Place candles evenly around a circle
-    for (int i = 0; i < age; i++) {
-      float angle = (float) (i * 2 * Math.PI / age);
-      float offsetX = (float) (radius * Math.cos(angle));
-      float offsetY = (float) (radius * Math.sin(angle));
-
-      float[][] candleVerts = DrawingHelpers.translateVertices(baseVerts, offsetX, offsetY);
-      DrawingHelpers.putInMatrix(candleVerts, faces, matrix, faces.length, shiftX, shiftY);
-    }
-  }
-
-  // Puts the name on the cake.
-  public void putNameOnCake(char[][] matrix, String name, int width, int height) {
-    for (int i = width; i < width + name.length(); i++) {
-      matrix[i][height] = name.charAt(i - width);
-    }
-  }
-
   // returns the length of the cake
   public int getLength() {
+    float[][] verts = rendering.verts;
     return DrawingHelpers.getMax(verts) - DrawingHelpers.getMin(verts);
   }
 
   // sets the offset of the cake
   public void setOffset(int x) {
-    shiftX = x;
+    rendering.setShiftX(x);
     return;
-  }
-
-  // This sets up the cakes Verts and Faces with a certain radius
-  public void setCakeDrawing(){
-    // Properties of how you draw the cake
-    matrix = DrawingHelpers.generateMatrix(140);
-    int slices = 10;
-    float thetaStart = (float) ((3f / 4f) * Math.PI);
-    float dTheta = (float) ((weightPounds / WEIGHTOG) * 2f * Math.PI);
-    float thetaEnd = thetaStart + dTheta;
-
-    // Generates the mesh of the Cake, with correcting rotation and zSorting.
-    verts = DrawingHelpers.generateCylinderSliceVertices(radius, height, slices, thetaStart, thetaEnd);
-    int[][] facesOG = DrawingHelpers.generateCylinderSliceIndices(slices, thetaEnd, thetaStart);
-    DrawingHelpers.rotateVertices(verts, (float) (3 * Math.PI / 4), 0.0f, 0.0f);
-    faces = DrawingHelpers.zSortTriangles(facesOG, verts);
   }
 
   // Main method, used for debugging the cake class
@@ -341,7 +272,7 @@ public class Cake implements Offsetable {
 
     cake.eat(90);
     // cake.draw("Name", "5");
-    Table T = new Table(3, 50);
+    Table T = new Table(2, 80);
     cake.draw(T);
   }
 }

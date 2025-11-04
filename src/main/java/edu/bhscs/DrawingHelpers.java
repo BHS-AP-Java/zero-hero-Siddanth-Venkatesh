@@ -338,8 +338,9 @@ public class DrawingHelpers {
 
   // get min and max x-values, used to print cake properly
   public static int getMax(float[][] verts) {
-    float max = 0f;
+    float max = -10000000f;
     for (float[] vert : verts) {
+      // System.out.println(vert[0]);
       if (vert[0] > max) {
         max = vert[0];
       }
@@ -357,8 +358,9 @@ public class DrawingHelpers {
     return (int) (min);
   }
 
-  public static void drawCakeOnScreen(char[][] things, boolean goneBad) {
-    int width = things.length;
+  public static void drawCakeOnScreen(char[][] things, boolean goneBad, int maxLength) {
+    // System.out.println(maxLength);
+    int width = maxLength;
     int height = things[0].length;
 
     // Find top and bottom bounds to print cake
@@ -366,15 +368,13 @@ public class DrawingHelpers {
     for (int y = 0; y < height; y++) {
       for (int x = 0; x < width; x++) {
         if (things[x][y] != ' ') {
-          if (bottom == -1)
-            bottom = y;
+          if (bottom == -1) bottom = y;
           top = y;
         }
       }
     }
 
-    if (bottom == -1)
-      return; // matrix is blank so nothing to draw
+    if (bottom == -1) return; // matrix is blank so nothing to draw
 
     // Prints the cake properly
     for (int y = top; y >= bottom; y--) {
@@ -388,12 +388,12 @@ public class DrawingHelpers {
     }
   }
 
-
   // Takes in a set of verticies and faces and draws them into the matrix
-  public static void putInMatrix(float[][] verts, int[][] faces, char[][] matrix, int length, int shiftX, int shiftY) {
+  public static void putInMatrix(
+      float[][] verts, int[][] faces, char[][] matrix, int length, int shiftX, int shiftY) {
     for (int i = 0; i < length; i++) {
       // For now, simple orthographic projection is used
-
+      System.out.println(shiftX);
       int x0 = Math.round(verts[faces[i][0]][0]) + shiftX;
       int y0 = Math.round(verts[faces[i][0]][1]) + shiftY;
       int z0 = Math.round(verts[faces[i][0]][2]);
@@ -411,7 +411,6 @@ public class DrawingHelpers {
       DrawingHelpers.fillTriangle(x0, y0, x1, y1, x2, y2, matrix, shade);
     }
   }
-
 
   // Helper methods for drawing candles
   public static float[][] createBaseCandleVertices() {
@@ -451,5 +450,4 @@ public class DrawingHelpers {
     printVertices(verts);
     printIndices(faces);
   }
-
 }
