@@ -274,10 +274,6 @@ public class Cake implements Offsetable {
     System.out.println(shiftX);
     DrawingHelpers.putInMatrix(verts, faces, matrix, length, shiftX, shiftY);
 
-    // System.out.println("The CAKE");
-    // DrawingHelpers.printVertices(verts);
-    // DrawingHelpers.printIndices(faces);
-
     // Only put candles and name on Cake if it has not been eaten.
     if (weightPounds == WEIGHTOG) {
       putCandlesInMatrix(matrix, age, (int) radius);
@@ -290,46 +286,23 @@ public class Cake implements Offsetable {
   // Puts a bunch of candles in the matrix, as specified by age. Size will be the size of the cake,
   // so the candles can be correctly spaced.
   public void putCandlesInMatrix(char[][] matrix, int age, int size) {
-    // Random rand = new Random();
-
-    // Candles without rotations
-    float[][] baseCandleVerts = DrawingHelpers.generateCylinderSliceVertices(1, 100, 2, 0f, 6.29f);
-    int[][] candleFacesOG = DrawingHelpers.generateCylinderSliceIndices(2, 6.29f, 0f);
-
-    // Rotate the candle
-    DrawingHelpers.rotateVertices(
-        baseCandleVerts, (float) ((3 * Math.PI / 4) + (Math.PI / 2)), 0.0f, 0.0f);
-
-    int[][] candleFaces = DrawingHelpers.zSortTriangles(candleFacesOG, baseCandleVerts);
-    int candleTriangleAmount = candleFaces.length;
     float radius = size / 2f;
 
-    // System.out.println("CANDLES: ");
-    // DrawingHelpers.printVertices(baseCandleVerts);
-    // DrawingHelpers.printIndices(candleFaces);
+    // Create a base candle model once
+    float[][] baseVerts = DrawingHelpers.createBaseCandleVertices();
+    int[][] faces = DrawingHelpers.createBaseCandleFaces(baseVerts);
 
-    // This makes copies of the candles and places them in a circle
+    // Place candles evenly around a circle
     for (int i = 0; i < age; i++) {
-      float[][] candleVerts = new float[baseCandleVerts.length][3];
-      for (int j = 0; j < baseCandleVerts.length; j++) {
-        System.arraycopy(baseCandleVerts[j], 0, candleVerts[j], 0, 3);
-      }
-
-      // Evenly spaced candle positions around the circle
-      float angle = (float) (i * 2.0f * Math.PI / age);
+      float angle = (float) (i * 2 * Math.PI / age);
       float offsetX = (float) (radius * Math.cos(angle));
       float offsetY = (float) (radius * Math.sin(angle));
 
-      // Translates the candles
-      for (float[] v : candleVerts) {
-        v[0] += offsetX;
-        v[1] += offsetY;
-      }
-
-      // Render candle into matrix
-      DrawingHelpers.putInMatrix(candleVerts, candleFaces, matrix, candleTriangleAmount, shiftX, shiftY);
+      float[][] candleVerts = DrawingHelpers.translateVertices(baseVerts, offsetX, offsetY);
+      DrawingHelpers.putInMatrix(candleVerts, faces, matrix, faces.length, shiftX, shiftY);
     }
   }
+
 
   // Puts the name on the cake.
   public void putNameOnCake(char[][] matrix, String name, int width, int height) {
@@ -349,7 +322,6 @@ public class Cake implements Offsetable {
   }
 
   public void setOffset() {
-
     return;
   }
 

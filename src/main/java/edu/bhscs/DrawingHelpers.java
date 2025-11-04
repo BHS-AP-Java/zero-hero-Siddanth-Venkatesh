@@ -398,6 +398,28 @@ public class DrawingHelpers {
     }
   }
 
+
+  public static float[][] createBaseCandleVertices() {
+    float[][] verts = DrawingHelpers.generateCylinderSliceVertices(1, 100, 2, 0f, 6.29f);
+    DrawingHelpers.rotateVertices(verts, (float) ((3 * Math.PI / 4) + (Math.PI / 2)), 0f, 0f);
+    return verts;
+  }
+
+  public static int[][] createBaseCandleFaces(float[][] verts) {
+    int[][] faces = DrawingHelpers.generateCylinderSliceIndices(2, 6.29f, 0f);
+    return DrawingHelpers.zSortTriangles(faces, verts);
+  }
+
+  public static float[][] translateVertices(float[][] verts, float dx, float dy) {
+    float[][] result = new float[verts.length][3];
+    for (int i = 0; i < verts.length; i++) {
+      result[i][0] = verts[i][0] + dx;
+      result[i][1] = verts[i][1] + dy;
+      result[i][2] = verts[i][2];
+    }
+    return result;
+  }
+
   // Main method to debug this class
   public static void main(String[] args) {
     float radius = 20f;
