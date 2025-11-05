@@ -30,7 +30,7 @@ public class Table implements Offsetable {
   public void drawTop(int layers, int offset) {
     if (layers-- == 0) return;
     drawLine(offset, 1, " ");
-    drawLine(width + leg.length(), tableTopChars.length(), tableTopChars);
+    drawLine(width, tableTopChars.length(), tableTopChars);
     System.out.println();
     drawTop(layers, offset);
   }
@@ -48,7 +48,7 @@ public class Table implements Offsetable {
       return;
     }
     drawLine(offset, 1, " ");
-    int legSpacing = (legs == 1) ? width + 10 : width / (legs - 1);
+    int legSpacing = (legs == 1) ? width + 10 : (width - leg.length()) / (legs - 1);
     String legWithSpace = leg;
     for (int i = leg.length(); i < legSpacing; i++) {
       legWithSpace += " ";
@@ -81,14 +81,18 @@ public class Table implements Offsetable {
     if (legs == 1) {
       return width;
     }
-    return width + ((legs - 1) - width % (legs - 1)) + leg.length();
+    return width + ((legs - 1) - width % (legs - 1)) + leg.length() + 10;
   }
 
   public void setOffset(int x) {
     offset = x;
   }
 
+  public void setLeg(String leg){
+    this.leg = leg;
+  }
+
   public static void main(String[] args) {
-    new Table(7, 70).draw(50);
+    new Table(3, 5).draw(0);
   }
 }
