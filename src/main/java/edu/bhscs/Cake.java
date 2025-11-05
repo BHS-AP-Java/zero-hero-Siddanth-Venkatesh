@@ -228,13 +228,13 @@ public class Cake implements Offsetable {
 
   // Drawing methods
   public void draw() {
-    if (rendering == null){
+    if (rendering == null) {
       rendering = new CakeRendering(weightPounds, WEIGHTOG);
     }
     this.draw(nameOnTheCake, "" + candlesOnTheCake);
   }
 
-  public void draw(String name, String ageString){
+  public void draw(String name, String ageString) {
     boolean goneBad = flour.quality < 1;
     if (rendering == null) {
       rendering = new CakeRendering(weightPounds, WEIGHTOG);

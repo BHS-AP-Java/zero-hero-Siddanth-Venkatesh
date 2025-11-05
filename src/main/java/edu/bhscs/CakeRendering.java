@@ -19,7 +19,7 @@ public class CakeRendering {
   // original weight of the cake
   final double WEIGHTOG;
 
-  public CakeRendering(double weight, double WEIGHTOG){
+  public CakeRendering(double weight, double WEIGHTOG) {
     this.weightPounds = weight;
     this.WEIGHTOG = WEIGHTOG;
     setCakeDrawing();
@@ -84,7 +84,7 @@ public class CakeRendering {
     DrawingHelpers.drawCakeOnScreen(matrix, goneBad, shiftX + DrawingHelpers.getMax(verts));
   }
 
-  public void setShiftX(int x){
+  public void setShiftX(int x) {
     shiftX = x;
   }
 }

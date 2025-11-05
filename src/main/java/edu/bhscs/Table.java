@@ -35,7 +35,8 @@ public class Table implements Offsetable {
     drawTop(layers, offset);
   }
 
-  // Draws a line made of String chars, where width is how long it is, and len is the lenght of the chars
+  // Draws a line made of String chars, where width is how long it is, and len is the lenght of the
+  // chars
   public void drawLine(int width, int lengthOfChars, String chars) {
     for (int i = 0; i < width; i++) {
       System.out.print(chars.substring(i % lengthOfChars, i % lengthOfChars + 1));
@@ -53,7 +54,7 @@ public class Table implements Offsetable {
       legWithSpace += " ";
     }
     for (int i = 0; i <= width; i += legSpacing) {
-      if (i == width){
+      if (i == width) {
         drawLine(leg.length(), leg.length(), leg);
         break;
       }
@@ -66,7 +67,7 @@ public class Table implements Offsetable {
   // draws centered around x
   public void draw(int x) {
     width = getLength();
-    setOffset(x - (width + leg.length()) / 2);
+    setOffset(x);
     drawTop(TABLEHEIGHT, offset);
     drawLegs(LEGHEIGHT, offset);
   }
@@ -77,7 +78,7 @@ public class Table implements Offsetable {
   }
 
   public int getLength() {
-    if (legs == 1){
+    if (legs == 1) {
       return width;
     }
     return width + ((legs - 1) - width % (legs - 1)) + leg.length();

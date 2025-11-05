@@ -368,7 +368,7 @@ public class DrawingHelpers {
     for (int y = 0; y < height; y++) {
       for (int x = 0; x < width; x++) {
         if (things[x][y] != ' ') {
-          if (bottom == -1){
+          if (bottom == -1) {
             bottom = y;
           }
           top = y;
