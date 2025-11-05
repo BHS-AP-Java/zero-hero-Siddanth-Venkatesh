@@ -74,7 +74,6 @@ public class CakeRendering {
 
     // Ensures Cake is drawn from edge of screen
     shiftX += -1 * DrawingHelpers.getMin(verts);
-    System.out.println(shiftX);
     DrawingHelpers.putInMatrix(verts, faces, matrix, faces.length, shiftX, shiftY);
 
     // Only put candles and name on Cake if it has not been eaten.

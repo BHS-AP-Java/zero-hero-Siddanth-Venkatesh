@@ -368,7 +368,9 @@ public class DrawingHelpers {
     for (int y = 0; y < height; y++) {
       for (int x = 0; x < width; x++) {
         if (things[x][y] != ' ') {
-          if (bottom == -1) bottom = y;
+          if (bottom == -1){
+            bottom = y;
+          }
           top = y;
         }
       }
@@ -393,7 +395,6 @@ public class DrawingHelpers {
       float[][] verts, int[][] faces, char[][] matrix, int length, int shiftX, int shiftY) {
     for (int i = 0; i < length; i++) {
       // For now, simple orthographic projection is used
-      System.out.println(shiftX);
       int x0 = Math.round(verts[faces[i][0]][0]) + shiftX;
       int y0 = Math.round(verts[faces[i][0]][1]) + shiftY;
       int z0 = Math.round(verts[faces[i][0]][2]);

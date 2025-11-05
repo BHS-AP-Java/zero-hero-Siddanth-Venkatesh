@@ -228,12 +228,17 @@ public class Cake implements Offsetable {
 
   // Drawing methods
   public void draw() {
-    rendering = new CakeRendering(weightPounds, WEIGHTOG);
+    if (rendering == null){
+      rendering = new CakeRendering(weightPounds, WEIGHTOG);
+    }
     this.draw(nameOnTheCake, "" + candlesOnTheCake);
   }
 
   public void draw(String name, String ageString){
     boolean goneBad = flour.quality < 1;
+    if (rendering == null) {
+      rendering = new CakeRendering(weightPounds, WEIGHTOG);
+    }
     rendering.draw(nameOnTheCake, "" + candlesOnTheCake, goneBad);
   }
 
@@ -272,7 +277,7 @@ public class Cake implements Offsetable {
 
     cake.eat(90);
     // cake.draw("Name", "5");
-    Table T = new Table(2, 80);
+    Table T = new Table(2, 100);
     cake.draw(T);
   }
 }
