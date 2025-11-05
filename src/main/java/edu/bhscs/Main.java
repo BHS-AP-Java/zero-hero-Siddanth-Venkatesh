@@ -34,9 +34,10 @@ public class Main {
 
   public static void date10_27() {
     Baker bob = new Baker("Bob");
-    Table t = new Table(3, 15);
-    t.setLeg("677");
+    Table t = new Table(3, 80);
+    t.setLeg("|--|");
     Cake bDay = bob.bakes(5, "Suzzie");
+    bDay.eat(50);
     bDay.draw(t);
   }
 

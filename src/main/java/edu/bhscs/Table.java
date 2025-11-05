@@ -18,7 +18,7 @@ public class Table implements Offsetable {
   final int TABLEHEIGHT = 3;
   final int LEGHEIGHT = 5;
 
-  String tableTopChars = "XY";
+  String tableTopChars = "----";
   String leg = "AB";
   int offset;
 
