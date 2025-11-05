@@ -219,7 +219,7 @@ public class Cake implements Offsetable {
     return result;
   }
 
-  // Returns the name of the type
+  // Returns what the Cake should be when printed (not displayed)
   @Override
   public String toString() {
     String stuff = Arrays.toString(ingredients);
@@ -244,7 +244,9 @@ public class Cake implements Offsetable {
 
   // Draws the cake with a table
   public void draw(Table T) {
-    rendering = new CakeRendering(weightPounds, WEIGHTOG);
+    if (rendering == null) {
+      rendering = new CakeRendering(weightPounds, WEIGHTOG);
+    }
     int cakeLength = getLength();
     int tableLength = T.getLength();
     if (cakeLength > tableLength) {
@@ -274,7 +276,6 @@ public class Cake implements Offsetable {
   public static void main(String[] args) {
     Cake cake = new Cake();
     // cake.getFlour().goBad();
-
     cake.eat(90);
     // cake.draw("Name", "5");
     Table T = new Table(2, 100);
