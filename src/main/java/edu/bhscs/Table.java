@@ -15,8 +15,8 @@ package edu.bhscs;
 public class Table implements Offsetable {
   int legs;
   int width;
-  final int TABLEHEIGHT = 3;
-  final int LEGHEIGHT = 5;
+  int tableheight = 3;
+  int legheight = 5;
 
   String tableTopChars = "----";
   String leg = "AB";
@@ -25,6 +25,11 @@ public class Table implements Offsetable {
   public Table(int x, int y) {
     legs = x;
     width = y;
+  }
+
+  public void setWidth(int x){
+    width = x;
+    width = getWidth();
   }
 
   public void drawTop(int layers, int offset) {
@@ -68,8 +73,8 @@ public class Table implements Offsetable {
   public void draw(int x) {
     width = getWidth();
     setOffset(x);
-    drawTop(TABLEHEIGHT, offset);
-    drawLegs(LEGHEIGHT, offset);
+    drawTop(tableheight, offset);
+    drawLegs(legheight, offset);
   }
 
   // Draws with whatever cenntering their is
@@ -77,15 +82,11 @@ public class Table implements Offsetable {
     draw(offset);
   }
 
-  public void draw(Offsetable thing) {
-    draw(0);
-  }
-
   public int getWidth() {
     if (legs == 1) {
       return width;
     }
-    return width + ((legs - 1) - width % (legs - 1)) + leg.length() + 10;
+    return width + ((legs - 1) - width % (legs - 1)) + leg.length();
   }
 
   public void setOffset(int x) {
@@ -96,7 +97,26 @@ public class Table implements Offsetable {
     this.leg = leg;
   }
 
+  // Set the height of the table top and the height of the legs
+  public void setHeight(int x, int y){
+    // tableheight = x;
+    // legheight = y;
+  }
+
+  // Set's the total height of the table, with 1/3 going to top and 2/3 to legs (up to int precesion)
+  public void setHeight(int x){
+    setHeight((x / 3), (x - (x/3)));
+  }
+
+  // Draws the table on top of the cake because the interface specifies
+  // that draw draws the thing below the other offsetable below it.
   public static void main(String[] args) {
-    new Table(3, 5).draw(0);
+    Table table = new Table(3, 5);
+    table.draw();
+    // table.setWidth(70);
+    // table.draw();
+    // table.setHeight(0);
+    table.draw();
+
   }
 }

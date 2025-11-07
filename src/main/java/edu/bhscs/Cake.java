@@ -242,14 +242,6 @@ public class Cake implements Offsetable {
     rendering.draw(nameOnTheCake, "" + candlesOnTheCake, goneBad);
   }
 
-  // Draws the cake with a table
-  public void draw(Offsetable T) {
-    setOffset(getOffset(T));
-    T.setOffset(T.getOffset(this));
-    this.draw();
-    T.draw();
-  }
-
   // returns the length of the cake
   public int getWidth() {
     float[][] verts = rendering.verts;

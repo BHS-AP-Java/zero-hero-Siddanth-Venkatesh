@@ -25,7 +25,12 @@ public interface Offsetable {
 
   // Each Offsetable thing knows how to draw itself
   // relative to whatever is beneath it.
-  void draw(Offsetable below);
+  default public void draw(Offsetable T) {
+    setOffset(getOffset(T));
+    T.setOffset(T.getOffset(this));
+    this.draw();
+    T.draw();
+  }
 
   // Draws something once it already has an offset
   void draw();
