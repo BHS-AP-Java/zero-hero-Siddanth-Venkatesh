@@ -66,18 +66,22 @@ public class Table implements Offsetable {
 
   // draws centered around x
   public void draw(int x) {
-    width = getLength();
+    width = getWidth();
     setOffset(x);
     drawTop(TABLEHEIGHT, offset);
     drawLegs(LEGHEIGHT, offset);
   }
 
-  // Draws without centering
+  // Draws with whatever cenntering their is
   public void draw() {
+    draw(offset);
+  }
+
+  public void draw(Offsetable thing) {
     draw(0);
   }
 
-  public int getLength() {
+  public int getWidth() {
     if (legs == 1) {
       return width;
     }
@@ -88,7 +92,7 @@ public class Table implements Offsetable {
     offset = x;
   }
 
-  public void setLeg(String leg){
+  public void setLeg(String leg) {
     this.leg = leg;
   }
 

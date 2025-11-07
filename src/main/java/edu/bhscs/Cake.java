@@ -54,6 +54,7 @@ public class Cake implements Offsetable {
     this.ingredients = ingredients;
     weightPounds = weight;
     WEIGHTOG = weight;
+    rendering = new CakeRendering(weightPounds, WEIGHTOG);
 
     String stuff = Arrays.toString(ingredients);
     System.out.println("Baking the cake with... " + stuff);
@@ -69,6 +70,7 @@ public class Cake implements Offsetable {
     this.quality = skill;
     WEIGHTOG = 100;
     weightPounds = WEIGHTOG;
+    rendering = new CakeRendering(weightPounds, WEIGHTOG);
   }
 
   public Cake() {
@@ -76,6 +78,7 @@ public class Cake implements Offsetable {
     weightPounds = WEIGHTOG;
     ingredients = base();
     flour = new Flour("ALl purpose flour", 1.0, 10.0, 2);
+    rendering = new CakeRendering(weightPounds, WEIGHTOG);
   }
 
   public Cake(int age, String name) {
@@ -85,6 +88,7 @@ public class Cake implements Offsetable {
     flour = new Flour("ALl purpose flour", 1.0, 10.0, 2);
     candlesOnTheCake = age;
     nameOnTheCake = name;
+    rendering = new CakeRendering(weightPounds, WEIGHTOG);
   }
 
   // This makes a cake using a specific type of flour
@@ -99,6 +103,7 @@ public class Cake implements Offsetable {
     this.ingredients = ingredients;
     weightPounds = weight;
     WEIGHTOG = weight;
+    rendering = new CakeRendering(weightPounds, WEIGHTOG);
 
     String stuff = Arrays.toString(ingredients);
     System.out.println("Baking the cake with... " + stuff);
@@ -114,6 +119,7 @@ public class Cake implements Offsetable {
     ingredients = other.getIngredients();
     flour = other.getFlour();
     quality = other.getQuality();
+    rendering = new CakeRendering(weightPounds, WEIGHTOG);
   }
 
   // METHODS
@@ -228,40 +234,24 @@ public class Cake implements Offsetable {
 
   // Drawing methods
   public void draw() {
-    if (rendering == null) {
-      rendering = new CakeRendering(weightPounds, WEIGHTOG);
-    }
     this.draw(nameOnTheCake, "" + candlesOnTheCake);
   }
 
   public void draw(String name, String ageString) {
     boolean goneBad = flour.quality < 1;
-    if (rendering == null) {
-      rendering = new CakeRendering(weightPounds, WEIGHTOG);
-    }
     rendering.draw(nameOnTheCake, "" + candlesOnTheCake, goneBad);
   }
 
   // Draws the cake with a table
-  public void draw(Table T) {
-    if (rendering == null) {
-      rendering = new CakeRendering(weightPounds, WEIGHTOG);
-    }
-    int cakeLength = getLength();
-    int tableLength = T.getLength();
-    if (cakeLength > tableLength) {
-      this.draw();
-      int x = (cakeLength - tableLength) / 2;
-      T.draw(x);
-      return;
-    }
-    setOffset((tableLength - cakeLength) / 2);
+  public void draw(Offsetable T) {
+    setOffset(getOffset(T));
+    T.setOffset(T.getOffset(this));
     this.draw();
     T.draw();
   }
 
   // returns the length of the cake
-  public int getLength() {
+  public int getWidth() {
     float[][] verts = rendering.verts;
     return DrawingHelpers.getMax(verts) - DrawingHelpers.getMin(verts);
   }
@@ -276,9 +266,9 @@ public class Cake implements Offsetable {
   public static void main(String[] args) {
     Cake cake = new Cake();
     // cake.getFlour().goBad();
-    cake.eat(90);
+    cake.eat(0);
     // cake.draw("Name", "5");
-    Table T = new Table(2, 100);
+    Table T = new Table(2, 5);
     cake.draw(T);
   }
 }

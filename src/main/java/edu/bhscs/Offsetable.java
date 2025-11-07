@@ -14,7 +14,22 @@ package edu.bhscs;
 
 // NO CONSTRUCTOR (it's an interface)
 public interface Offsetable {
-  int getLength(); // The length of the object
+  int getWidth();
 
+  // Default centering logic — always clamps to 0 so alignment never goes negative.
+  default int getOffset(Offsetable below) {
+    if (below == null)
+      return 0;
+    return Math.max(0, (below.getWidth() - this.getWidth()) / 2);
+  }
+
+  // Each Offsetable thing knows how to draw itself
+  // relative to whatever is beneath it.
+  void draw(Offsetable below);
+
+  // Draws something once it already has an offset
+  void draw();
+
+  // Sets the offset
   void setOffset(int x);
 }

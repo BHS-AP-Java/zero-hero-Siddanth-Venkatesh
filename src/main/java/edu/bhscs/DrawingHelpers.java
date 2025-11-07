@@ -349,7 +349,7 @@ public class DrawingHelpers {
   }
 
   public static int getMin(float[][] verts) {
-    float min = 1000000f;
+    float min = 10000000f;
     for (float[] vert : verts) {
       if (vert[0] < min) {
         min = vert[0];
@@ -439,13 +439,13 @@ public class DrawingHelpers {
   public static void main(String[] args) {
     float radius = 20f;
     float height = 1.0f;
-    int slices = 4;
-    float thetaStart = (float) 2;
-    float thetaEnd = (float) 3;
+    int slices = 10;
+    float thetaStart = (float) 0;
+    float thetaEnd = (float) (2 * Math.PI);
 
     float[][] verts = generateCylinderSliceVertices(radius, height, slices, thetaStart, thetaEnd);
     int[][] facesOG = generateCylinderSliceIndices(slices, thetaEnd, thetaStart);
-    rotateVertices(verts, (float) (3 * Math.PI / 4), 0.0f, 0.0f);
+    rotateVertices(verts, (float) (-3 * Math.PI / 4), 0.0f, 0.0f);
     int[][] faces = zSortTriangles(facesOG, verts);
 
     printVertices(verts);

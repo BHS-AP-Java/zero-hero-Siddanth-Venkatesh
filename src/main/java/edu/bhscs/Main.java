@@ -37,7 +37,7 @@ public class Main {
     Table t = new Table(3, 80);
     t.setLeg("|--|");
     Cake bDay = bob.bakes(5, "Suzzie");
-    bDay.eat(50);
+    bDay.eat(5);
     bDay.draw(t);
   }
 
