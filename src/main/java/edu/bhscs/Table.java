@@ -24,12 +24,7 @@ public class Table implements Offsetable {
 
   public Table(int x, int y) {
     legs = x;
-    width = y;
-  }
-
-  public void setWidth(int x){
-    width = x;
-    width = getWidth();
+    setWidth(y);
   }
 
   public void drawTop(int layers, int offset) {
@@ -86,7 +81,12 @@ public class Table implements Offsetable {
     if (legs == 1) {
       return width;
     }
-    return width + ((legs - 1) - width % (legs - 1)) + leg.length();
+    return width;
+  }
+
+  public void setWidth(int x){
+    width = x;
+    width = width + ((legs - 1) - width % (legs - 1)) + leg.length();
   }
 
   public void setOffset(int x) {
@@ -99,8 +99,8 @@ public class Table implements Offsetable {
 
   // Set the height of the table top and the height of the legs
   public void setHeight(int x, int y){
-    // tableheight = x;
-    // legheight = y;
+    tableheight = x;
+    legheight = y;
   }
 
   // Set's the total height of the table, with 1/3 going to top and 2/3 to legs (up to int precesion)
@@ -113,9 +113,9 @@ public class Table implements Offsetable {
   public static void main(String[] args) {
     Table table = new Table(3, 5);
     table.draw();
-    // table.setWidth(70);
-    // table.draw();
-    // table.setHeight(0);
+    table.setWidth(70);
+    table.draw();
+    table.setHeight(10);
     table.draw();
 
   }

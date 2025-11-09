@@ -3,7 +3,7 @@ package edu.bhscs;
 public class CakeRendering {
   // Just the shift for the projection. Make sure everything lands in camera
   private int shiftX = 0;
-  private int shiftY = 40;
+  private int shiftY = 50;
   // height of the cake (for drawing)
   float height = 10f;
   // radius of the cake
@@ -20,9 +20,13 @@ public class CakeRendering {
   final double WEIGHTOG;
 
   public CakeRendering(double weight, double WEIGHTOG) {
-    this.weightPounds = weight;
     this.WEIGHTOG = WEIGHTOG;
-    setCakeDrawing();
+    setCakeDrawing(weight);
+  }
+
+  // Sets the radius of the cake
+  public void setRadius(float x){
+    radius = x;
   }
 
   // Puts a bunch of candles in the matrix, as specified by age. Size will be the size of the cake,
@@ -52,8 +56,9 @@ public class CakeRendering {
   }
 
   // This sets up the cakes Verts and Faces with a certain radius
-  public void setCakeDrawing() {
+  public void setCakeDrawing(double weight) {
     // Properties of how you draw the cake
+    this.weightPounds = weight;
     matrix = DrawingHelpers.generateMatrix(140);
     int slices = 10;
     float thetaStart = (float) ((3f / 4f) * Math.PI);

@@ -132,6 +132,7 @@ public class Cake implements Offsetable {
   // Sets the height of the cake
   public void setHeight(float height) {
     this.rendering.height = height;
+    rendering.setCakeDrawing(weightPounds);
   }
 
   // Returns the flour object in a cake
@@ -154,6 +155,7 @@ public class Cake implements Offsetable {
       return;
     }
     weightPounds *= (100.00 - percent) / 100.00;
+    rendering.setCakeDrawing(weightPounds);
   }
 
   // Returns name of the cake.
@@ -254,13 +256,21 @@ public class Cake implements Offsetable {
     return;
   }
 
+  public void setWidth(int x){
+    float radius = (x / 2);
+    rendering.setRadius(radius);
+    rendering.setCakeDrawing(weightPounds);
+  }
+
   // Main method, used for debugging the cake class
   public static void main(String[] args) {
     Cake cake = new Cake();
     // cake.getFlour().goBad();
-    cake.eat(0);
+    cake.eat(90);
     // cake.draw("Name", "5");
-    Table T = new Table(2, 5);
+    Table T = new Table(3, 100);
+    cake.setHeight(10f);
+    cake.setWidth(150);
     cake.draw(T);
   }
 }
