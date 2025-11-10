@@ -94,7 +94,7 @@ public class CakeRendering {
     shiftX = x;
   }
 
-  public static void print(String x){
+  public static void print(String x) {
     System.out.print(x);
   }
 }
