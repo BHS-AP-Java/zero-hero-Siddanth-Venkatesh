@@ -241,7 +241,7 @@ public class Cake implements Offsetable {
 
   public void draw(String name, String ageString) {
     boolean goneBad = flour.quality < 1;
-    rendering.draw(nameOnTheCake, "" + candlesOnTheCake, goneBad);
+    rendering.draw(name, ageString, goneBad);
   }
 
   // returns the length of the cake
@@ -256,7 +256,7 @@ public class Cake implements Offsetable {
     return;
   }
 
-  public void setWidth(int x){
+  public void setWidth(int x) {
     float radius = (x / 2);
     rendering.setRadius(radius);
     rendering.setCakeDrawing(weightPounds);
@@ -266,11 +266,11 @@ public class Cake implements Offsetable {
   public static void main(String[] args) {
     Cake cake = new Cake();
     // cake.getFlour().goBad();
-    cake.eat(90);
-    // cake.draw("Name", "5");
-    Table T = new Table(3, 100);
-    cake.setHeight(10f);
-    cake.setWidth(150);
-    cake.draw(T);
+    cake.eat(0);
+    cake.draw("Name", "10w");
+    // Table T = new Table(3, 100);
+    // cake.setHeight(10f);
+    // cake.setWidth(130);
+    // cake.draw(T);
   }
 }
