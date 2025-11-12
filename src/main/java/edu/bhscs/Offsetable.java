@@ -18,14 +18,13 @@ public interface Offsetable {
 
   // Default centering logic — always clamps to 0 so alignment never goes negative.
   default int getOffset(Offsetable below) {
-    if (below == null)
-      return 0;
+    if (below == null) return 0;
     return Math.max(0, (below.getWidth() - this.getWidth()) / 2);
   }
 
   // Each Offsetable thing knows how to draw itself
   // relative to whatever is beneath it.
-  default public void draw(Offsetable T) {
+  public default void draw(Offsetable T) {
     setOffset(getOffset(T));
     T.setOffset(T.getOffset(this));
     this.draw();

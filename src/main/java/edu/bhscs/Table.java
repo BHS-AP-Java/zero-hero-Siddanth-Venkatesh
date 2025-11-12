@@ -84,7 +84,7 @@ public class Table implements Offsetable {
     return width;
   }
 
-  public void setWidth(int x){
+  public void setWidth(int x) {
     width = x;
     width = width + ((legs - 1) - width % (legs - 1)) + leg.length();
   }
@@ -98,14 +98,15 @@ public class Table implements Offsetable {
   }
 
   // Set the height of the table top and the height of the legs
-  public void setHeight(int x, int y){
+  public void setHeight(int x, int y) {
     tableheight = x;
     legheight = y;
   }
 
-  // Set's the total height of the table, with 1/3 going to top and 2/3 to legs (up to int precesion)
-  public void setHeight(int x){
-    setHeight((x / 3), (x - (x/3)));
+  // Set's the total height of the table, with 1/3 going to top and 2/3 to legs (up to int
+  // precesion)
+  public void setHeight(int x) {
+    setHeight((x / 3), (x - (x / 3)));
   }
 
   // Draws the table on top of the cake because the interface specifies
@@ -117,6 +118,5 @@ public class Table implements Offsetable {
     table.draw();
     table.setHeight(10);
     table.draw();
-
   }
 }

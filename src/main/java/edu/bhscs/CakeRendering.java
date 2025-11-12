@@ -25,7 +25,7 @@ public class CakeRendering {
   }
 
   // Sets the radius of the cake
-  public void setRadius(float x){
+  public void setRadius(float x) {
     radius = x;
   }
 
@@ -83,6 +83,7 @@ public class CakeRendering {
 
     // Only put candles and name on Cake if it has not been eaten.
     if (weightPounds == WEIGHTOG) {
+      // print("This is happening with age " + age + " and the name is " + name);
       putCandlesInMatrix(matrix, age, (int) radius);
       putNameOnCake(matrix, name, (int) radius + 40, 20);
     }
@@ -91,5 +92,9 @@ public class CakeRendering {
 
   public void setShiftX(int x) {
     shiftX = x;
+  }
+
+  public static void print(String x) {
+    System.out.print(x);
   }
 }
