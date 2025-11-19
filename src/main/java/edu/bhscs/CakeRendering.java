@@ -88,6 +88,7 @@ public class CakeRendering {
       putNameOnCake(matrix, name, (int) radius + 40, 20);
     }
     DrawingHelpers.drawCakeOnScreen(matrix, goneBad, shiftX + DrawingHelpers.getMax(verts));
+    shiftX -= -1 * DrawingHelpers.getMin(verts);
   }
 
   public void setShiftX(int x) {

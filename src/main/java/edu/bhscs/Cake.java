@@ -236,7 +236,7 @@ public class Cake implements Offsetable {
 
   // Drawing methods
   public void draw() {
-    this.draw(nameOnTheCake, "" + candlesOnTheCake);
+    draw(nameOnTheCake, "" + candlesOnTheCake);
   }
 
   public void draw(String name, String ageString) {
@@ -253,6 +253,7 @@ public class Cake implements Offsetable {
   // sets the offset of the cake
   public void setOffset(int x) {
     rendering.setShiftX(x);
+
     return;
   }
 
@@ -268,9 +269,9 @@ public class Cake implements Offsetable {
     // cake.getFlour().goBad();
     cake.eat(0);
     cake.draw("Name", "10");
-    // Table T = new Table(3, 100);
-    // cake.setHeight(10f);
-    // cake.setWidth(130);
-    // cake.draw(T);
+    Table T = new Table(3, 100);
+    cake.setHeight(10f);
+    cake.setWidth(100);
+    cake.draw();
   }
 }
