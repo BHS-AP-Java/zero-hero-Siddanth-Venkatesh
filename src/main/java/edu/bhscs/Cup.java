@@ -1,5 +1,3 @@
 package edu.bhscs;
 
-public class Cup{
-
-}
+public class Cup {}
