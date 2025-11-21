@@ -361,6 +361,8 @@ public class DrawingHelpers {
   public static void drawCakeOnScreen(char[][] things, boolean goneBad, int maxLength) {
     // System.out.println(maxLength);
     int width = maxLength;
+    int space =  things.length;
+    width = width > space ? space : width;
     int height = things[0].length;
 
     // Find top and bottom bounds to print cake

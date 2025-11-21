@@ -5,7 +5,5 @@ public class Cup {
   int handleWidth;
   int handleHeight;
 
-  public Cup(){
-
-  }
+  public Cup() {}
 }

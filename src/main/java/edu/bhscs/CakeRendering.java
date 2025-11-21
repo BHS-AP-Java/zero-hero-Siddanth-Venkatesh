@@ -85,7 +85,7 @@ public class CakeRendering {
     if (weightPounds == WEIGHTOG) {
       // print("This is happening with age " + age + " and the name is " + name);
       putCandlesInMatrix(matrix, age, (int) radius);
-      putNameOnCake(matrix, name, (int) radius + 40, 20);
+      putNameOnCake(matrix, name, 40, 20);
     }
     DrawingHelpers.drawCakeOnScreen(matrix, goneBad, shiftX + DrawingHelpers.getMax(verts));
     shiftX -= -1 * DrawingHelpers.getMin(verts);
