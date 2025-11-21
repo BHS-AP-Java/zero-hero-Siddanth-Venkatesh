@@ -1,5 +1,7 @@
 package edu.bhscs;
 
+import java.lang.Thread;
+
 public class CakeRendering {
   // Just the shift for the projection. Make sure everything lands in camera
   private int shiftX = 0;
@@ -21,7 +23,8 @@ public class CakeRendering {
 
   public CakeRendering(double weight, double WEIGHTOG) {
     this.WEIGHTOG = WEIGHTOG;
-    setCakeDrawing(weight);
+    float angle = (float) (3 * Math.PI / 4);
+    setCakeDrawing(weight, angle);
   }
 
   // Sets the radius of the cake
@@ -56,7 +59,7 @@ public class CakeRendering {
   }
 
   // This sets up the cakes Verts and Faces with a certain radius
-  public void setCakeDrawing(double weight) {
+  public void setCakeDrawing(double weight, float angle) {
     // Properties of how you draw the cake
     this.weightPounds = weight;
     matrix = DrawingHelpers.generateMatrix(140);
@@ -69,7 +72,7 @@ public class CakeRendering {
     verts =
         DrawingHelpers.generateCylinderSliceVertices(radius, height, slices, thetaStart, thetaEnd);
     int[][] facesOG = DrawingHelpers.generateCylinderSliceIndices(slices, thetaEnd, thetaStart);
-    DrawingHelpers.rotateVertices(verts, (float) (3 * Math.PI / 4), 0.0f, 0.0f);
+    DrawingHelpers.rotateVertices(verts, angle, 0.0f, 0.0f);
     faces = DrawingHelpers.zSortTriangles(facesOG, verts);
   }
 
@@ -91,8 +94,39 @@ public class CakeRendering {
     shiftX -= -1 * DrawingHelpers.getMin(verts);
   }
 
+  public void drawCakeWithAngle(float angle){
+    setCakeDrawing(weightPounds, angle);
+    draw(" ", "0", false);
+  }
+
+  public void drawRotating(){
+    // angle < (float) (2f * Math.PI)
+    for (float angle = 0f; true; angle += 0.1){
+      drawCakeWithAngle(angle);
+      System.out.flush();
+      waitSomeTime(80);
+      clearTerminal();
+      if (angle >= (float) (2f * Math.PI)){
+        angle = 0f;
+      }
+    }
+  }
+
+  public void clearTerminal() {
+    System.out.print("\033[2J");
+    System.out.print("\033[9999;1H");
+  }
+
   public void setShiftX(int x) {
     shiftX = x;
+  }
+  public void waitSomeTime(int time){
+    try {
+      Thread.sleep(time);
+    } catch (Exception e) {
+      // catching the exception
+      System.out.println(e);
+    }
   }
 
   public static void print(String x) {

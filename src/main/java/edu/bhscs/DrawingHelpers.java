@@ -22,7 +22,7 @@ public class DrawingHelpers {
   private static final String SHADING =
       "$@B%8&WM#*oahkbdpqwmZO0QLCJUYXzcvunxrjft/\\|()1{}[]?-_+~<>i!lI;:,\"^`'.";
   // Amount of characters in shading
-  private static final int SHADINGAMOUNT = 70;
+  private static final int SHADINGAMOUNT = 69;
   // colors of the cake. Will be Green and Gray if the cake has gone bad
   public static final String RESET = "\u001B[0m";
   public static final String GREEN = "\u001B[32m";
@@ -317,7 +317,8 @@ public class DrawingHelpers {
 
     // Dot product = cosine of angle between light and normal
     float intensity = nx * lx + ny * ly + nz * lz;
-    intensity = Math.max(0, intensity); // clamp to [0,1]
+    intensity = Math.max(0, intensity);
+    intensity = Math.min(1, intensity); // clamp to [0,1]
 
     // Convert to shading index
     int shadeIndex = Math.round(intensity * (SHADINGAMOUNT - 1));
@@ -381,15 +382,17 @@ public class DrawingHelpers {
     if (bottom == -1) return; // matrix is blank so nothing to draw
 
     // Prints the cake properly
+    String toPrint = "";
     for (int y = top; y >= bottom; y--) {
       for (int x = 0; x < width; x++) {
         char c = things[x][y];
         String mold = x % 2 == 0 ? GREEN : GRAY;
         String piece = goneBad ? mold + c : "" + c;
-        System.out.print(piece + RESET);
+        toPrint += piece + RESET;
       }
-      System.out.println();
+      toPrint += "\n";
     }
+    System.out.println(toPrint);
   }
 
   // Takes in a set of verticies and faces and draws them into the matrix
