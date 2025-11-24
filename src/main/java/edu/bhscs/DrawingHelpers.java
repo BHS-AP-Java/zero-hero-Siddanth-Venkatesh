@@ -361,7 +361,7 @@ public class DrawingHelpers {
     float lx = 0, ly = 0, lz = -1;
 
     // Dot product = cosine of angle between light and normal
-    float intensity = (nx * lx + ny * ly + nz * lz) * 5.0f;
+    float intensity = (nx * lx + ny * ly + nz * lz);
     intensity = Math.max(0, intensity);
     intensity = Math.min(1, intensity); // clamp to [0,1]
 
