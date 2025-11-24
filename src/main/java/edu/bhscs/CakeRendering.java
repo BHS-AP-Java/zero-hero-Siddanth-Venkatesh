@@ -1,7 +1,5 @@
 package edu.bhscs;
 
-import java.lang.Thread;
-
 public class CakeRendering {
   // Just the shift for the projection. Make sure everything lands in camera
   private int shiftX = 0;
@@ -62,7 +60,7 @@ public class CakeRendering {
   public void setCakeDrawing(double weight, float angle) {
     // Properties of how you draw the cake
     this.weightPounds = weight;
-    matrix = DrawingHelpers.generateMatrix(140);
+    matrix = DrawingHelpers.generateMatrix(50);
     int slices = 10;
     float thetaStart = (float) ((3f / 4f) * Math.PI);
     float dTheta = (float) ((weightPounds / WEIGHTOG) * 2f * Math.PI);
@@ -94,19 +92,19 @@ public class CakeRendering {
     shiftX -= -1 * DrawingHelpers.getMin(verts);
   }
 
-  public void drawCakeWithAngle(float angle){
+  public void drawCakeWithAngle(float angle) {
     setCakeDrawing(weightPounds, angle);
     draw(" ", "0", false);
   }
 
-  public void drawRotating(){
+  public void drawRotating() {
     // angle < (float) (2f * Math.PI)
-    for (float angle = 0f; true; angle += 0.1){
+    for (float angle = 0f; true; angle += 0.1) {
       drawCakeWithAngle(angle);
       System.out.flush();
       waitSomeTime(80);
       clearTerminal();
-      if (angle >= (float) (2f * Math.PI)){
+      if (angle >= (float) (2f * Math.PI)) {
         angle = 0f;
       }
     }
@@ -120,7 +118,8 @@ public class CakeRendering {
   public void setShiftX(int x) {
     shiftX = x;
   }
-  public void waitSomeTime(int time){
+
+  public void waitSomeTime(int time) {
     try {
       Thread.sleep(time);
     } catch (Exception e) {

@@ -327,9 +327,9 @@ public class DrawingHelpers {
   }
 
   // Makes a blank 2x2 matrix
-  public static char[][] generateMatrix(int size) {
-    char[][] matrix = new char[size][size];
-    char[] def = new char[size];
+  public static char[][] generateMatrix(int x, int y) {
+    char[][] matrix = new char[y][x];
+    char[] def = new char[x];
     Arrays.fill(def, ' ');
     for (int i = 0; i < matrix.length; i++) {
       matrix[i] = def.clone();
@@ -362,28 +362,11 @@ public class DrawingHelpers {
   public static void drawCakeOnScreen(char[][] things, boolean goneBad, int maxLength) {
     // System.out.println(maxLength);
     int width = maxLength;
-    int space =  things.length;
+    int space = things.length;
     width = width > space ? space : width;
-    int height = things[0].length;
 
-    // Find top and bottom bounds to print cake
-    int top = -1, bottom = -1;
-    for (int y = 0; y < height; y++) {
-      for (int x = 0; x < width; x++) {
-        if (things[x][y] != ' ') {
-          if (bottom == -1) {
-            bottom = y;
-          }
-          top = y;
-        }
-      }
-    }
-
-    if (bottom == -1) return; // matrix is blank so nothing to draw
-
-    // Prints the cake properly
     String toPrint = "";
-    for (int y = top; y >= bottom; y--) {
+    for (int y = things[0].length - 1; y >= 0; y--) {
       for (int x = 0; x < width; x++) {
         char c = things[x][y];
         String mold = x % 2 == 0 ? GREEN : GRAY;

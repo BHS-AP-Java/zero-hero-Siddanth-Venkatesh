@@ -278,6 +278,6 @@ public class Cake implements Offsetable {
     cake.setWidth(60);
     // cake.draw();
     cake.draw();
-    cake.rendering.drawRotating();
+    // cake.rendering.drawRotating();
   }
 }
