@@ -146,6 +146,7 @@ public class DrawingHelpers {
     float z = 0f;
 
     // For now, making it so that it is not rotated around center
+    // float[] center = findCenter(vertices);
     float avgX = 0f;
     float avgY = 0f;
     float avgZ = 0f;
@@ -185,6 +186,50 @@ public class DrawingHelpers {
     }
   }
 
+  public static void rotateCenter(float[][] vertices, float pitch, float yaw, float roll) {
+    float x = 0f;
+    float y = 0f;
+    float z = 0f;
+
+    float[] center = findCenter(vertices);
+    float avgX = center[0];
+    float avgY = center[1];
+    float avgZ = center[2];
+
+    // Breaks down the rotation into their cos and sin components
+    float cp = (float) Math.cos(pitch);
+    float sp = (float) Math.sin(pitch);
+    float cy = (float) Math.cos(yaw);
+    float sy = (float) Math.sin(yaw);
+    float cr = (float) Math.cos(roll);
+    float sr = (float) Math.sin(roll);
+
+    for (int i = 0; i < vertices.length; i++) {
+      x = vertices[i][0] - avgX;
+      y = vertices[i][1] - avgY;
+      z = vertices[i][2] - avgZ;
+
+      // Apply pitch (x-axis)
+      float y1 = y * cp - z * sp;
+      float z1 = y * sp + z * cp;
+      y = y1;
+      z = z1;
+
+      // Apply yaw (y-axis)
+      float x2 = x * cy + z * sy;
+      float z2 = -x * sy + z * cy;
+      x = x2;
+      z = z2;
+
+      // Apply roll (z-axis)
+      float x3 = x * cr - y * sr;
+      float y3 = x * sr + y * cr;
+
+      vertices[i][0] = x3 + avgX;
+      vertices[i][1] = y3 + avgY;
+      vertices[i][2] = z + avgZ;
+    }
+  }
   // Sorts the triangle by their average z cordinate. This makes it so that triangles are draw in
   // the correct order
   public static int[][] zSortTriangles(int[][] indices, float[][] vertices) {
@@ -316,22 +361,22 @@ public class DrawingHelpers {
     float lx = 0, ly = 0, lz = -1;
 
     // Dot product = cosine of angle between light and normal
-    float intensity = nx * lx + ny * ly + nz * lz;
+    float intensity = (nx * lx + ny * ly + nz * lz) * 5.0f;
     intensity = Math.max(0, intensity);
     intensity = Math.min(1, intensity); // clamp to [0,1]
 
     // Convert to shading index
-    int shadeIndex = Math.round(intensity * (SHADINGAMOUNT - 1));
+    int shadeIndex = Math.round(intensity * (SHADINGAMOUNT - 1)) ;
     char shade = SHADING.charAt(shadeIndex);
     return shade;
   }
 
   // Makes a blank 2x2 matrix
   public static char[][] generateMatrix(int x, int y) {
-    char[][] matrix = new char[y][x];
-    char[] def = new char[x];
+    char[][] matrix = new char[x][y];
+    char[] def = new char[y];
     Arrays.fill(def, ' ');
-    for (int i = 0; i < matrix.length; i++) {
+    for (int i = 0; i < x; i++) {
       matrix[i] = def.clone();
     }
     return matrix;
