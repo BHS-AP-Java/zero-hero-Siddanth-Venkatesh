@@ -230,6 +230,7 @@ public class DrawingHelpers {
       vertices[i][2] = z + avgZ;
     }
   }
+
   // Sorts the triangle by their average z cordinate. This makes it so that triangles are draw in
   // the correct order
   public static int[][] zSortTriangles(int[][] indices, float[][] vertices) {
@@ -366,9 +367,9 @@ public class DrawingHelpers {
     intensity = Math.min(1, intensity); // clamp to [0,1]
 
     // Convert to shading index
-    int shadeIndex = Math.round(intensity * (SHADINGAMOUNT - 1)) ;
+    int shadeIndex = Math.round(intensity * (SHADINGAMOUNT - 1));
     char shade = SHADING.charAt(shadeIndex);
-    return shade;
+    return 'D';
   }
 
   // Makes a blank 2x2 matrix

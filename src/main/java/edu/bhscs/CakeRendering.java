@@ -74,7 +74,7 @@ public class CakeRendering {
     faces = DrawingHelpers.zSortTriangles(facesOG, verts);
   }
 
-  public void setAngle(float angle){
+  public void setAngle(float angle) {
     DrawingHelpers.rotateCenter(verts, angle, 0.0f, 0.0f);
   }
 
@@ -112,6 +112,8 @@ public class CakeRendering {
       if (angle >= (float) (2f * Math.PI)) {
         angle = 0f;
       }
+      float angle2 = (float) (3 * Math.PI / 4);
+      setCakeDrawing(weightPounds, angle2);
     }
   }
 
