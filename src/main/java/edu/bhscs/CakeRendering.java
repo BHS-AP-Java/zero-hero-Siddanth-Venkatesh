@@ -3,7 +3,7 @@ package edu.bhscs;
 public class CakeRendering {
   // Just the shift for the projection. Make sure everything lands in camera
   private int shiftX = 0;
-  private int shiftY = 10;
+  private int shiftY = 30;
   // height of the cake (for drawing)
   float height = 10f;
   // radius of the cake
@@ -60,7 +60,7 @@ public class CakeRendering {
   public void setCakeDrawing(double weight, float angle) {
     // Properties of how you draw the cake
     this.weightPounds = weight;
-    matrix = DrawingHelpers.generateMatrix(60, 50);
+    matrix = DrawingHelpers.generateMatrix(100,  100);
     int slices = 10;
     float thetaStart = (float) ((3f / 4f) * Math.PI);
     float dTheta = (float) ((weightPounds / WEIGHTOG) * 2f * Math.PI);

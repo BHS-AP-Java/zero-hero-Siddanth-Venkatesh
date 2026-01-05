@@ -267,17 +267,18 @@ public class Cake implements Offsetable {
     rendering.setCakeDrawing(weightPounds, angle);
   }
 
-  // Main method, used for debugging the cake class (not needed)
+  // Main method to see the drawing of the cake
+  // The cake rotation does not work.
   public static void main(String[] args) {
     Cake cake = new Cake();
     // cake.getFlour().goBad();
-    cake.eat(0);
+    cake.eat(90);
     // cake.draw("Name", "10");
     // Table T = new Table(3, 100);
     cake.setHeight(10f);
-    cake.setWidth(50);
+    cake.setWidth(80);
     // cake.draw();
     // cake.draw();
-    cake.rendering.drawRotating();
+    cake.draw();
   }
 }

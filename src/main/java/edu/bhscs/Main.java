@@ -17,6 +17,7 @@
 
 package edu.bhscs;
 
+// Please look at the cake class because that is where the cake is properly printed.
 public class Main {
 
   public static void main(String[] args) {

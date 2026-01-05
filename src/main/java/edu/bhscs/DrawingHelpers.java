@@ -369,7 +369,7 @@ public class DrawingHelpers {
     // Convert to shading index
     int shadeIndex = Math.round(intensity * (SHADINGAMOUNT - 1));
     char shade = SHADING.charAt(shadeIndex);
-    return 'D';
+    return shade;
   }
 
   // Makes a blank 2x2 matrix
