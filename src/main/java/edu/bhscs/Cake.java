@@ -267,7 +267,7 @@ public class Cake implements Offsetable {
     rendering.setCakeDrawing(weightPounds, angle);
   }
 
-  // Main method, used for debugging the cake class
+  // Main method, used for debugging the cake class (not needed)
   public static void main(String[] args) {
     Cake cake = new Cake();
     // cake.getFlour().goBad();
