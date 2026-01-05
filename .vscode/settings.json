@@ -13,5 +13,8 @@
 
   // Google Java Style for the Red Hat formatter
   "java.format.settings.url": "${workspaceFolder}/.vscode/eclipse-java-google-style.xml",
-  "java.format.settings.profile": "GoogleStyle"
+  "java.format.settings.profile": "GoogleStyle",
+  "files.associations": {
+    "mesh.C": "cpp"
+  }
 }

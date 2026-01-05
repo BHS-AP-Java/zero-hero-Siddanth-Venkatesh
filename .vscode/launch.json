@@ -3,6 +3,83 @@
   "configurations": [
     {
       "type": "java",
+      "name": "Table",
+      "request": "launch",
+      "mainClass": "edu.bhscs.Table",
+      "projectName": "ap-java-starter"
+    },
+    {
+      "type": "java",
+      "name": "App",
+      "request": "launch",
+      "mainClass": "edu.bhscs.App",
+      "projectName": "ap-java-starter"
+    },
+    {
+      "type": "java",
+      "name": "DrawingHelpers",
+      "request": "launch",
+      "mainClass": "edu.bhscs.DrawingHelpers",
+      "projectName": "ap-java-starter"
+    },
+    {
+      "type": "java",
+      "name": "Burger",
+      "request": "launch",
+      "mainClass": "edu.bhscs.Burger",
+      "projectName": "ap-java-starter"
+    },
+    {
+      "type": "java",
+      "name": "TicTacToe",
+      "request": "launch",
+      "mainClass": "edu.bhscs.TicTacToe",
+      "projectName": "ap-java-starter"
+    },
+    {
+      "type": "java",
+      "name": "PTSA",
+      "request": "launch",
+      "mainClass": "edu.bhscs.PTSA",
+      "projectName": "ap-java-starter"
+    },
+    {
+      "type": "java",
+      "name": "Store",
+      "request": "launch",
+      "mainClass": "edu.bhscs.Store",
+      "projectName": "ap-java-starter"
+    },
+    {
+      "type": "java",
+      "name": "Cake",
+      "request": "launch",
+      "mainClass": "edu.bhscs.Cake",
+      "projectName": "ap-java-starter"
+    },
+    {
+      "type": "java",
+      "name": "donut",
+      "request": "launch",
+      "mainClass": "edu.bhscs.donut",
+      "projectName": "ap-java-starter"
+    },
+    {
+      "type": "java",
+      "name": "Example",
+      "request": "launch",
+      "mainClass": "edu.bhscs.Example",
+      "projectName": "ap-java-starter"
+    },
+    {
+      "type": "java",
+      "name": "main",
+      "request": "launch",
+      "mainClass": "edu.bhscs.main",
+      "projectName": "ap-java-starter"
+    },
+    {
+      "type": "java",
       "name": "Run Main (console)",
       "request": "launch",
       "mainClass": "edu.bhscs.Main",
@@ -23,7 +100,10 @@
       "mainClass": "edu.bhscs.Main",
       "console": "integratedTerminal",
       "preLaunchTask": "xpra-up",
-      "env": { "DISPLAY": ":99", "LIBGL_ALWAYS_SOFTWARE": "1" }
+      "env": {
+        "DISPLAY": ":99",
+        "LIBGL_ALWAYS_SOFTWARE": "1"
+      }
     }
   ]
 }
