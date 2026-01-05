@@ -112,11 +112,7 @@ public class Table implements Offsetable {
   // Draws the table on top of the cake because the interface specifies
   // that draw draws the thing below the other offsetable below it.
   public static void main(String[] args) {
-    Table table = new Table(3, 5);
-    table.draw();
-    table.setWidth(70);
-    table.draw();
-    table.setHeight(10);
+    Table table = new Table(5, 25);
     table.draw();
   }
 }

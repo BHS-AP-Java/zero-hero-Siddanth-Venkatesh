@@ -272,13 +272,14 @@ public class Cake implements Offsetable {
   public static void main(String[] args) {
     Cake cake = new Cake();
     // cake.getFlour().goBad();
-    cake.eat(90);
+    cake.eat(0);
     // cake.draw("Name", "10");
     // Table T = new Table(3, 100);
     cake.setHeight(10f);
     cake.setWidth(80);
     // cake.draw();
     // cake.draw();
-    cake.draw();
+    Table table =  new Table(4, 25);
+    cake.draw(table);
   }
 }
